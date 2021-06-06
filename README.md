@@ -1,8 +1,7 @@
-## Our Web Page
+## Here..
 
-<img src="https://seimpairiyun.github.io/img/logo2.png" alt="isn't this cool?">
+<img src="https://seimpairiyun.github.io/img/logofull.png" alt="isn't this cool?">
 Blog pribadi yang berisi uneg-uneg yang dirasa penting.
-
 
 ### Log history
 
