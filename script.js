@@ -20,7 +20,7 @@ width = $(window).width();
 if (width <= 700) {
   $(".name").click(function () {
     $(".intro").css("right", "0");
-    // $(".text").css("transform", "translateX(20px)")
+    $(".text").css("transform", "translateX(20px)")
     $(".wrapper").css("z-index", "20");
   });
 
