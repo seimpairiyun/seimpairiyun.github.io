@@ -1,0 +1,462 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900");
+
+* {
+    margin : 0;
+    padding: 0;
+}
+
+body {
+    background         : rgb(255, 255, 255);
+    background-image   : url('img/cover.jpg');
+    background-position: center;
+    background-size    : cover;
+    overflow           : hidden;
+}
+
+.logo {
+    position : absolute;
+    top      : 20px;
+    max-width: 100%;
+    width    : 30%;
+}
+
+.loader {
+    position       : relative;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 500px;
+    overflow       : hidden;
+}
+
+.loader:before {
+    position     : absolute;
+    top          : 50%;
+    content      : '';
+    width        : 30px;
+    height       : 30px;
+    border       : 3px solid;
+    border-color : transparent transparent rgb(0, 0, 0);
+    border-radius: 100%;
+    animation    : 1s spin ease infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.container {
+    position       : relative;
+    width          : 100%;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 100vh;
+    overflow       : hidden;
+    font-size      : 40px;
+    color          : rgb(0, 0, 0, 0.4);
+}
+
+.container>* {
+    margin: 5px;
+}
+
+.name {
+    display: flex;
+}
+
+.left,
+.right {
+    z-index    : 10;
+    position   : relative;
+    width      : 30px;
+    height     : 60px;
+    overflow   : hidden;
+    color      : rgb(0, 0, 0);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
+    font-size  : 45px;
+    transition : width 0.4s 0.1s;
+}
+
+.right:hover,
+.left:hover {
+    transition: width 0.4s 0.1s;
+}
+
+.left:hover {
+    width: 140px;
+}
+
+.right:hover {
+    width: 110px;
+}
+
+span {
+    position: absolute;
+}
+
+#name {
+    left: 30px;
+}
+
+.intro {
+    overflow       : hidden;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    position       : absolute;
+    background     : rgb(0, 0, 0);
+    width          : 30%;
+    right          : -1000px;
+    margin         : 0;
+    height         : 100vh;
+    color          : rgb(255, 255, 255);
+    font-family    : 'Source Sans Pro', sans-serif;
+}
+
+.wrapper {
+    max-width      : 100%;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+}
+
+.wrapper>* {
+    margin: 10px;
+}
+
+.close {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    font-size      : 40px;
+    cursor         : pointer;
+    position       : absolute;
+    z-index        : 1;
+    top            : 45px;
+}
+
+.text {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+    width          : 100%;
+    font-size      : 24px;
+    transform      : translateX(20px);
+    font-weight    : 200;
+}
+
+.text a {
+    position       : relative;
+    color          : rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.text>* {
+    margin: 10px 20px 0 20px;
+}
+
+.about-me {
+    text-align : justify;
+    line-height: 45px;
+}
+
+#social {
+    font-size: 29px;
+}
+
+#social>* {
+    margin: 5px;
+}
+
+#work {
+    font-size: 20px;
+    margin   : 40px 0;
+}
+
+#work>* {
+    margin: 5px;
+}
+
+.out {
+    transition: 1s all ease;
+    transform : translateX(450px);
+}
+
+.arrow {
+    display    : flex;
+    align-items: center;
+    height     : 40px;
+    animation  : 0.5s bounce ease infinite;
+    cursor     : pointer;
+}
+
+#insta {
+    background             : radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;
+    /* Also define standard property for compatibility */
+    background-clip        : text;
+    -webkit-text-fill-color: transparent;
+    font-size              : 25px;
+}
+
+.social-button {
+    transition      : all 0.4s;
+    position        : fixed;
+    left            : 25px;
+    bottom          : 25px;
+    width           : 60px;
+    height          : 60px;
+    text-align      : center;
+    line-height     : 60px;
+    border-radius   : 50%;
+    background-color: black;
+    color           : #fff;
+    font-size       : 24px;
+    box-shadow      : 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.22);
+    cursor          : pointer;
+    transition-delay: 1s;
+    z-index         : 1000;
+}
+
+.social-button-open {
+    transition-delay: 0s;
+    bottom          : 110px;
+    background-color: black;
+    box-shadow      : 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+.social-button .social-point {
+    transition   : all 0.4s;
+    opacity      : 0;
+    width        : 0px;
+    height       : 0px;
+    text-align   : center;
+    line-height  : 50px;
+    border-radius: 50%;
+    color        : #fff;
+    font-size    : 24px;
+    box-shadow   : 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.22);
+    cursor       : pointer;
+    visibility   : hidden;
+}
+
+.social-button .social-point:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+.social-button .social-point:nth-child(2) {
+    transition-delay: 0.3s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    background-color: white;
+}
+
+.social-button .social-point:nth-child(3) {
+    transition-delay: 0.4s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    background-color: white;
+}
+
+.social-button .social-point:nth-child(4) {
+    transition-delay: 0.5s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    background-color: black;
+}
+
+.social-button .social-point:nth-child(5) {
+    transition-delay: 0.6s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    background-color: #1da1f2;
+}
+
+.social-button .social-point:nth-child(6) {
+    transition-delay: 0.7s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    background-color: #1da1f2;
+}
+
+.social-button-open .social-point-open {
+    opacity   : 1;
+    width     : 50px;
+    height    : 50px;
+    visibility: visible;
+}
+
+.social-button-open .social-point-open:nth-child(2) {
+    left  : 5px;
+    bottom: 80px;
+}
+
+.social-button-open .social-point-open:nth-child(2):hover {
+    transition-delay: 0s;
+    background-color: gainsboro;
+}
+
+.social-button-open .social-point-open:nth-child(3) {
+    left  : 65px;
+    bottom: 65px;
+}
+
+.social-button-open .social-point-open:nth-child(3):hover {
+    transition-delay: 0s;
+    background-color: gainsboro;
+}
+
+.social-button-open .social-point-open:nth-child(4) {
+    left  : 80px;
+    bottom: 5px;
+}
+
+.social-button-open .social-point-open:nth-child(4):hover {
+    transition-delay: 0s;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.social-button-open .social-point-open:nth-child(5) {
+    left  : 65px;
+    bottom: -65px;
+}
+
+.social-button-open .social-point-open:nth-child(5):hover {
+    transition-delay: 0s;
+    background-color: #1980BF;
+}
+
+.social-button-open .social-point-open:nth-child(6) {
+    left  : 5px;
+    bottom: -80px;
+}
+
+.social-button-open .social-point-open:nth-child(6):hover {
+    transition-delay: 0s;
+    background-color: #1980BF;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .loader {
+        display: none;
+    }
+
+    .container {
+        width: auto;
+    }
+
+    .intro {
+        width: 100%;
+    }
+
+    .wrapper>* {
+        margin: 0;
+    }
+
+    .text {
+        width      : 100%;
+        display    : block;
+        text-align : center;
+        z-index    : -1;
+        margin     : 0;
+        transform  : translateX(0);
+        font-weight: 400;
+        font-size  : 20px;
+    }
+
+    .close {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1030px) {
+    .logo {
+        width: 85%;
+    }
+    .text{
+        font-size: 18px;
+    }
+}
+
+.modal-window {
+    position          : fixed;
+    background-color  : rgba(0, 0, 0, 0.75);
+    max-width         : 100%;
+    top               : 0;
+    right             : 0;
+    bottom            : 0;
+    left              : 0;
+    z-index           : 999;
+    opacity           : 0;
+    pointer-events    : none;
+    -webkit-transition: all 0.3s;
+    -moz-transition   : all 0.3s;
+    transition        : all 0.3s;
+}
+
+.modal-window:target {
+    opacity       : 1;
+    pointer-events: auto;
+}
+
+.modal-window>div {
+    width   : 350px;
+    position: relative;
+    margin  : 8% auto;
+    padding : 0rem;
+    color   : #444;
+}
+
+.modal-window header {
+    font-weight: bold;
+}
+
+.modal-close {
+    color          : #aaa;
+    line-height    : 50px;
+    font-size      : 30px;
+    position       : absolute;
+    right          : -17px;
+    text-align     : center;
+    top            : -6px;
+    width          : 70px;
+    text-decoration: none;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.modal-window h1 {
+    font-size: 150%;
+    margin   : 0 0 15px;
+}
