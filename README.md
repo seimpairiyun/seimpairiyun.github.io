@@ -9,7 +9,7 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 - https://seimpairiyun.github.io/ourwedding
 ```
 
-### Log History
+### History
 
 * [Linka Ninki](https://linkaninki.github.io) - childhood 
 * [Enghoha](https://enghoha.github.io) - teen
