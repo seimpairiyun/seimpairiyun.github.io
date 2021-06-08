@@ -154,17 +154,14 @@ request.onreadystatechange = function () {
 };
 request.send();
 
-//Initializing
+//changing image automatically
 var i = 0;
 var images = []; //array
-var time = 10000; // time in millie seconds
-
-//images
+var time = 10000;
 
 images[0] = "url(img/weddcars.jpg)";
 images[1] = "url(img/cover.jpg)";
 images[2] = "url(img/bride.jpg)";
-//function
 
 function changeImage() {
     var el = document.getElementById('body');
