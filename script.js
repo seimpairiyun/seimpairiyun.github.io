@@ -153,3 +153,28 @@ request.onreadystatechange = function () {
   }
 };
 request.send();
+
+//Initializing
+var i = 0;
+var images = []; //array
+var time = 10000; // time in millie seconds
+
+//images
+
+images[0] = "url(img/weddcars.webp)";
+images[1] = "url(img/cover.jpg)";
+images[2] = "url(img/bride.jpg)";
+//function
+
+function changeImage() {
+    var el = document.getElementById('body');
+    el.style.backgroundImage = images[i];
+    if (i < images.length - 1) {
+        i++;
+    } else {
+        i = 0;
+    }
+    setTimeout('changeImage()', time);
+}
+
+window.onload = changeImage;
