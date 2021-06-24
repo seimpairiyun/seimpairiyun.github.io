@@ -161,7 +161,15 @@ var time = 10000;
 
 images[0] = "url(img/weddcars.jpg)";
 images[1] = "url(img/cover.jpg)";
-images[2] = "url(img/bride.jpg)";
+images[2] = "url(img/lombok_sand.jpg)";
+images[3] = "url(img/weddcars.jpg)";
+images[4] = "url(img/burger.jpg)";
+images[5] = "url(img/menu1.jpg)";
+images[6] = "url(img/menu2.jpg)";
+images[7] = "url(img/menu3.jpg)";
+images[8] = "url(img/menu4.jpg)";
+images[9] = "url(img/menu5.jpg)";
+images[10] = "url(img/menu6.jpg)";
 
 function changeImage() {
     var el = document.getElementById('body');
