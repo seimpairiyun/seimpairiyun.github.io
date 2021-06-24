@@ -7,9 +7,9 @@
 
 body {
     background         : rgb(255, 255, 255);
-    background-size    : cover;
+    background-size    : contain; /*cover*/
     background-position: center;
-    background-repeat  : no-repeat;
+    background-repeat  : repeat;
     overflow           : hidden;
 }
 
