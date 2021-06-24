@@ -159,9 +159,9 @@ var i = 0;
 var images = []; //array
 var time = 10000;
 
-images[0] = "url(img/weddcars.jpg)";
+images[0] = "url(img/lombok_sand.jpg)";
 images[1] = "url(img/cover.jpg)";
-images[2] = "url(img/lombok_sand.jpg)";
+images[2] = "url(img/bride.jpg)";
 images[3] = "url(img/weddcars.jpg)";
 images[4] = "url(img/burger.jpg)";
 images[5] = "url(img/menu1.jpg)";
@@ -170,6 +170,9 @@ images[7] = "url(img/menu3.jpg)";
 images[8] = "url(img/menu4.jpg)";
 images[9] = "url(img/menu5.jpg)";
 images[10] = "url(img/menu6.jpg)";
+images[11] = "url(img/oc5.jpg)";
+images[12] = "url(img/oc3.jpg)";
+images[13] = "url(img/wallpaper.jpg)";
 
 function changeImage() {
     var el = document.getElementById('body');
