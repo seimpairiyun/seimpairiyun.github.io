@@ -1,3 +1,4 @@
+//LOGO
 $(document).ready(function () {
   $('.logo').hide().fadeIn(18000);
 });
@@ -15,6 +16,7 @@ setTimeout(function () {
   loaded.play();
 }, 2500);
 
+//SOSMED BUTTON
 width = $(window).width();
 
 if (width <= 700) {
@@ -128,6 +130,7 @@ window.addEventListener('load', () => {
   });
 })
 
+//CONSOLE: Author, Location and IP
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -155,10 +158,10 @@ request.onreadystatechange = function () {
 request.send();
 
 
-//changing image automatically
+//BACKGROUND
 var i = 0;
 var images = []; //array
-var time = 10000;
+var time = 7000;
 
 images[0] = "url(img/lombok_sand.jpg)";
 images[1] = "url(img/cover.jpg)";
@@ -188,32 +191,13 @@ function changeImage() {
     i = 0;
   }
 
-  //$("body").fadeOut("slow", function () {
-    //$(this).css("background-image", images[i]);
-    //$(this).fadeIn("slow");
-    //$(this).hide().fadeIn(18000);
-  //});
+  /*   $("#background_cycler").fadeOut(1500, function () {
+      $(this).css("background-image", images[i]);
+      $(this).fadeIn(1500);
+      $(this).hide().fadeIn(1500);
+    }); */
 
   setTimeout('changeImage()', time);
 }
 
 window.onload = changeImage;
-
-/*
-function cycleImages() {
-  var $active = $('#background_cycler .active');
-  var $next = ($('#background_cycler .active').next().length > 0) ? $('#background_cycler .active').next() : $('#background_cycler img:first');
-  $next.css('z-index', 2);//move the next image up the pile
-  $active.fadeOut(1500, function () {//fade out the top image
-    $active.css('z-index', 1).show().removeClass('active');//reset the z-index and unhide the image
-    $next.css('z-index', 3).addClass('active');//make the next image the top one
-  });
-}
-
-$(window).load(function () {
-  $('#background_cycler').fadeIn(1500);//fade the background back in once all the images are loaded
-  // run every 7s
-  setInterval('cycleImages()', 7000);
-})
-
-*/
