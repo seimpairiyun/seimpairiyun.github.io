@@ -174,13 +174,13 @@ images[7] = "url(img/menu3.jpg)";
 images[8] = "url(img/menu4.jpg)";
 images[9] = "url(img/menu5.jpg)";
 images[10] = "url(img/menu6.jpg)";
-images[8] = "url(img/menu7.jpg)";
-images[9] = "url(img/menu8.jpg)";
-images[10] = "url(img/menu9.jpg)";
-images[10] = "url(img/menu10.jpg)";
-images[11] = "url(img/oc5.jpg)";
-images[12] = "url(img/oc3.jpg)";
-images[13] = "url(img/wallpaper.jpg)";
+images[11] = "url(img/menu7.jpg)";
+images[12] = "url(img/menu8.jpg)";
+images[13] = "url(img/menu9.jpg)";
+images[14] = "url(img/menu10.jpg)";
+images[15] = "url(img/oc5.jpg)";
+images[16] = "url(img/oc3.jpg)";
+images[17] = "url(img/wallpaper.jpg)";
 
 function changeImage() {
   var el = document.getElementById('body');
