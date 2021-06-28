@@ -131,14 +131,14 @@ window.addEventListener('load', () => {
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
+  } else {
     console.log('Not Supported');
   }
 }
 
 function showPosition(position) {
   console.log('Created by Mhd. Afizha Aw');
-  console.log('Location: https://www.google.co.id/maps/place/'+position.coords.latitude+','+position.coords.longitude);
+  console.log('Location: https://www.google.co.id/maps/place/' + position.coords.latitude + ',' + position.coords.longitude);
 }
 
 getLocation();
@@ -148,11 +148,12 @@ request.open('GET', 'https://api.ipify.org?format=json'); //https://ifconfig.co/
 request.setRequestHeader('Accept', 'application/json');
 request.onreadystatechange = function () {
   if (this.readyState === 4) {
-  data = JSON.parse(this.responseText)
-	console.log('IP Public: '+data["ip"]);
+    data = JSON.parse(this.responseText)
+    console.log('IP Public: ' + data["ip"]);
   }
 };
 request.send();
+
 
 //changing image automatically
 var i = 0;
@@ -170,19 +171,49 @@ images[7] = "url(img/menu3.jpg)";
 images[8] = "url(img/menu4.jpg)";
 images[9] = "url(img/menu5.jpg)";
 images[10] = "url(img/menu6.jpg)";
+images[8] = "url(img/menu7.jpg)";
+images[9] = "url(img/menu8.jpg)";
+images[10] = "url(img/menu9.jpg)";
+images[10] = "url(img/menu10.jpg)";
 images[11] = "url(img/oc5.jpg)";
 images[12] = "url(img/oc3.jpg)";
 images[13] = "url(img/wallpaper.jpg)";
 
 function changeImage() {
-    var el = document.getElementById('body');
-    el.style.backgroundImage = images[i];
-    if (i < images.length - 1) {
-        i++;
-    } else {
-        i = 0;
-    }
-    setTimeout('changeImage()', time);
+  var el = document.getElementById('body');
+  el.style.backgroundImage = images[i];
+  if (i < images.length - 1) {
+    i++;
+  } else {
+    i = 0;
+  }
+
+  //$("body").fadeOut("slow", function () {
+    //$(this).css("background-image", images[i]);
+    //$(this).fadeIn("slow");
+    //$(this).hide().fadeIn(18000);
+  //});
+
+  setTimeout('changeImage()', time);
 }
 
 window.onload = changeImage;
+
+/*
+function cycleImages() {
+  var $active = $('#background_cycler .active');
+  var $next = ($('#background_cycler .active').next().length > 0) ? $('#background_cycler .active').next() : $('#background_cycler img:first');
+  $next.css('z-index', 2);//move the next image up the pile
+  $active.fadeOut(1500, function () {//fade out the top image
+    $active.css('z-index', 1).show().removeClass('active');//reset the z-index and unhide the image
+    $next.css('z-index', 3).addClass('active');//make the next image the top one
+  });
+}
+
+$(window).load(function () {
+  $('#background_cycler').fadeIn(1500);//fade the background back in once all the images are loaded
+  // run every 7s
+  setInterval('cycleImages()', 7000);
+})
+
+*/
