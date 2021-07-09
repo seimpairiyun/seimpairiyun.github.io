@@ -16,6 +16,26 @@ setTimeout(function () {
   loaded.play();
 }, 2500);
 
+//TABEL
+$(document).ready(function () {
+  $('#buglist').DataTable({
+    language: {
+      searchPlaceholder: "Cari.."
+    },
+    "oLanguage": {
+      "sSearch": ""
+    },
+    "paging": false,
+    "info": false,
+    "dom": '<<"filter__css"f>rt',
+    "ordering": false,
+    "scrollY": 400,
+    "scrollX": true
+  });
+});
+//TABEL.SEARCH
+$('.dataTables_filter input[type="search"]').attr('placeholder', 'ss').css({});
+
 //SOSMED BUTTON
 width = $(window).width();
 

@@ -353,6 +353,84 @@ span {
     background-color: #1980BF;
 }
 
+.filter__css {
+    float         : none;
+    text-align    : center;
+    padding-bottom: 20px;
+}
+
+.modal {
+    position           : relative;
+    display            : block;
+    width              : 100%;
+    max-width          : 600px;
+    margin             : 0 auto;
+    margin-top         : 20px;
+    margin-bottom      : 20px;
+    border-radius      : 4px;
+    overflow           : hidden;
+    padding-bottom     : 20px;
+    background-color   : #fff;
+    -ms-flex-item-align: center;
+    align-self         : center;
+    box-shadow         : 0 12px 25px 0 rgba(199, 175, 189, .25);
+    transition         : opacity 250ms 250ms ease, transform 300ms 250ms ease;
+}
+
+.modal-window {
+    position          : fixed;
+    background-color  : rgba(0, 0, 0, 0.75);
+    max-width         : 100%;
+    top               : 0;
+    right             : 0;
+    bottom            : 0;
+    left              : 0;
+    z-index           : 999;
+    opacity           : 0;
+    pointer-events    : none;
+    -webkit-transition: all 0.3s;
+    -moz-transition   : all 0.3s;
+    transition        : all 0.3s;
+}
+
+.modal-window:target {
+    opacity       : 1;
+    pointer-events: auto;
+}
+
+.modal-window>div {
+    width   : 550px;
+    position: relative;
+    margin  : 8% auto;
+    padding : 1rem 0rem 0rem 0rem;
+    color   : #444;
+}
+
+.modal-window header {
+    font-weight: bold;
+}
+
+.modal-close {
+    color          : #aaa;
+    line-height    : 50px;
+    font-size      : 30px;
+    position       : absolute;
+    right          : -17px;
+    text-align     : center;
+    top            : -6px;
+    width          : 70px;
+    text-decoration: none;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.modal-window h1 {
+    font-size: 150%;
+    margin   : 0 0 15px;
+}
+
 @keyframes bounce {
     0% {
         transform: translateX(0);
@@ -398,6 +476,10 @@ span {
     .close {
         max-width: 100%;
     }
+
+    .modal-window>div {
+        width: 310px;
+    }
 }
 
 @media screen and (max-width: 1030px) {
@@ -408,58 +490,8 @@ span {
     .text {
         font-size: 18px;
     }
-}
 
-.modal-window {
-    position          : fixed;
-    background-color  : rgba(0, 0, 0, 0.75);
-    max-width         : 100%;
-    top               : 0;
-    right             : 0;
-    bottom            : 0;
-    left              : 0;
-    z-index           : 999;
-    opacity           : 0;
-    pointer-events    : none;
-    -webkit-transition: all 0.3s;
-    -moz-transition   : all 0.3s;
-    transition        : all 0.3s;
-}
-
-.modal-window:target {
-    opacity       : 1;
-    pointer-events: auto;
-}
-
-.modal-window>div {
-    width   : 350px;
-    position: relative;
-    margin  : 8% auto;
-    padding : 0rem;
-    color   : #444;
-}
-
-.modal-window header {
-    font-weight: bold;
-}
-
-.modal-close {
-    color          : #aaa;
-    line-height    : 50px;
-    font-size      : 30px;
-    position       : absolute;
-    right          : -17px;
-    text-align     : center;
-    top            : -6px;
-    width          : 70px;
-    text-decoration: none;
-}
-
-.modal-close:hover {
-    color: #000;
-}
-
-.modal-window h1 {
-    font-size: 150%;
-    margin   : 0 0 15px;
+    .modal-window>div {
+        width: 310px;
+    }
 }

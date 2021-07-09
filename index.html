@@ -16,6 +16,7 @@
     </span>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css'>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -61,7 +62,6 @@
                         <img src="img/logo2.png" title="Learn new language.."
                             style="position: relative; width: 15%; bottom: -24px;"> &bull;
 
-                        <img src="img/Git.svg" style="position: relative; width: 6%; bottom: -8px;"> &bull;
                         <img src="img/Qt.svg" style="position: relative; width: 8%; bottom: -8px;"> &bull;
                         <img src="img/Python.svg" style="position: relative; width: 6%; bottom: -8px;"> &bull;
                         <img src="img/JS.svg" style="position: relative; width: 6%; bottom: -8px;"> &bull;
@@ -83,9 +83,8 @@
             <img class="img-rounded icon-circle-arrow-left" src="img/logo2.png" width="60">
         </i>
 
-        <a hidden class="social-point" href="https://www.linkedin.com/in/seimpairiyun/" target="_blank" title="LinkedIn">
-<!--             <i class="fa fa-user-secret" style="color: black;"></i>
- -->            <i class="fa fa-linkedin-square" style="color: black;"></i>
+        <a hidden class="social-point" href="#bug" title="Lihat Bug Temuan Saya">
+            <i class="fa fa-bug" style="color: black;"></i>
         </a>
         <a hidden class="social-point" href="https://instagram.com/seimpairiyun" target="_blank" title="Instagram">
             <i class="fa fa-instagram" id="insta"></i>
@@ -101,19 +100,91 @@
         </a>
     </div>
 
-    <div id="aboutme" class="modal-window">
-        <div>
+    <div id="bug" class="modal-window">
+        <div class="modal">
             <a href="" title="Close" class="modal-close">
                 <i class="fa fa-remove"></i>
             </a>
             <div>
-                <img src="img/me.png" style="max-width: 100%;">
+                <table id="buglist" style="margin: auto;" class="display cell-border">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th align="left">WEB APPS</th>
+                            <th align="left" width=200px>NAMA BUG</th>
+                            <th align="left" width=100px>PERIODE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>sikka-djp</td>
+                            <td>Reflected XSS</td>
+                            <td>2020</td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>quran.sadar.web.id</td>
+                            <td>SQL Injection</td>
+                            <td>September 2020</td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>portal.sadar.web.id</td>
+                            <td>Reflected XSS</td>
+                            <td>September 2020</td>
+                        </tr>
+                        <tr>
+                            <td>4.</td>
+                            <td>portal.sadar.web.id</td>
+                            <td>SQL Injection</td>
+                            <td>Oktober 2020</td>
+                        </tr>
+                        <tr>
+                            <td>5.</td>
+                            <td>portal.sadar.web.id</td>
+                            <td>Business Logic Error + IDOR</td>
+                            <td>April 2021</td>
+                        </tr>
+                        <tr>
+                            <td>6.</td>
+                            <td>sidjp</td>
+                            <td>Reflected XSS</td>
+                            <td>April 2021</td>
+                        </tr>
+                        <tr>
+                            <td>7.</td>
+                            <td>lasisonline</td>
+                            <td>SQL Injection</td>
+                            <td>Mei 2021</td>
+                        </tr>
+                        <tr>
+                            <td>8. </td>
+                            <td>lasisonline</td>
+                            <td>Stored XSS</td>
+                            <td>Juni 2021</td>
+                        </tr>
+                        <tr>
+                            <td>9. </td>
+                            <td>pedulilindungi.id</td>
+                            <td>Business Logic Error + IDOR</td>
+                            <td>Juni 2021</td>
+                        </tr>
+                        <tr>
+                            <td>10. </td>
+                            <td>indopremier.com</td>
+                            <td>Reflected XSS</td>
+                            <td>Juli 2021</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.0/anime.js'></script>
+    <script src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js'></script>
     <script src="script.js"></script>
 
 </body>
