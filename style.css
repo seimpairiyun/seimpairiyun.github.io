@@ -478,7 +478,8 @@ span {
     }
 
     .modal-window>div {
-        width: 310px;
+        width: 350px;
+        margin  : 15% auto;
     }
 }
 
@@ -492,6 +493,7 @@ span {
     }
 
     .modal-window>div {
-        width: 310px;
+        width: 350px;
+        margin  : 15% auto;
     }
 }
