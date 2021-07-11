@@ -188,6 +188,20 @@ body {
     line-height: 45px;
 }
 
+.linkaninki {
+    font-size        : 3em;
+    text-shadow      : 0 0 5px rgba(0, 0, 0, 0.5);
+    text-align       : center;
+    letter-spacing   : -18px;
+    color            : transparent;
+    top              : 35%;
+    margin           : 80px -170px;
+    position         : absolute;
+    -webkit-animation: horror-animation 5s infinite;
+    -moz-animation   : horror-animation 5s infinite;
+    -o-animation     : horror-animation 5s infinite;
+    animation        : horror-animation 5s infinite;
+}
 
 /* MAGIC BUTTON */
 #magic {
@@ -428,20 +442,24 @@ body {
     margin   : 0 0 15px;
 }
 
-@keyframes bounce {
-    0% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(3px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
+.bug_title {
+    position: relative;
+    width   : 100%;
 }
 
+.bug_title p {
+    font-size              : 10px;
+    line-height            : 10px;
+    background             : url(https://seimpairiyun.github.io/img/logofull.png);
+    background-size        : 100%;
+    background-position    : center;
+    background-repeat      : no-repeat;
+    background-clip        : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+/* SCREEN CONTROL */
 @media (max-width: 700px) {
     .loader {
         display: none;
@@ -478,6 +496,10 @@ body {
         width : 350px;
         margin: 25% auto;
     }
+
+    .bug_title p {
+        margin: -40px;
+    }
 }
 
 @media screen and (max-width: 1030px) {
@@ -493,40 +515,26 @@ body {
         width : 350px;
         margin: 25% auto;
     }
+
+    .bug_title p {
+        margin: -40px;
+    }
 }
 
-/* Develepment */
 
-.bug_title {
-    position: relative;
-    width   : 100%;
-}
+/* ----- KEYFRAMES ------ */
+@keyframes bounce {
+    0% {
+        transform: translateX(0);
+    }
 
-.bug_title p {
-    font-size              : 10px;
-    line-height            : 10px;
-    background             : url(https://seimpairiyun.github.io/img/logofull.png);
-    background-size        : 100%;
-    background-position    : bottom;
-    background-repeat      : no-repeat;
-    background-clip        : text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: rgba(255, 255, 255, 0);
-}
+    50% {
+        transform: translateX(3px);
+    }
 
-.linkaninki {
-    font-size        : 3em;
-    text-shadow      : 0 0 5px rgba(0, 0, 0, 0.5);
-    text-align       : center;
-    letter-spacing   : -18px;
-    color            : transparent;
-    top              : 35%;
-    margin           : 80px -170px;
-    position         : absolute;
-    -webkit-animation: horror-animation 5s infinite;
-    -moz-animation   : horror-animation 5s infinite;
-    -o-animation     : horror-animation 5s infinite;
-    animation        : horror-animation 5s infinite;
+    100% {
+        transform: translateX(0);
+    }
 }
 
 @-webkit-keyframes horror-animation {
