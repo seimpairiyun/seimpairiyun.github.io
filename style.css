@@ -15,6 +15,7 @@ body {
     overflow             : hidden;
 }
 
+/* SEIMPAIRIYUN LOGO */
 .logo {
     position : absolute;
     top      : 20px;
@@ -22,6 +23,7 @@ body {
     width    : 30%;
 }
 
+/* LOADING */
 .loader {
     position       : relative;
     display        : flex;
@@ -53,7 +55,8 @@ body {
     }
 }
 
-.container {
+/* HIDDEN NAME */
+.name-container {
     position       : relative;
     width          : 100%;
     display        : flex;
@@ -65,7 +68,7 @@ body {
     color          : rgb(0, 0, 0, 0.4);
 }
 
-.container>* {
+.name-container>* {
     margin: 5px;
 }
 
@@ -73,8 +76,16 @@ body {
     display: flex;
 }
 
-.left,
-.right {
+.name-span {
+    position: absolute;
+}
+
+.name-align {
+    left: 30px;
+}
+
+.name-left,
+.name-right {
     z-index    : 10;
     position   : relative;
     width      : 30px;
@@ -87,25 +98,30 @@ body {
     transition : width 0.4s 0.1s;
 }
 
-.right:hover,
-.left:hover {
+.name-right:hover,
+.name-left:hover {
     transition: width 0.4s 0.1s;
 }
 
-.left:hover {
+.name-left:hover {
     width: 140px;
 }
 
-.right:hover {
+.name-right:hover {
     width: 110px;
 }
 
-span {
-    position: absolute;
+/* LEFT INFO */
+.intro-container {
+    max-width      : 100%;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
 }
 
-#name {
-    left: 30px;
+.intro-container>* {
+    margin: 10px;
 }
 
 .intro {
@@ -123,19 +139,15 @@ span {
     font-family    : 'Source Sans Pro', sans-serif;
 }
 
-.wrapper {
-    max-width      : 100%;
-    display        : flex;
-    flex-direction : column;
-    justify-content: center;
-    align-items    : center;
+.intro-arrow {
+    display    : flex;
+    align-items: center;
+    height     : 40px;
+    animation  : 0.5s bounce ease infinite;
+    cursor     : pointer;
 }
 
-.wrapper>* {
-    margin: 10px;
-}
-
-.close {
+.intro-close {
     display        : flex;
     justify-content: center;
     width          : 100%;
@@ -146,7 +158,11 @@ span {
     top            : 45px;
 }
 
-.text {
+.intro-close:hover {
+    color: red;
+}
+
+.intro-text {
     display        : flex;
     flex-direction : column;
     justify-content: center;
@@ -157,13 +173,13 @@ span {
     font-weight    : 200;
 }
 
-.text a {
+.intro-text a {
     position       : relative;
     color          : rgb(255, 255, 255);
     text-decoration: none;
 }
 
-.text>* {
+.intro-text>* {
     margin: 10px 20px 0 20px;
 }
 
@@ -172,46 +188,24 @@ span {
     line-height: 45px;
 }
 
-#social {
+
+/* MAGIC BUTTON */
+#magic {
     font-size: 29px;
 }
 
-#social>* {
+#magic>* {
     margin: 5px;
 }
 
-#work {
-    font-size: 20px;
-    margin   : 40px 0;
-}
-
-#work>* {
-    margin: 5px;
-}
-
-.out {
-    transition: 1s all ease;
-    transform : translateX(450px);
-}
-
-.arrow {
-    display    : flex;
-    align-items: center;
-    height     : 40px;
-    animation  : 0.5s bounce ease infinite;
-    cursor     : pointer;
-}
-
-#insta {
+.insta {
     background             : radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-    -webkit-background-clip: text;
-    /* Also define standard property for compatibility */
     background-clip        : text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size              : 25px;
 }
 
-.social-button {
+.magic-button {
     transition      : all 0.4s;
     position        : fixed;
     left            : 25px;
@@ -230,14 +224,14 @@ span {
     z-index         : 1000;
 }
 
-.social-button-open {
+.magic-button-open {
     transition-delay: 0s;
     bottom          : 110px;
     background-color: black;
     box-shadow      : 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
 }
 
-.social-button .social-point {
+.magic-button .magic-point {
     transition   : all 0.4s;
     opacity      : 0;
     width        : 0px;
@@ -252,27 +246,29 @@ span {
     visibility   : hidden;
 }
 
-.social-button .social-point:hover {
+.magic-button .magic-point:hover {
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
 }
 
-.social-button .social-point:nth-child(2) {
+.magic-button .magic-point:nth-child(2) {
     transition-delay: 0.3s;
     position        : absolute;
     left            : 50px;
     bottom          : 50px;
+    color           : black;
     background-color: white;
 }
 
-.social-button .social-point:nth-child(3) {
+.magic-button .magic-point:nth-child(3) {
     transition-delay: 0.4s;
     position        : absolute;
     left            : 50px;
     bottom          : 50px;
+    color           : black;
     background-color: white;
 }
 
-.social-button .social-point:nth-child(4) {
+.magic-button .magic-point:nth-child(4) {
     transition-delay: 0.5s;
     position        : absolute;
     left            : 50px;
@@ -280,7 +276,7 @@ span {
     background-color: black;
 }
 
-.social-button .social-point:nth-child(5) {
+.magic-button .magic-point:nth-child(5) {
     transition-delay: 0.6s;
     position        : absolute;
     left            : 50px;
@@ -288,7 +284,7 @@ span {
     background-color: #1da1f2;
 }
 
-.social-button .social-point:nth-child(6) {
+.magic-button .magic-point:nth-child(6) {
     transition-delay: 0.7s;
     position        : absolute;
     left            : 50px;
@@ -296,59 +292,59 @@ span {
     background-color: #1da1f2;
 }
 
-.social-button-open .social-point-open {
+.magic-button-open .magic-point-open {
     opacity   : 1;
     width     : 50px;
     height    : 50px;
     visibility: visible;
 }
 
-.social-button-open .social-point-open:nth-child(2) {
+.magic-button-open .magic-point-open:nth-child(2) {
     left  : 5px;
     bottom: 80px;
 }
 
-.social-button-open .social-point-open:nth-child(2):hover {
+.magic-button-open .magic-point-open:nth-child(2):hover {
     transition-delay: 0s;
     background-color: gainsboro;
 }
 
-.social-button-open .social-point-open:nth-child(3) {
+.magic-button-open .magic-point-open:nth-child(3) {
     left  : 65px;
     bottom: 65px;
 }
 
-.social-button-open .social-point-open:nth-child(3):hover {
+.magic-button-open .magic-point-open:nth-child(3):hover {
     transition-delay: 0s;
     background-color: gainsboro;
 }
 
-.social-button-open .social-point-open:nth-child(4) {
+.magic-button-open .magic-point-open:nth-child(4) {
     left  : 80px;
     bottom: 5px;
 }
 
-.social-button-open .social-point-open:nth-child(4):hover {
+.magic-button-open .magic-point-open:nth-child(4):hover {
     transition-delay: 0s;
     background-color: rgba(0, 0, 0, 0.75);
 }
 
-.social-button-open .social-point-open:nth-child(5) {
+.magic-button-open .magic-point-open:nth-child(5) {
     left  : 65px;
     bottom: -65px;
 }
 
-.social-button-open .social-point-open:nth-child(5):hover {
+.magic-button-open .magic-point-open:nth-child(5):hover {
     transition-delay: 0s;
     background-color: #1980BF;
 }
 
-.social-button-open .social-point-open:nth-child(6) {
+.magic-button-open .magic-point-open:nth-child(6) {
     left  : 5px;
     bottom: -80px;
 }
 
-.social-button-open .social-point-open:nth-child(6):hover {
+.magic-button-open .magic-point-open:nth-child(6):hover {
     transition-delay: 0s;
     background-color: #1980BF;
 }
@@ -370,7 +366,7 @@ span {
     border-radius      : 4px;
     overflow           : hidden;
     padding-bottom     : 20px;
-    background-color   :black;
+    background-color   : black;
     -ms-flex-item-align: center;
     align-self         : center;
     box-shadow         : 0 12px 25px 0 rgba(199, 175, 189, .25);
@@ -420,10 +416,11 @@ span {
     top            : -6px;
     width          : 70px;
     text-decoration: none;
+    z-index        : 1;
 }
 
 .modal-close:hover {
-    color: #000;
+    color: red;
 }
 
 .modal-window h1 {
@@ -450,7 +447,7 @@ span {
         display: none;
     }
 
-    .container {
+    .name-container {
         width: auto;
     }
 
@@ -458,11 +455,11 @@ span {
         width: 100%;
     }
 
-    .wrapper>* {
+    .intro-container>* {
         margin: 0;
     }
 
-    .text {
+    .intro-text {
         width      : 100%;
         display    : block;
         text-align : center;
@@ -473,7 +470,7 @@ span {
         font-size  : 20px;
     }
 
-    .close {
+    .intro-close {
         max-width: 100%;
     }
 
@@ -488,7 +485,7 @@ span {
         width: 85%;
     }
 
-    .text {
+    .intro-text {
         font-size: 18px;
     }
 
@@ -500,16 +497,19 @@ span {
 
 /* Develepment */
 
-.bug_title{
-    position: relative; 
-    width: 100%; 
+.bug_title {
+    position: relative;
+    width   : 100%;
 }
-.bug_title p{
-    font-size: 10px;
-    line-height: 10px;
-    background: url(https://seimpairiyun.github.io/img/logofull.png);
-    background-size: 100%;
-    background-position: bottom;
+
+.bug_title p {
+    font-size              : 10px;
+    line-height            : 10px;
+    background             : url(https://seimpairiyun.github.io/img/logofull.png);
+    background-size        : 100%;
+    background-position    : bottom;
+    background-repeat      : no-repeat;
+    background-clip        : text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
 }

@@ -16,7 +16,7 @@ setTimeout(function () {
   loaded.play();
 }, 2500);
 
-//TABEL
+//BUG
 $(document).ready(function () {
   $('#buglist').DataTable({
     language: {
@@ -29,43 +29,41 @@ $(document).ready(function () {
     "info": false,
     "dom": '<<"filter__css"f>rt',
     "ordering": false,
-    "scrollY": 400,
+    "scrollY": 200,
     "scrollX": true
   });
 });
-//TABEL.SEARCH
-$('.dataTables_filter input[type="search"]').attr('placeholder', 'ss').css({});
 
-//SOSMED BUTTON
+//INTRO
 width = $(window).width();
 
 if (width <= 700) {
   $(".name").click(function () {
     $(".intro").css("right", "0");
-    // $(".text").css("transform", "translateX(20px)")
-    $(".wrapper").css("z-index", "20");
+    $(".intro-container").css("z-index", "20");
   });
 
-  $(".close").click(function () {
+  $(".intro-close").click(function () {
     $(".intro").css("right", "-1000px");
   });
 
 }
 
-$("#arrow").click(function () {
+$("#intro-arrow").click(function () {
   open.play();
   about.play();
 
   if (width <= 700) {
-    $(".wrapper").css("z-index", "20");
+    $(".intro-container").css("z-index", "20");
     $(".intro").css("transform", "translateX:100px")
   }
 });
 
-$(".close").click(function () {
+$(".intro-close").click(function () {
   close.play();
 })
 
+//BRAND ANIMATION
 var loaded = anime({
   targets: '.name',
   scale: [{
@@ -97,7 +95,7 @@ var close = anime({
 });
 
 var about = anime({
-  targets: '.text',
+  targets: '.intro-text',
   translateX: [{
     value: -200,
     duration: 100,
@@ -110,40 +108,41 @@ var about = anime({
   delay: 200
 });
 
-var social_open = false
+//MAGIC BUTTON
+var magic_open = false
 window.addEventListener('load', () => {
-  const menu = document.querySelector('.social-button');
+  const menu = document.querySelector('.magic-button');
 
   menu.addEventListener('click', () => {
-    const icon = document.querySelector('#social-icon');
-    if (social_open == true) {
-      social_open = false;
+    const icon = document.querySelector('#magic-icon');
+    if (magic_open == true) {
+      magic_open = false;
 
       menu.title = menu.title.replace(/Tutup/, "Lihat")
-      menu.classList.remove('social-button-open')
+      menu.classList.remove('magic-button-open')
       icon.classList.remove('fa-remove')
       //icon.classList.add('fa-tree')
 
-      var menu_point = document.querySelectorAll(".social-point");
+      var menu_point = document.querySelectorAll(".magic-point");
       for (let i = 0; i < menu_point.length; i++) {
-        menu_point[i].classList.remove('social-point-open');
+        menu_point[i].classList.remove('magic-point-open');
         setTimeout(function () {
           menu_point[i].hidden = true;
         }, 800)
       }
     } else {
-      social_open = true;
+      magic_open = true;
 
       menu.title = menu.title.replace(/Lihat/, "Tutup")
-      menu.classList.add('social-button-open');
+      menu.classList.add('magic-button-open');
       icon.classList.remove('fa-thumbs-up')
       //icon.classList.add('fa-times')
 
-      var menu_point = document.querySelectorAll(".social-point");
+      var menu_point = document.querySelectorAll(".magic-point");
       for (let i = 0; i < menu_point.length; i++) {
         menu_point[i].hidden = false;
         setTimeout(function () {
-          menu_point[i].classList.add('social-point-open');
+          menu_point[i].classList.add('magic-point-open');
         }, 200)
       }
     }
