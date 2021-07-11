@@ -370,7 +370,7 @@ span {
     border-radius      : 4px;
     overflow           : hidden;
     padding-bottom     : 20px;
-    background-color   : #fff;
+    background-color   :black;
     -ms-flex-item-align: center;
     align-self         : center;
     box-shadow         : 0 12px 25px 0 rgba(199, 175, 189, .25);
@@ -500,7 +500,21 @@ span {
 
 /* Develepment */
 
-.name_style {
+.bug_title{
+    position: relative; 
+    width: 100%; 
+}
+.bug_title p{
+    font-size: 10px;
+    line-height: 10px;
+    background: url(https://seimpairiyun.github.io/img/logofull.png);
+    background-size: 100%;
+    background-position: bottom;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+.linkaninki {
     font-size        : 3em;
     text-shadow      : 0 0 5px rgba(0, 0, 0, 0.5);
     text-align       : center;
