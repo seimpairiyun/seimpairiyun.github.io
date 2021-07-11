@@ -20,7 +20,7 @@ setTimeout(function () {
 $(document).ready(function () {
   $('#buglist').DataTable({
     language: {
-      searchPlaceholder: "Cari.."
+      searchPlaceholder: " Cari.."
     },
     "oLanguage": {
       "sSearch": ""
