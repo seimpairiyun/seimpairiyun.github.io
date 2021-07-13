@@ -8,8 +8,8 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 ```
 - https://seimpairiyun.github.io/ourwedding
 ```
-### History
+### Alias Name
 
-* [Linka Ninki](https://linkaninki.github.io) - childhood 
-* [Enghoha](https://enghoha.github.io) - teen
+* [Linka Ninki](https://seimpairiyun.github.io/linkaninki) - childhood 
+* [Enghoha](https://seimpairiyun.github.io/enghoha) - teen
 * [Seimpairiyun](https://seimpairiyun.github.io) - now

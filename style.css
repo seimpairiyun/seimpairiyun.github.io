@@ -72,6 +72,26 @@ body {
     margin: 5px;
 }
 
+.name-effect {
+    color                  : transparent;
+    background-image       : url(img/blue.gif);
+    background-size        : cover;
+    background-clip        : text;
+    -moz-background-clip   : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+/* .name-effect2 {
+    color                  : transparent;
+    background-image       : url(https://media.tenor.com/images/acf8d3a7f8ad8a8a37fa8a0dd6452183/tenor.gif);
+    background-size        : cover;
+    background-clip        : text;
+    -moz-background-clip   : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+} */
+
 .name {
     display: flex;
 }
@@ -369,7 +389,7 @@ body {
     background-color   : black;
     -ms-flex-item-align: center;
     align-self         : center;
-    box-shadow         : 0 12px 25px 0 rgba(199, 175, 189, .25);
+    box-shadow         : 0 0px 25px 0 rgba(199, 175, 189, .40);
     transition         : opacity 250ms 250ms ease, transform 300ms 250ms ease;
 }
 
