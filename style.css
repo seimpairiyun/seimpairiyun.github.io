@@ -1,0 +1,1434 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900");
+
+* {
+    margin : 0;
+    padding: 0;
+}
+
+
+body {
+    background           : black;
+    background-size      : contain;
+    background-position  : center center;
+    background-repeat    : repeat;
+    background-attachment: fixed;
+    overflow             : hidden;
+}
+
+/* SEIMPAIRIYUN LOGO */
+.logo {
+    position : absolute;
+    top      : 20px;
+    max-width: 100%;
+    width    : 30%;
+}
+
+/* LOADING */
+.loader {
+    position       : relative;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 500px;
+    overflow       : hidden;
+}
+
+.loader:before {
+    position     : absolute;
+    top          : 50%;
+    content      : '';
+    width        : 30px;
+    height       : 30px;
+    border       : 3px solid;
+    border-color : transparent transparent rgb(0, 0, 0);
+    border-radius: 100%;
+    animation    : 1s spin ease infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+/* HIDDEN NAME */
+.name-container {
+    position       : relative;
+    width          : 100%;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 100vh;
+    overflow       : hidden;
+    font-size      : 40px;
+    color          : rgb(0, 0, 0, 0.4);
+}
+
+.name-container>* {
+    margin: 5px;
+}
+
+.name-effect {
+    color                  : transparent;
+    background-image       : url(img/blue.gif);
+    background-size        : cover;
+    background-clip        : text;
+    -moz-background-clip   : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+/* .name-effect2 {
+    color                  : transparent;
+    background-image       : url(https://media.tenor.com/images/acf8d3a7f8ad8a8a37fa8a0dd6452183/tenor.gif);
+    background-size        : cover;
+    background-clip        : text;
+    -moz-background-clip   : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+} */
+
+.name {
+    display: flex;
+}
+
+.name-span {
+    position: absolute;
+}
+
+.name-align {
+    left: 30px;
+}
+
+.name-left,
+.name-right {
+    z-index    : 10;
+    position   : relative;
+    width      : 30px;
+    height     : 60px;
+    overflow   : hidden;
+    color      : rgb(0, 0, 0);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
+    font-size  : 45px;
+    transition : width 0.4s 0.1s;
+}
+
+.name-right:hover,
+.name-left:hover {
+    transition: width 0.4s 0.1s;
+}
+
+.name-left:hover {
+    width: 140px;
+}
+
+.name-right:hover {
+    width: 110px;
+}
+
+/* LEFT INFO */
+.intro-container {
+    max-width      : 100%;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+}
+
+.intro-container>* {
+    margin: 10px;
+}
+
+.intro {
+    overflow       : hidden;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    position       : absolute;
+    background     : rgb(0, 0, 0);
+    width          : 30%;
+    right          : -1000px;
+    margin         : 0;
+    height         : 100vh;
+    color          : rgb(255, 255, 255);
+    font-family    : 'Source Sans Pro', sans-serif;
+}
+
+.intro-arrow {
+    display    : flex;
+    align-items: center;
+    height     : 40px;
+    animation  : 0.5s bounce ease infinite;
+    cursor     : pointer;
+}
+
+.intro-close {
+    display        : flex;
+    justify-content: center;
+    width          : 100%;
+    font-size      : 40px;
+    cursor         : pointer;
+    position       : absolute;
+    z-index        : 1;
+    top            : 45px;
+}
+
+.intro-close:hover {
+    color: red;
+}
+
+.intro-text {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+    width          : 100%;
+    font-size      : 24px;
+    transform      : translateX(20px);
+    font-weight    : 200;
+}
+
+.intro-text a {
+    position       : relative;
+    color          : rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.intro-text>* {
+    margin: 10px 20px 0 20px;
+}
+
+.about-me {
+    text-align : justify;
+    line-height: 45px;
+}
+
+
+/* MAGIC BUTTON */
+#magic {
+    font-size: 29px;
+}
+
+#magic>* {
+    margin: 5px;
+}
+
+.magic-button {
+    transition                    : all 0.4s;
+    position                      : fixed;
+    left                          : 25px;
+    bottom                        : 25px;
+    width                         : 60px;
+    height                        : 60px;
+    text-align                    : center;
+    line-height                   : 60px;
+    border-radius                 : 50%;
+    color                         : transparent;
+    /*     background-image       : url(img/blue.gif);
+    background-size               : cover; */
+    background-color              : black;
+    color                         : #fff;
+    font-size                     : 24px;
+    box-shadow                    : 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.22);
+    cursor                        : pointer;
+    transition-delay              : 1s;
+    z-index                       : 1000;
+}
+
+.magic-button-open {
+    transition-delay: 0s;
+    bottom          : 110px;
+    background-color: black;
+    box-shadow      : 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+.magic-button .magic-point {
+    transition   : all 0.4s;
+    opacity      : 0;
+    width        : 0px;
+    height       : 0px;
+    text-align   : center;
+    line-height  : 50px;
+    border-radius: 50%;
+    color        : #fff;
+    font-size    : 24px;
+    box-shadow   : 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.22);
+    cursor       : pointer;
+    visibility   : hidden;
+}
+
+.magic-button .magic-point:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+.magic-button .magic-point:nth-child(2) {
+    transition-delay: 0.3s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    color           : black;
+    background-color: white;
+}
+
+.magic-button .magic-point:nth-child(3) {
+    transition-delay: 0.4s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    color           : black;
+    background-color: white;
+}
+
+.magic-button .magic-point:nth-child(4) {
+    transition-delay: 0.5s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    color           : black;
+    background-color: white;
+}
+
+.magic-button .magic-point:nth-child(5) {
+    transition-delay: 0.6s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    color           : black;
+    background-color: white;
+}
+
+.magic-button .magic-point:nth-child(6) {
+    transition-delay: 0.7s;
+    position        : absolute;
+    left            : 50px;
+    bottom          : 50px;
+    color           : black;
+    background-color: white;
+}
+
+.magic-button-open .magic-point-open {
+    opacity   : 1;
+    width     : 50px;
+    height    : 50px;
+    visibility: visible;
+}
+
+.magic-button-open .magic-point-open:nth-child(2) {
+    left  : 5px;
+    bottom: 80px;
+}
+
+.magic-button-open .magic-point-open:nth-child(2):hover {
+    transition-delay: 0s;
+    color           : tomato;
+}
+
+.magic-button-open .magic-point-open:nth-child(3) {
+    left  : 65px;
+    bottom: 65px;
+}
+
+.magic-button-open .magic-point-open:nth-child(3):hover {
+    transition-delay: 0s;
+    color           : yellow;
+    background-color: black;
+}
+
+.magic-button-open .magic-point-open:nth-child(4) {
+    left  : 80px;
+    bottom: 5px;
+}
+
+.magic-button-open .magic-point-open:nth-child(4):hover {
+    transition-delay: 0s;
+    color           : red;
+    background-color: gainsboro;
+}
+
+.magic-button-open .magic-point-open:nth-child(5) {
+    left  : 65px;
+    bottom: -65px;
+}
+
+.magic-button-open .magic-point-open:nth-child(5):hover {
+    transition-delay          : 0s;
+    background                : radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    background-clip           : text;
+    /* -webkit-background-clip: text;
+    -webkit-text-fill-color   : transparent; */
+
+}
+
+.magic-button-open .magic-point-open:nth-child(6) {
+    left  : 5px;
+    bottom: -80px;
+}
+
+.magic-button-open .magic-point-open:nth-child(6):hover {
+    transition-delay: 0s;
+    color           : #1da1f2;
+}
+
+.filter__css {
+    float         : none;
+    text-align    : center;
+    padding-bottom: 20px;
+}
+
+/*MODAL TERMINAL */
+.terminal {
+    position           : relative;
+    display            : block;
+    max-width          : 700px;
+    overflow           : hidden;
+    padding            : 10px 20px 10px 10px;
+    -ms-flex-item-align: center;
+    align-self         : center;
+}
+
+.terminal-window {
+    position          : fixed;
+    max-width         : 100%;
+    top               : 0;
+    right             : 0;
+    bottom            : 0;
+    left              : 0;
+    z-index           : 999;
+    opacity           : 0;
+    pointer-events    : none;
+    -webkit-transition: all 0.3s;
+    -moz-transition   : all 0.3s;
+    transition        : all 0.3s;
+}
+
+.terminal-window:target {
+    opacity       : 1;
+    pointer-events: auto;
+}
+
+.terminal-window>div {
+    position: relative;
+    margin  : 8% auto;
+    padding : 1rem 0rem 0rem 0rem;
+    color   : #444;
+}
+
+.container {
+    height                : 100%;
+    overflow              : hidden;
+    justify-content       : center;
+    align-items           : center;
+    position              : relative;
+    display               : block;
+    /*     width          : 100%;*/
+    width                 : 90%;
+    max-width             : 700px;
+    margin                : 0 auto;
+    margin-top            : 90px;
+    margin-bottom         : 20px;
+}
+
+/* textarea,
+  input,
+  button {
+    outline: none;
+  } */
+
+.window-button,
+.window .buttons .maximize,
+.window .buttons .minimize,
+.window .buttons .close {
+    padding         : 0;
+    margin          : 0;
+    margin-right    : 4px;
+    width           : 12px;
+    height          : 12px;
+    background-color: gainsboro;
+    border          : 1px solid rgba(0, 0, 0, 0.2);
+    border-radius   : 6px;
+    color           : rgba(0, 0, 0, 0.5);
+}
+
+.handle {
+    border-top-left-radius : 5px;
+    border-top-right-radius: 5px;
+}
+
+.window {
+    animation: bounceIn 1s ease-in-out;
+    width    : 700px;
+}
+
+.window .handle {
+    height       : 22px;
+    background   : linear-gradient(0deg, #d8d8d8, #ececec);
+    border-top   : 1px solid white;
+    border-bottom: 1px solid #b3b3b3;
+    color        : rgba(0, 0, 0, 0.7);
+    font-family  : Helvetica, sans-serif;
+    font-size    : 13px;
+    line-height  : 22px;
+    text-align   : center;
+}
+
+.window .buttons {
+    position: absolute;
+    float   : left;
+    margin  : 0 8px;
+}
+
+.window .buttons .close {
+    background-color: #ff6159;
+}
+
+.window .buttons .minimize {
+    background-color: #ffbf2f;
+}
+
+.window .buttons .maximize {
+    background-color: #25cc3e;
+}
+
+.window .terminal {
+    background-color                 : black;
+    opacity                          : 0.7;
+    height                           : 250px;
+    color                            : white;
+    font-family                      : "Source Code Pro", monospace;
+    font-weight                      : 200;
+    font-size                        : 14px;
+    white-space                      : pre-wrap;
+    /*     white-space               : -moz-pre-wrap;
+    white-space                      : -pre-wrap;
+    white-space                      : -o-pre-wrap;
+ */
+    word-wrap                        : break-word;
+    border-bottom-left-radius        : 5px;
+    border-bottom-right-radius       : 5px;
+    overflow-y                       : auto;
+}
+
+.window .terminal::after {
+    content  : "|";
+    animation: blink 2s steps(1) infinite;
+}
+
+.cmd {
+    background-color: transparent;
+    border-color    : transparent;
+    outline         : none;
+    margin          : -5px;
+    width           : 0%;
+
+}
+
+.prompt {
+    color: #bde371;
+}
+
+.path {
+    color: #5ed7ff;
+}
+
+@keyframes blink {
+    50% {
+        color: transparent;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: translateY(-1000px);
+    }
+
+    60% {
+        transform: translateY(200px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/*MODAL BUG LIST */
+.modal {
+    position           : relative;
+    display            : block;
+    width              : 100%;
+    max-width          : 600px;
+    margin             : 0 auto;
+    margin-top         : 20px;
+    margin-bottom      : 20px;
+    border-radius      : 4px;
+    overflow           : hidden;
+    padding-bottom     : 20px;
+    background-color   : black;
+    -ms-flex-item-align: center;
+    align-self         : center;
+    box-shadow         : 0 0px 25px 0 rgba(199, 175, 189, .40);
+    transition         : opacity 250ms 250ms ease, transform 300ms 250ms ease;
+}
+
+.modal-window {
+    position          : fixed;
+    background-color  : rgba(0, 0, 0, 0.75);
+    max-width         : 100%;
+    top               : 0;
+    right             : 0;
+    bottom            : 0;
+    left              : 0;
+    z-index           : 999;
+    opacity           : 0;
+    pointer-events    : none;
+    -webkit-transition: all 0.3s;
+    -moz-transition   : all 0.3s;
+    transition        : all 0.3s;
+}
+
+.modal-window:target {
+    opacity       : 1;
+    pointer-events: auto;
+}
+
+.modal-window>div {
+    width     : 550px;
+    position  : relative;
+    margin    : 8% auto;
+    /*padding : 1rem 0rem 0rem 0rem; */
+    padding   : 0rem 1rem 0rem 1rem;
+    color     : #444;
+}
+
+.modal-window header {
+    font-weight: bold;
+}
+
+.modal-close {
+    color          : #aaa;
+    line-height    : 50px;
+    font-size      : 30px;
+    position       : absolute;
+    right          : -17px;
+    text-align     : center;
+    top            : -6px;
+    width          : 70px;
+    text-decoration: none;
+    z-index        : 1;
+}
+
+.modal-close:hover {
+    color: red;
+}
+
+.modal-window h1 {
+    font-size: 150%;
+    margin   : 0 0 15px;
+}
+
+.bug_title {
+    position: relative;
+    width   : 100%;
+}
+
+.bug_title p {
+    font-size              : 10px;
+    line-height            : 10px;
+    background             : url(https://seimpairiyun.github.io/img/logofull.png);
+    background-size        : 100%;
+    background-position    : center;
+    background-repeat      : no-repeat;
+    background-clip        : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .loader {
+        display: none;
+    }
+
+    .name-container {
+        width: auto;
+    }
+
+    .intro {
+        width: 100%;
+    }
+
+    .intro-container>* {
+        margin: 0;
+    }
+
+    .intro-text {
+        width      : 100%;
+        display    : block;
+        text-align : center;
+        z-index    : -1;
+        margin     : 0;
+        transform  : translateX(0);
+        font-weight: 400;
+        font-size  : 20px;
+    }
+
+    .intro-close {
+        max-width: 100%;
+    }
+
+    .modal-window>div {
+        width : 350px;
+        margin: 25% auto;
+    }
+
+    .filter__css {
+        position: absolute;
+        z-index : 1;
+        margin  : -60px 90px;
+    }
+
+    .bug_title p {
+        margin: -60px auto;
+    }
+
+    .terminal-window>div {
+        margin: 40% auto;
+    }
+
+    .window {
+        width : 100%;
+        margin: 0 auto;
+    }
+
+    .window .terminal::after {
+        content: "";
+    }
+
+    .cmd {
+        color: white;
+        width: 50%;
+    }
+}
+
+
+@media screen and (max-width: 1030px) {
+    .logo {
+        width: 85%;
+    }
+
+    .intro-text {
+        font-size: 18px;
+    }
+
+    .modal-window>div {
+        width : 350px;
+        margin: 25% auto;
+    }
+
+    .bug_title p {
+        margin: -60px auto;
+    }
+
+    .filter__css {
+        position: absolute;
+        z-index : 1;
+        margin  : -60px 90px;
+    }
+
+    .terminal-window>div {
+        margin: 40% auto;
+    }
+
+    .window {
+        width : 100%;
+        margin: 0 auto;
+    }
+
+    .window .terminal::after {
+        content: "";
+    }
+
+    .cmd {
+        color: white;
+        width: 50%;
+    }
+
+}
+
+/* Develepment */
+
+.linkaninki {
+    font-size        : 3em;
+    text-shadow      : 0 0 5px rgba(0, 0, 0, 0.5);
+    text-align       : center;
+    letter-spacing   : -18px;
+    color            : transparent;
+    top              : 35%;
+    margin           : 80px -170px;
+    position         : absolute;
+    -webkit-animation: horror-animation 5s infinite;
+    -moz-animation   : horror-animation 5s infinite;
+    -o-animation     : horror-animation 5s infinite;
+    animation        : horror-animation 5s infinite;
+}
+
+@-webkit-keyframes horror-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        left       : 51%;
+        top        : 36%;
+    }
+
+    5% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    10% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+        top        : 34%;
+    }
+
+    15% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    16% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    17% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    20% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 49%;
+    }
+
+    25% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 49%;
+    }
+
+    30% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        left       : 50%;
+    }
+
+    35% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    36% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    37% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    40% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+        left       : 51%;
+    }
+
+    45% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 51%;
+    }
+
+    50% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        left       : 51%;
+    }
+
+    55% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 50%;
+    }
+
+    56% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    57% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 52%;
+    }
+
+    60% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+
+    65% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    70% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+    }
+
+    75% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    76% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    77% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    80% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        left       : 49%;
+    }
+
+    85% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    86% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    87% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    90% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        left       : 51%;
+    }
+
+    95% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 51%;
+    }
+
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+}
+
+@-moz-keyframes horror-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        left       : 51%;
+        top        : 36%;
+    }
+
+    5% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    10% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+        top        : 34%;
+    }
+
+    15% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    16% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    17% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    20% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 49%;
+    }
+
+    25% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 49%;
+    }
+
+    30% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        left       : 50%;
+    }
+
+    35% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    36% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    37% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    40% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+        left       : 51%;
+    }
+
+    45% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 51%;
+    }
+
+    50% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        left       : 51%;
+    }
+
+    55% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 50%;
+    }
+
+    56% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    57% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 52%;
+    }
+
+    60% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+
+    65% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    70% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+    }
+
+    75% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    76% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    77% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    80% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        left       : 49%;
+    }
+
+    85% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    86% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    87% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    90% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        left       : 51%;
+    }
+
+    95% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 51%;
+    }
+
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+}
+
+@-o-keyframes horror-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        left       : 51%;
+        top        : 36%;
+    }
+
+    5% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    10% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+        top        : 34%;
+    }
+
+    15% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    16% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    17% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    20% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 49%;
+    }
+
+    25% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 49%;
+    }
+
+    30% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        left       : 50%;
+    }
+
+    35% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    36% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    37% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    40% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+        left       : 51%;
+    }
+
+    45% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 51%;
+    }
+
+    50% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        left       : 51%;
+    }
+
+    55% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 50%;
+    }
+
+    56% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    57% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 52%;
+    }
+
+    60% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+
+    65% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    70% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+    }
+
+    75% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    76% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    77% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    80% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        left       : 49%;
+    }
+
+    85% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    86% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    87% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    90% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        left       : 51%;
+    }
+
+    95% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 51%;
+    }
+
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+}
+
+@keyframes horror-animation {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        left       : 51%;
+        top        : 36%;
+    }
+
+    5% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    10% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+        top        : 34%;
+    }
+
+    15% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+        top        : 35%;
+    }
+
+    16% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    17% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    20% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 49%;
+    }
+
+    25% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 49%;
+    }
+
+    30% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        left       : 50%;
+    }
+
+    35% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    36% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    37% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 50%;
+    }
+
+    40% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+        left       : 51%;
+    }
+
+    45% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        left       : 51%;
+    }
+
+    50% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        left       : 51%;
+    }
+
+    55% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 50%;
+    }
+
+    56% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    57% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        left       : 52%;
+    }
+
+    60% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+
+    65% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 50%;
+    }
+
+    70% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        left       : 49%;
+    }
+
+    75% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    76% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    77% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        left       : 49%;
+    }
+
+    80% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        left       : 49%;
+    }
+
+    85% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    86% {
+        text-shadow: 0 0 5px #212121;
+        left       : 50%;
+    }
+
+    87% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        left       : 51%;
+    }
+
+    90% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        left       : 51%;
+    }
+
+    95% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        left       : 51%;
+    }
+
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        left       : 50%;
+    }
+}
