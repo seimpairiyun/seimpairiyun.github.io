@@ -49,6 +49,30 @@ function assignBingo(index) {
   return bingoVar;
 }
 
+//!
+// Score
+function Score(a, b, c, d, e) {
+  this.A = a;
+  this.B = b;
+  this.C = c;
+  this.D = d;
+  this.E = e;
+}
+
+let bingoScore = [
+  new Score(0, 0, 0, 0, 0),
+  new Score(0, 0, 0, 0, 0),
+  new Score(0, 0, 0, 0, 0),
+  new Score(0, 0, 0, 0, 0),
+  new Score(0, 0, 0, 0, 0),
+];
+
+//bingoScore[0]['A'] = '-'
+//bingoScore[1]['B'] = '-'
+
+console.table(bingoScore);
+//!
+
 function render(indexRow) {
   assignBingo(indexRow).forEach((e, i) => {
     let addColumn = document.createElement("td");
@@ -72,7 +96,8 @@ function generateBingo() {
   let bingoNumber = document.getElementsByTagName("td");
   for (let i = 0; i < bingoNumber.length; i++) {
     bingoNumber[i].innerText = bingoUniq[i];
-    bingoNumber[i].classList.add("n");
+    bingoNumber[i].classList.remove("bg-warning");
+    bingoNumber[i].classList.remove("fw-bold");
   }
 }
 
