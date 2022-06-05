@@ -54,6 +54,11 @@
 }
 
 /* Table */
-.td:visited {
-  background-color: aqua;
+tr:nth-of-type(even):hover td:nth-of-type(odd):hover,
+tr:nth-of-type(odd):hover td:nth-of-type(even):hover {
+  background-color: khaki;
+}
+tr:nth-of-type(even):hover td:nth-of-type(even):hover,
+tr:nth-of-type(odd):hover td:nth-of-type(odd):hover {
+  background-color: khaki;
 }
