@@ -45,32 +45,31 @@ function assignBingo(index) {
   let bingoUniq = [...new Set(bingo)];
   let bingoVar = bingoUniq.slice(idx[index].start, idx[index].end); //.join(' - ')
 
-  //console.log(bingoVar)
   return bingoVar;
 }
 
 //!
 // Score
-function Score(a, b, c, d, e) {
-  this.A = a;
-  this.B = b;
-  this.C = c;
-  this.D = d;
-  this.E = e;
-}
-
 let bingoScore = [
-  new Score(0, 0, 0, 0, 0),
-  new Score(0, 0, 0, 0, 0),
-  new Score(0, 0, 0, 0, 0),
-  new Score(0, 0, 0, 0, 0),
-  new Score(0, 0, 0, 0, 0),
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
 ];
 
-//bingoScore[0]['A'] = '-'
-//bingoScore[1]['B'] = '-'
+function Score() {
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      bingoScore[i][j] = assignBingo(i)[j];
+    }
+  }
 
-console.table(bingoScore);
+  console.table(bingoScore);
+  return bingoScore;
+}
+
+Score();
 //!
 
 function render(indexRow) {
@@ -99,6 +98,15 @@ function generateBingo() {
     bingoNumber[i].classList.remove("bg-warning");
     bingoNumber[i].classList.remove("fw-bold");
   }
+
+  /* for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      bingoScore[i][j] = bingoUniq[j];
+    }
+  }
+
+  console.log(bingoScore)
+  console.log(bingoUniq); */
 }
 
 // Render Bingo Number
