@@ -15,7 +15,7 @@ function getNum(e) {
 
 function assignBingo(index) {
   for (let i = 0; i < 120; i++) {
-    bingo.push(Math.ceil(Math.random() * 60));
+    bingo.push(Math.ceil(Math.random() * 100));
   }
 
   //[0, 5, 10, 15, 20, 25]
@@ -86,8 +86,8 @@ function render(indexRow) {
 // Generate New Bingo Number
 function generateBingo() {
   let newBingo = [];
-  for (let i = 0; i < 999; i++) {
-    newBingo.push(Math.ceil(Math.random() * 60));
+  for (let i = 0; i < 9999; i++) {
+    newBingo.push(Math.ceil(Math.random() * 100));
   }
 
   let bingoUniq = [...new Set(newBingo)];
