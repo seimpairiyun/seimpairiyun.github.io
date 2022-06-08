@@ -3,7 +3,9 @@ let rowBingo = document.getElementsByTagName("tr");
 let divCover = document.getElementsByTagName("main")[0];
 let divBingo = document.getElementsByTagName("bingo")[0];
 let bingoNum = document.getElementsByTagName("td");
-let win = document.getElementsByClassName("bingo");
+let win = document.getElementsByClassName("btn-success");
+let captionBingo = document.getElementsByClassName("caption")[0];
+let shareBtn = document.getElementsByClassName("share")[0];
 
 let bingo = [];
 let idx = [
@@ -157,7 +159,7 @@ try {
     //console.table(bingoScore);
     // Copy Score => we use
     isBingo();
-    console.table(_bingoScore);
+    //console.table(_bingoScore);
 
     if (this.className) changeScore(bingo, 0);
     // toggle color number
@@ -169,9 +171,9 @@ try {
 }
 
 // BINGO WINNER CHECK
-let bCheck = ["B", "I", "N", "G", "O"];
 function isBingo() {
   // Win Combination
+  let bCheck = ["B", "I", "N", "G", "O"];
   let Combination = [
     ...horzCombination(),
     ...vertCombination(),
@@ -184,40 +186,38 @@ function isBingo() {
   let i = Combination.filter((e) => e == "11111").length - 1;
   if (i == -1) {
     win[0].classList.add("d-none");
+    captionBingo.innerText = "Choose your Number!";
   } else if (i == 0) {
+    captionBingo.innerText = "Wow! You got one!";
     win[0].classList.remove("d-none");
     win[1].classList.add("d-none");
     win[2].classList.add("d-none");
     win[3].classList.add("d-none");
     win[4].classList.add("d-none");
   } else if (i == 1) {
-    //win[0].classList.remove("d-none");
+    captionBingo.innerText = "Damn! Almost three!";
     win[1].classList.remove("d-none");
     win[2].classList.add("d-none");
     win[3].classList.add("d-none");
     win[4].classList.add("d-none");
   } else if (i == 2) {
-    //win[0].classList.remove("d-none");
-    //win[1].classList.remove("d-none");
+    captionBingo.innerText = "Nice, find the GO!";
     win[2].classList.remove("d-none");
     win[3].classList.add("d-none");
     win[4].classList.add("d-none");
   } else if (i == 3) {
-    //win[0].classList.remove("d-none");
-    //win[1].classList.remove("d-none");
-    //win[2].classList.add("d-none");
+    captionBingo.innerText = "Almost there!";
     win[3].classList.remove("d-none");
     win[4].classList.add("d-none");
   } else if (i == 4) {
-    //win[0].classList.remove("d-none");
-    //win[1].classList.remove("d-none");
-    //win[2].classList.add("d-none");
-    //win[3].classList.add("d-none");
+    captionBingo.innerText = "CONGRATULATION, BINGO!!";
     win[4].classList.remove("d-none");
+    win[4].classList.remove("d-none");
+    shareBtn.classList.remove("d-none");
   }
 
-  console.log(i);
-  console.log(bCheck[i]);
+  //console.log(i);
+  console.log(bCheck[i] ?? "Not Yet");
 }
 
 // Horizontal Combination
@@ -270,3 +270,14 @@ function dRightCombination() {
   }
   return n.join("");
 }
+
+// Animation
+(function randomMoves() {
+  anime({
+    targets: "td",
+    easing: "easeInOutQuad",
+    duration: 1750,
+    complete: randomMoves,
+    translateY: () => anime.random(-5, 5),
+  });
+})();

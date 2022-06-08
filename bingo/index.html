@@ -9,7 +9,8 @@
     <title>Bingo</title>
 
     <link rel="shortcut icon" href="../img/logo2.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
@@ -33,18 +34,18 @@
                 Do you know bingo? One of the best game, can be played by more than 2
                 people, that i play to have fun.
             </p>
-            <p class="lead">
+            <p class="lead btnPlay">
                 <a href="#" onclick="showBingo()" class="btn btn-lg bg-danger fw-bold border-light text-light">Play!</a>
             </p>
 
         </main>
 
-        <bingo class="table-responsive-lg d-none">
+        <bingo class="d-none">
 
-            <div class="h3 text-center">Choose your Number!</div>
+            <div class="h3 text-center caption">Choose your Number!</div>
 
             <table style="border-collapse: separate;" background=""
-                class="table border-dark table-light table-bordered nowrap m-auto mt-0 text-center">
+                class="table border-dark table-light table-bordered m-auto mt-0 text-center">
                 <tbody>
                     <tr></tr>
                     <tr></tr>
@@ -54,25 +55,40 @@
                 </tbody>
             </table>
 
-            <small class="text-left">
-                💡 Kurang menantang?
-                <a href="#" onclick="generateBingo(999)" class="text-white">God Mode</a>
-            </small>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-4">
-                        <a href="#" onclick="generateBingo()" class="btn btn-xs btn-warning mt-5 fw-bold">Generate</a>
-                    </div>
-                    <div class="col-8">
-                        <a href="#" class="btn btn-xs btn-success fw-bold mt-5 bingo d-none">B</a>
-                        <a href="#" class="btn btn-xs btn-success fw-bold mt-5 bingo d-none">I</a>
-                        <a href="#" class="btn btn-xs btn-success fw-bold mt-5 bingo d-none">N</a>
-                        <a href="#" class="btn btn-xs btn-success fw-bold mt-5 bingo d-none">G</a>
-                        <a href="#" class="btn btn-xs btn-success fw-bold mt-5 bingo d-none">O</a>
-                    </div>
-                </div>
+            <div class="text-center caption2">
+                <small>
+                    💡 Kurang menantang?
+                    <a href="#" onclick="generateBingo(999)" class="text-white">God Mode</a>
+                    🎲
+                    <a href="#" onclick="generateBingo()" class="text-white">Generate number</a>
+                </small>
             </div>
+
+            <div class="text-center">
+                <a href="#" class="btn btn-xs btn-success fw-bold mt-2 d-none">B</a>
+                <a href="#" class="btn btn-xs btn-success fw-bold mt-2 d-none">I</a>
+                <a href="#" class="btn btn-xs btn-success fw-bold mt-2 d-none">N</a>
+                <a href="#" class="btn btn-xs btn-success fw-bold mt-2 d-none">G</a>
+                <a href="#" class="btn btn-xs btn-success fw-bold mt-2 d-none">O</a>
+            </div>
+
+            <div class="text-center mt-5 share d-none">
+                Share with your friends:
+                <!-- Whatsapp -->
+                <a class="btn btn-primary" style="background-color: #25d366; border-color: #25d366;" href="https://whatsapp://send?text=Lets play Bingo!"
+                    role="button"><i class="fab fa-whatsapp fa-lg"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-primary" style="background-color: #55acee; border-color: #55acee;" href="#!"
+                    role="button"><i class="fab fa-twitter fa-lg"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-primary" style="background-color: #f84ea3; border-color: #ac2bac;"
+                    href="https://twitter.com/intent/tweet?url=https://seimpairiyun.github.io/bingo&text=Lets play Bingo!"
+                    role="button"><i class="fab fa-instagram fa-lg"></i></a>
+
+            </div>
+
 
         </bingo>
 
@@ -86,6 +102,7 @@
     </div>
 </body>
 
+<script src="./anime.min.js"></script>
 <script src="./script.js"></script>
 
 </html>
