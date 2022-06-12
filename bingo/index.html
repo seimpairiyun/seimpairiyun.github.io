@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Lets play bingo! Guess the bingo number" />
     <meta name="author" content="seimpairiyun" />
-    <meta property="og:image" content="https://seimpairiyun.github.io/ourwedding/img/thumbnail.jpeg">
+    <meta property="og:image" content="https://seimpairiyun.github.io/ourwedding/img/logo2.png">
 
     <title>Bingo</title>
 
-    <link itemprop="thumbnailUrl" href="https://seimpairiyun.github.io/ourwedding/img/thumbnail.jpeg">
+    <link itemprop="thumbnailUrl" href="https://seimpairiyun.github.io/img/logo2.png">
     <link rel="shortcut icon" href="../img/logo2.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -46,7 +46,9 @@
 
         </main>
 
-        <bingo class="d-nones">
+        <canvas class="d-none" id="shot"></canvas>
+
+        <bingo class="d-none">
 
             <div class="h3 text-center caption">Choose your Number!</div>
 
@@ -78,7 +80,7 @@
                 <a href="#" class="btn btn-xs btn-success fw-bold mt-2 d-none">O</a>
             </div>
 
-            <div class="text-center mt-5 share d-nones">
+            <div class="text-center mt-5 share d-none">
                 Share :
                 <!-- Share -->
                 <button class="btn btn-light share" role="button"><i class="fas fa-share fa-lg"></i></button>

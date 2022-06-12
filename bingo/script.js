@@ -287,7 +287,7 @@ function dRightCombination() {
   const btnShare = document.querySelector(".share");
   const shareData = {
     title: "Bingo",
-    text: "lets play Bingo!",
+    text: "Lets play Bingo!",
     url: "https://seimpairiyun.github.io/bingo/",
   };
 
@@ -295,3 +295,32 @@ function dRightCombination() {
     navigator.share(shareData).catch((e) => console.log(e));
   });
 })();
+
+// Request media
+/* navigator.mediaDevices
+  .getDisplayMedia()
+  .then((stream) => {
+    // Grab frame from stream
+    let track = stream.getVideoTracks()[0];
+    let capture = new ImageCapture(track);
+    capture.grabFrame().then((bitmap) => {
+      // Stop sharing
+      track.stop();
+
+      // Draw the bitmap to canvas
+      canvas.width = bitmap.width;
+      canvas.height = bitmap.height;
+      canvas.getContext("2d").drawImage(bitmap, 0, 0);
+
+      // Grab blob from canvas
+      canvas.toBlob((blob) => {
+        // Do things with blob here
+        blob.name = `screenshot-${new Date().getTime()}`;
+        // copy to clipboard
+        let data = [new ClipboardItem({ [blob.type]: blob })];
+        navigator.clipboard.write(data);
+        console.log("output blob:", blob);
+      });
+    });
+  })
+  .catch((e) => console.log(e)); */
