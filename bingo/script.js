@@ -39,6 +39,17 @@ function showBingo() {
 }
 
 // initializing Bingo
+// Animation
+(function randomMoves() {
+  anime({
+    targets: "td",
+    easing: "easeInOutQuad",
+    duration: 1750,
+    complete: randomMoves,
+    translateY: () => anime.random(-5, 5),
+  });
+})();
+
 function assignBingo(index) {
   for (let i = 0; i < 120; i++) {
     bingo.push(Math.ceil(Math.random() * 99));
@@ -271,13 +282,16 @@ function dRightCombination() {
   return n.join("");
 }
 
-// Animation
-(function randomMoves() {
-  anime({
-    targets: "td",
-    easing: "easeInOutQuad",
-    duration: 1750,
-    complete: randomMoves,
-    translateY: () => anime.random(-5, 5),
+// Share Bingo
+(() => {
+  const btnShare = document.querySelector(".share");
+  const shareData = {
+    title: "Bingo",
+    text: "lets play Bingo!",
+    url: "https://seimpairiyun.github.io/bingo/",
+  };
+
+  btnShare.addEventListener("click", () => {
+    navigator.share(shareData).catch((e) => console.log(e));
   });
 })();
