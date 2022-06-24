@@ -13,8 +13,8 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 * [Linka Ninki](https://seimpairiyun.github.io/linkaninki) - childhood 
 * [Enghoha](https://seimpairiyun.github.io/enghoha) - teen
 * [Seimpairiyun](https://seimpairiyun.github.io) - now
+* [devCollector](https://seimpairiyun.dev) - future
 
-<h1 align="center">Hi 👋, I'm Mhd Afizha Aw</h1>
 <h3 align="center">Backend developer | Data Analyst Junior</h3>
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=seimpairiyun&label=Profile%20views&color=0e75b6&style=plastic" alt="seimpairiyun" /> </p>
