@@ -1,4 +1,4 @@
-## Here..
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=seimpairiyun&label=Profile%20views&color=0e75b6&style=plastic" alt="seimpairiyun" /> </p>
 
 <img src="https://seimpairiyun.github.io/img/logofull.png" alt="isn't this cool?">
 Blog pribadi yang berisi uneg-uneg yang dirasa penting.
@@ -13,11 +13,9 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 * [Linka Ninki](https://seimpairiyun.github.io/linkaninki) - childhood 
 * [Enghoha](https://seimpairiyun.github.io/enghoha) - teen
 * [Seimpairiyun](https://seimpairiyun.github.io) - now
-* [devCollector](https://seimpairiyun.dev) - future
+* [devCollector](https://seimpairiyun.dev) - ne
 
-<h3 align="center">Backend developer | Data Analyst Junior</h3>
-
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=seimpairiyun&label=Profile%20views&color=0e75b6&style=plastic" alt="seimpairiyun" /> </p>
+<h3>Backend developer | Data Analyst Junior</h3>
 
 - 🌱 I’m currently learning **NodeJs, React**
 
