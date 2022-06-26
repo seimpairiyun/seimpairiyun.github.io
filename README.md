@@ -14,7 +14,6 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 <h3>Fullstack Badass Developer | Data Analyst Junior</h3>
 
 - 💬 Ask me about **SQL**
-- 
 
 <h3 align="left"> 🌱 Technology:</h3>
  
