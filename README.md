@@ -4,20 +4,22 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 
 <img src="https://seimpairiyun.github.io/img/logofull.png" alt="isn't this cool?">
 
-### The Best Experience
+### My Projects
 
 ```
 - https://alkfoundation.id
 - https://seimpairiyun.github.io/ourwedding
 - Saka - Presensi & Sak Automation
 - LPSE Downloader 
-- Talita Web
+- Telebot 104
+- Talita Web 104
+- https://seimpairiyun.thedev.id/bingo
 ```
 ### Alias Name: [LinkaNinki, Enghoha, Seimpairiyun, DevCor]
 
-<h4>Fullstack Badass Developer | Data Analyst Junior</h4>
+<h4>Fullstack Badass Developer | Data Analyst Baby</h4>
 
-- 💬 Ask me about **SQL**
+- 💬 Ask me about **SQL - Query**
 
 <h4 align="left"> 🌱 Technology:</h4>
  
