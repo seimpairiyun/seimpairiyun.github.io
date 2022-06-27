@@ -1,10 +1,11 @@
-Blog pribadi yang berisi uneg-uneg yang dirasa penting.
+Blog pribadi yang berisi uneg-uneg yang dirasa penting |
+<h4>Fullstack Badass Developer | Data Analyst Baby</h4>
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=seimpairiyun&label=Profile%20views&color=0e75b6&style=plastic" alt="seimpairiyun" /> </p>
 
 <img src="https://seimpairiyun.github.io/img/logofull.png" alt="isn't this cool?">
 
-### My Projects
+### My Projects 💬 Ask me about **SQL - Query**
 
 ```
 - https://alkfoundation.id
@@ -17,9 +18,6 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 ```
 ### Alias Name: [LinkaNinki, Enghoha, Seimpairiyun, DevCor]
 
-<h4>Fullstack Badass Developer | Data Analyst Baby</h4>
-
-- 💬 Ask me about **SQL - Query**
 
 <h4 align="left"> 🌱 Technology i'd learned:</h4>
  
