@@ -47,8 +47,8 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting
  
 </p>
 
-<br>
-### Find me on:
+
+### Find me on
 
 <a href="mailto:m.afizha96@gmail.com" target="blank"><img align="center" src="https://www.freepnglogos.com/uploads/gmail-email-logo-png-16.png" alt="seimpairiyun" height="30" width="40" /></a>
 <a href="https://twitter.com/seimpairiyun" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="seimpairiyun" height="30" width="40" /></a>
