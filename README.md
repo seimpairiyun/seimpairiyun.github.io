@@ -23,6 +23,6 @@ Blog pribadi yang berisi uneg-uneg yang dirasa penting.
 <h3 align="left">Find me on:</h3>
 
 📫 : **m.afizha96@gmail.com**
-
+<a href="https://twitter.com/seimpairiyun" target="blank"><img align="center" src="https://www.freepnglogos.com/uploads/gmail-email-logo-png-16.png" alt="seimpairiyun" height="30" width="40" /></a>
 <a href="https://twitter.com/seimpairiyun" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="seimpairiyun" height="30" width="40" /></a>
 <a href="https://instagram.com/seimpairiyun" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="seimpairiyun" height="30" width="40" /></a>
