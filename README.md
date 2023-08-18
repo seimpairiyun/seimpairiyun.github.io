@@ -15,6 +15,8 @@
 - Telebot 104
 - Talita Web 104
 - https://seimpairiyun.thedev.id/bingo
+- depelhee bot
+- MPN Lite
 ```
 
 
@@ -51,7 +53,7 @@
 
 <br><br><br>
 <p align='center'>
-#LinkaNinki #Enghoha #Seimpairiyun #DevCor <br>
+#LinkaNinki #Enghoha #Seimpairiyun #Undev <br>
 <a href="mailto:m.afizha96@gmail.com" target="blank"><img align="center" src="https://www.freepnglogos.com/uploads/gmail-email-logo-png-16.png" alt="seimpairiyun" height="25" width="30" /></a>
 <a href="https://twitter.com/seimpairiyun" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="seimpairiyun" height="25" width="25" /></a>
 <a href="https://instagram.com/seimpairiyun" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="seimpairiyun" height="25" width="25" /></a>
