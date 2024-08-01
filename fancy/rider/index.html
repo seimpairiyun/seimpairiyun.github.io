@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Night Drive by @sfi0zy</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    /> -->
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
+      body {
+        overflow: hidden;
+        background: #000000;
+      }
+
+      .full-screen-3d-example {
+        opacity: 0;
+        transition: opacity 1s ease-out;
+      }
+
+      .full-screen-3d-example.-loaded {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="full-screen-3d-example"></div>
+
+    <script src="../src/three.min.js"></script>
+    <script src="../src/three.render.js"></script>
+    <script src="../src/rider.js"></script>
+  </body>
+</html>
