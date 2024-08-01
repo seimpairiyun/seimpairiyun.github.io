@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Thanks to @mamboleoo</title>
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <script type="x-shader/x-vertex" id="vertexshader">
+      attribute float size;
+      attribute vec3 color;
+      attribute float fade;
 
+      varying vec3 vColor;
+
+      void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size;
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+      uniform sampler2D pointTexture;
+      varying vec3 vColor;
+      void main() {
+        gl_FragColor = vec4(vColor, 1.0);
+        gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+      }
+    </script>
+    <!-- partial -->
+    <script src="../src/three.min.js"></script>
+    <script src="../src/three.render.js"></script>
+    <script src="../src/gsap.min.js"></script>
+    <script src="../src/skull.js"></script>
+  </body>
+</html>
