@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="style.css">
+
+	<title>Dashboard</title>
+</head>
+
+<body>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">Dashboard</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="#">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-shopping-bag-alt'></i>
+					<span class="text">My Store</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-doughnut-chart'></i>
+					<span class="text">Analytics</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-message-dots'></i>
+					<span class="text">Message</span>
+				</a>
+				<!-- Submenu -->
+				<!-- <ul class="submenu">
+					<li><a href="#">Team Member 1</a></li>
+					<li><a href="#">Team Member 2</a></li>
+					<li><a href="#">Team Member 3</a></li>
+				</ul> -->
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-group'></i>
+					<span class="text">Team</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu'></i>
+			<form></form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="profile">
+				<img src="img/people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check'></i>
+					<span class="text">
+						<h3>1337</h3>
+						<p>New Order</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group'></i>
+					<span class="text">
+						<h3>1337</h3>
+						<p>Visitors</p>
+					</span>
+				</li>
+			</ul>
+
+	</section>
+
+	<script>
+		const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+		const menuBar = document.querySelector('#content nav .bx.bx-menu');
+		const sidebar = document.getElementById('sidebar');
+		const switchMode = document.getElementById('switch-mode');
+
+		// ACTIVE MENU
+		allSideMenu.forEach(item => {
+			const li = item.parentElement;
+
+			item.addEventListener('click', () => {
+				allSideMenu.forEach(i => {
+					i.parentElement.classList.remove('active');
+				})
+				li.classList.add('active');
+			})
+		});
+
+		// TOGGLE SIDEBAR
+		menuBar.addEventListener('click', () => {
+			sidebar.classList.toggle('hide');
+		})
+
+		// DARK MODE
+		switchMode.addEventListener('change', function () {
+			if (this.checked) {
+				document.body.classList.add('dark');
+			} else {
+				document.body.classList.remove('dark');
+			}
+		})
+	</script>
+</body>
+
+</html>
