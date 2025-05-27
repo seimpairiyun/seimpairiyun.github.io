@@ -1,1 +1,479 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Trader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+
+        .input-group input, .input-group select {
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .results-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .data-modal, .bid-fraksi {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+
+        td {
+            font-size: 0.9em;
+        }
+
+        .currency {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .percentage {
+            color: #e67e22;
+            font-weight: 600;
+        }
+
+        .total-row {
+            background: #ecf0f1;
+            font-weight: 600;
+        }
+
+        .bid-table td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .lot-info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .results-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kalkulator Split Order Saham</h1>
+            <p>by @ngadmin Tax Trader DJP</p>
+
+        </div>
+
+        <div class="content">
+            <div class="input-section">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="harga">Harga per Saham (Rp)</label>
+                        <input type="number" id="harga" value="6500" min="1" oninput="autoCalculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="totalModal">Total Modal (Rp)</label>
+                        <input type="number" id="totalModal" value="50000000" min="1" oninput="autoCalculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="lotModal">Lot Modal</label>
+                        <input type="number" id="lotModal" value="77" min="1" oninput="calculateFromLot()">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="fraksiOption">Pilihan Fraksi</label>
+                        <select id="fraksiOption" onchange="calculateSplitOrder()">
+                            <option value="1">Kolom 1</option>
+                            <option value="2">Kolom 2</option>
+                            <option value="3" selected>Kolom 3</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateSplitOrder()">Hitung Split Order</button>
+            </div>
+
+            <div class="results-section" id="results" style="display: none;">
+                <div class="data-modal">
+                    <div class="table-header">DATA MODAL</div>
+                    <table id="dataModalTable">
+                        <tbody>
+                            <tr>
+                                <td>harga</td>
+                                <td id="hargaDisplay"></td>
+                                <td class="percentage" id="hargaPercent"></td>
+                            </tr>
+                            <tr>
+                                <td>Harga lot</td>
+                                <td class="currency" id="hargaLot"></td>
+                                <td class="percentage">10%</td>
+                            </tr>
+                            <tr>
+                                <td>modal</td>
+                                <td class="currency" id="modalDisplay"></td>
+                                <td class="percentage">15%</td>
+                            </tr>
+                            <tr>
+                                <td>lot tersedia</td>
+                                <td id="lotTersedia"></td>
+                                <td class="percentage">30%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td class="percentage">42%</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td></td>
+                                <td></td>
+                                <td class="percentage">102%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="lot-info">
+                        alokasi lot
+                    </div>
+                </div>
+
+                <div class="bid-fraksi">
+                    <div class="table-header">BID FRAKSI</div>
+                    <table class="bid-table">
+                        <thead>
+                            <tr>
+                                <th>bid</th>
+                                <th>Lot</th>
+                                <th>Modal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bidTableBody">
+                        </tbody>
+                    </table>
+                    <div class="lot-info" id="totalInfo">
+                        <div>cek lot: <span id="totalLot"></span></div>
+                        <div>avg modal: Rp <span id="avgModal"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tabel fraksi referensi - sesuai dengan Excel
+        const fraksiTable = {
+            '50-200': {
+                1: [100, 99, 98, 97, 96],
+                2: [100, 98, 96, 94, 92], 
+                3: [80, 77, 74, 71, 68]
+            },
+            '200-500': {
+                1: [350, 348, 346, 344, 342],
+                2: [350, 346, 344, 342, 340],
+                3: [350, 344, 338, 332, 326]
+            },
+            '500-2000': {
+                1: [1000, 995, 990, 985, 980],
+                2: [1000, 990, 985, 980, 975],
+                3: [1000, 985, 970, 955, 940]
+            },
+            '2000-5000': {
+                1: [3000, 2990, 2980, 2970, 2960],
+                2: [3000, 2980, 2970, 2960, 2950],
+                3: [3000, 2970, 2940, 2910, 2880]
+            },
+            '>5000': {
+                1: [6500, 6475, 6450, 6425, 6400],
+                2: [6500, 6450, 6425, 6400, 6375],
+                3: [6500, 6425, 6350, 6275, 6200]
+            }
+        };
+
+        function getBidPrices(harga, column) {
+            if (harga >= 50 && harga <= 200) {
+                return fraksiTable['50-200'][column];
+            } else if (harga > 200 && harga <= 500) {
+                return fraksiTable['200-500'][column];
+            } else if (harga > 500 && harga <= 2000) {
+                return fraksiTable['500-2000'][column];
+            } else if (harga > 2000 && harga <= 5000) {
+                return fraksiTable['2000-5000'][column];
+            } else if (harga > 5000) {
+                return fraksiTable['>5000'][column];
+            }
+            // Default jika harga di luar range
+            return [harga, harga-1, harga-2, harga-3, harga-4];
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID').format(amount);
+        }
+
+        function autoCalculate() {
+            const harga = parseInt(document.getElementById('harga').value);
+            const totalModal = parseInt(document.getElementById('totalModal').value);
+            
+            if (harga && totalModal) {
+                const hargaLot = harga * 100;
+                const lotModal = Math.floor(totalModal / hargaLot);
+                document.getElementById('lotModal').value = lotModal;
+                calculateSplitOrder();
+            }
+        }
+
+        function calculateFromLot() {
+            const harga = parseInt(document.getElementById('harga').value);
+            const lotModal = parseInt(document.getElementById('lotModal').value);
+            
+            if (harga && lotModal) {
+                const hargaLot = harga * 100;
+                const totalModal = lotModal * hargaLot;
+                document.getElementById('totalModal').value = totalModal;
+                calculateSplitOrder();
+            }
+        }
+
+        function calculateSplitOrder() {
+            const harga = parseInt(document.getElementById('harga').value);
+            const totalModal = parseInt(document.getElementById('totalModal').value);
+            const lotModal = parseInt(document.getElementById('lotModal').value);
+            const fraksiOption = parseInt(document.getElementById('fraksiOption').value);
+
+            if (!harga || !lotModal) {
+                return;
+            }
+
+            // Hitung data modal
+            const hargaLot = harga * 100; // 1 lot = 100 saham
+            const lotTersedia = Math.floor(totalModal / hargaLot);
+
+            // Update data modal table
+            document.getElementById('hargaDisplay').textContent = formatCurrency(harga);
+            document.getElementById('hargaPercent').textContent = '5%';
+            document.getElementById('hargaLot').textContent = 'Rp ' + formatCurrency(hargaLot);
+            document.getElementById('modalDisplay').textContent = 'Rp ' + formatCurrency(totalModal);
+            document.getElementById('lotTersedia').textContent = lotTersedia;
+
+            // Hitung bid fraksi - sesuai dengan Excel
+            const bidPrices = getBidPrices(harga, fraksiOption);
+            
+            // Distribusi lot sesuai Excel: [4, 8, 12, 23, 32] = 79, dikurangi 1 = 78
+            const baseLotDistribution = [4, 8, 12, 23, 32];
+            const totalBaseLot = baseLotDistribution.reduce((a, b) => a + b, 0); // 79
+            
+            // Sesuaikan distribusi dengan lot modal yang tersedia
+            const adjustedDistribution = baseLotDistribution.map(lot => {
+                const ratio = (lotModal - 1) / (totalBaseLot - 1); // -1 untuk menyesuaikan dengan Excel
+                return Math.round(lot * ratio);
+            });
+            
+            // Pastikan total lot sesuai dengan lot modal - 1 (sesuai Excel)
+            let totalAdjusted = adjustedDistribution.reduce((a, b) => a + b, 0);
+            const targetTotal = lotModal - 1;
+            
+            // Adjust jika ada selisih
+            if (totalAdjusted !== targetTotal) {
+                const diff = targetTotal - totalAdjusted;
+                adjustedDistribution[adjustedDistribution.length - 1] += diff;
+            }
+            
+            const bidData = [];
+            let totalLot = 0;
+            let totalModalUsed = 0;
+
+            for (let i = 0; i < 5; i++) {
+                const lot = adjustedDistribution[i];
+                const bidPrice = bidPrices[i];
+                const modalBid = lot * bidPrice * 100; // 100 saham per lot
+                
+                if (lot > 0) {
+                    bidData.push({
+                        bid: i + 1,
+                        lot: lot,
+                        price: bidPrice,
+                        modal: modalBid
+                    });
+                    totalLot += lot;
+                    totalModalUsed += modalBid;
+                }
+            }
+
+            // Update bid table
+            const bidTableBody = document.getElementById('bidTableBody');
+            bidTableBody.innerHTML = '';
+
+            bidData.forEach(bid => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${bid.bid}</td>
+                    <td>${bid.lot}</td>
+                    <td class="currency">Rp ${formatCurrency(bid.modal)}</td>
+                `;
+                bidTableBody.appendChild(row);
+            });
+
+            // Add total row
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td><strong>Total</strong></td>
+                <td><strong>${totalLot}</strong></td>
+                <td class="currency"><strong>Rp ${formatCurrency(totalModalUsed)}</strong></td>
+            `;
+            bidTableBody.appendChild(totalRow);
+
+            // Update summary
+            document.getElementById('totalLot').textContent = totalLot;
+            document.getElementById('avgModal').textContent = formatCurrency(Math.round(totalModalUsed / totalLot / 100));
+
+            // Show results
+            document.getElementById('results').style.display = 'grid';
+        }
+
+        // Initialize with default calculation
+        window.addEventListener('load', function() {
+            autoCalculate();
+        });
+    </script>
+</body>
+  </html>
