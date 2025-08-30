@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingView Redirect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        .success {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>TradingView Shortlink</h2>
+        <div id="content">
+            <div class="spinner"></div>
+            <p id="status">Processing redirect...</p>
+        </div>
+        <p><small>If you're not redirected automatically, <a href="#" id="manualLink">click here</a></small></p>
+    </div>
+
+    <script>
+        function getSymbolFromPath() {
+            // Ambil path dari URL, hapus leading slash
+            let path = window.location.pathname.replace('/', '');
+            
+            // Hapus trailing slash jika ada
+            path = path.replace(/\/$/, '');
+            
+            // Jika path kosong atau hanya 'index.html', return null
+            if (!path || path === '' || path === 'index.html') {
+                return null;
+            }
+            
+            return path.toUpperCase(); // Convert ke uppercase untuk konsistensi
+        }
+
+        function showError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="error">
+                    <h3>❌ Error</h3>
+                    <p>${message}</p>
+                    <p><strong>Format yang benar:</strong><br>
+                    <code>yourdomain.github.io/BBCA</code><br>
+                    <code>yourdomain.github.io/TLKM</code></p>
+                </div>
+            `;
+        }
+
+        function showSuccess(symbol, url) {
+            document.getElementById('content').innerHTML = `
+                <div class="success">
+                    <h3>✅ Redirecting to TradingView</h3>
+                    <p>Symbol: <strong>IDX:${symbol}</strong></p>
+                    <div class="spinner"></div>
+                </div>
+            `;
+        }
+
+        function redirectToTradingView() {
+            const symbol = getSymbolFromPath();
+            
+            if (!symbol) {
+                showError('No symbol specified in URL path.');
+                return;
+            }
+            
+            // Validasi symbol (hanya huruf dan angka, max 10 karakter)
+            if (!/^[A-Z0-9]{1,10}$/.test(symbol)) {
+                showError(`Invalid symbol format: "${symbol}". Use only letters and numbers (max 10 characters).`);
+                return;
+            }
+            
+            // Buat URL TradingView
+            const tradingViewUrl = `https://www.tradingview.com/chart/3D2dmDEx/?symbol=IDX:${symbol}`;
+            
+            // Update manual link
+            document.getElementById('manualLink').href = tradingViewUrl;
+            
+            // Show success message
+            showSuccess(symbol, tradingViewUrl);
+            
+            // Redirect setelah delay singkat
+            setTimeout(() => {
+                window.location.href = tradingViewUrl;
+            }, 2000);
+        }
+
+        // Jalankan redirect saat halaman load
+        window.onload = redirectToTradingView;
+    </script>
+</body>
+</html>
