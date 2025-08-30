@@ -28,8 +28,8 @@ function redirectToTradingView() {
     const tradingViewUrl = `https://www.tradingview.com/chart/3D2dmDEx/?symbol=IDX:${symbol}`;
     
     // Update manual link
-    document.getElementById('manualLink').href = tradingViewUrl;
-    document.getElementById('status').innerHTML = `Redirecting to symbol: <strong>${symbol}</strong>`;
+    //document.getElementById('manualLink').href = tradingViewUrl;
+    //document.getElementById('status').innerHTML = `Redirecting to symbol: <strong>${symbol}</strong>`;
     
     // Redirect setelah delay singkat
     setTimeout(() => {
