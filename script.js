@@ -3,43 +3,6 @@ console.log('Created with 💗 by Mhd. Afizha Aw');
 console.log("Browser Resolution: " + window.innerWidth + " x " + window.innerHeight)
 console.log("Screen Resolution: " + screen.width + " x " + screen.height)
 
-function getSymbolFromPath() {
-    // Ambil path dari URL, hapus leading slash
-    const path = window.location.pathname.replace('/', '');
-    
-    // Jika path kosong atau hanya '/', return default atau error
-    if (!path || path === '' || path === 'index.html') {
-        return null;
-    }
-    
-    return path;
-}
-
-function redirectToTradingView() {
-    const symbol = getSymbolFromPath();
-    
-    if (!symbol) {
-        document.getElementById('status').innerHTML = 
-            'No symbol specified. Please use format: <br><strong>mytv.github.io/SYMBOL</strong>';
-        return;
-    }
-    
-    // Buat URL TradingView
-    const tradingViewUrl = `https://www.tradingview.com/chart/3D2dmDEx/?symbol=IDX:${symbol}`;
-    
-    // Update manual link
-    //document.getElementById('manualLink').href = tradingViewUrl;
-    //document.getElementById('status').innerHTML = `Redirecting to symbol: <strong>${symbol}</strong>`;
-    
-    // Redirect setelah delay singkat
-    setTimeout(() => {
-        window.location.href = tradingViewUrl;
-    }, 1500);
-}
-
-// Jalankan redirect saat halaman load
-window.onload = redirectToTradingView;
-
 //LOGO
 $(document).ready(function () {
   $('.logo').hide().fadeIn(18000);
