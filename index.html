@@ -1,185 +1,114 @@
-<!DOCTYPE html>
+<!-- Thanks to @mamboleoo -->
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Seimpairiyun Galaxy</title>
 
-<!--this template inspired by Sashatran, marcbizal -->
+        <link
+            rel="icon"
+            href="https://seimpairiyun.thedev.id/img/logofull.png"
+        />
 
-<head>
-    <meta charset="UTF-8">
-    <title>seimpairiyun@root: ~</title>
-    <link rel="icon" href="img/logofull.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="when bug somehow becomes a new feature">
-    <meta property="og:image" content="https://seimpairiyun.github.io/img/logofull.png">
-    <link itemprop="thumbnailUrl" href="https://seimpairiyun.github.io/img/logofull.png">
-    <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
-        <link itemprop="url" href="https://seimpairiyun.github.io/img/logo1.png">
-    </span>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
+        <link rel="stylesheet" href="./ui.css" />
 
-<body id="body">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="from Zero to Journey" />
+        <meta
+            property="og:image"
+            content="https://seimpairiyun.thedev.id/img/logofull.png"
+        />
+        <link
+            itemprop="thumbnailUrl"
+            href="https://seimpairiyun.thedev.id/img/logofull.png"
+        />
+        <span
+            itemprop="thumbnail"
+            itemscope
+            itemtype="http://schema.org/ImageObject"
+        >
+            <link
+                itemprop="url"
+                href="https://seimpairiyun.thedev.id/img/logo1.png"
+            />
+        </span>
+    </head>
+    <body>
+        <div class="logo-button" title="Lihat">
+            <i id="logo-icon">
+                <img
+                    class="img-rounded icon-circle-arrow-left"
+                    src="https://seimpairiyun.thedev.id/img/logo1.png"
+                    width="60"
+                />
+            </i>
 
-    <div class="loader"></div>
-
-    <div class="name-container">
-        <img class="logo" src="img/logofull.png" alt="not found">
-        <div class="name">
-            <div class="name-left">
-                <span class="name-span"></span>
-                <span class="name-span name-align">Mhd. </span>
-            </div>
-
-            <div class="name-right">
-                <span class="name-span name-effect">A</span>
-                <span class="name-span name-align">
-                    <small>fizha</small>
-                </span>
-            </div>
-        </div>
-
-        <div class="intro-arrow">
-            <i id="intro-arrow" class="fa fa-angle-right"></i>
-        </div>
-
-        <div class="intro">
-            <div class="intro-close">
-                <i class="fa fa-remove"></i>
-            </div>
-
-            <div class="intro-container">
-                <span class="linkaninki">linkaninki</span>
-                <div class="intro-text">
-                    <p class="about-me">
-                        <i class="fa fa-newspaper-o"></i>
-                        <br>
-                        Kalau mau jadi pengemudi Motor yg baik belajarlah
-                        mengemudi Mobil, <br> kalau mau jadi pengemudi Mobil yang baik belajarlah mengemudi Motor.
-
-                    <div style="text-align: center;">
-                        <img src="https://rustacean.net/assets/cuddlyferris.svg" style="position: relative; width: 8%; bottom: -8px;"> &bull;
-
-                        <img src="img/logo2.png" title="Learn new language.."
-                            style="position: relative; width: 10%; bottom: -15px;"> &bull;
-
-                        <img src="https://raw.githubusercontent.com/golang-samples/gopher-vector/refs/heads/master/gopher.png" style="position: relative; width: 5%; bottom: -8px;"> &bull;
-                        <img src="img/-Qt.svg" style="position: relative; width: 8%; bottom: -8px;"> &bull;
-                        <img src="img/-Python.svg" style="position: relative; width: 6%; bottom: -8px;"> &bull;
-                        <img src="img/-JS.svg" style="position: relative; width: 6%; bottom: -8px;"> &bull;
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Webysther_20160423_-_Elephpant.svg" style="position: relative; width: 10%; bottom: -8px;">
-
-                    </div>
-                    <br>
-                    <br>
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!--<div class="magic-button" title="Lihat">
-        <i id="magic-icon">
-            <img class="img-rounded icon-circle-arrow-left" src="img/logo1.png" width="60">
-        </i>
-
-        <a hidden class="magic-point" href="#bug" title="Lihat Bug Temuan Saya">
-            <i class="fa fa-bug"></i>
-        </a>
-        <a hidden class="magic-point" href="#terminal" title="Open Terminal">
-            <i class="fa fa-terminal"></i>
-        </a>
-        <a hidden class="magic-point" href="mailto:m.afizha96@gmail.com" title="Email">
-            <i class="fa fa-envelope-open-o"></i>
-        </a>
-        <a hidden class="magic-point" href="https://instagram.com/seimpairiyun" target="_blank" title="Instagram">
-            <i class="fa fa-instagram"></i>
-        </a>
-        <a hidden class="magic-point" href="https://twitter.com/seimpairiyun" target="_blank" title="Twitter">
-            <i class="fa fa-twitter"></i>
-        </a>
-    </div>
-    <div id="terminal" class="terminal-window">
-        <input type="hidden" id="location">
-        <div class="terminal-modal">
-            <div class="container">
-                <div class="window">
-                    <div class="handle">
-                        <div class="buttons">
-                            <button class="close">
-                            </button>
-                            <button class="minimize">
-                            </button>
-                            <button class="maximize">
-                            </button>
-                        </div>
-                        <span class="title"></span>
-                    </div>
-                    <div class="terminal"></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="bug" class="modal-window">
-        <div class="modal">
-            <a href="#" onclick="hideBuglist()" title="Close" class="modal-close">
-                <i class="fa fa-remove"></i>
+            <a
+                hidden
+                class="logo-point"
+                href="https://seimpairiyun.thedev.id/setup"
+                title="My Setup"
+                >😎</a
+            >
+            <a
+                hidden
+                class="logo-point"
+                href="https://tech-lang.vercel.app"
+                target="_blank"
+                title="Tech Lang History"
+                >👽
             </a>
-            <div class="bug_title">
-                <p>
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found.
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    BUG.
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG I Found BUG
-                    I Found BUG I Found BUG I Found BUG.
-                </p>
-            </div>
-            <div>
-                <table id="buglist" style="margin: auto;" class="display cell-border">
-                    <thead>
-                        <tr style="color: white;">
-                            <th>NO.</th>
-                            <th align="left">WEB APP</th>
-                            <th align="left" width=200px>NAMA BUG</th>
-                            <th align="left" width=100px>PERIODE</th>
-                            <th align="left" width=400px>INFO</th>
-                        </tr>
-                    </thead>
-                    <tbody id="check">
-
-                    </tbody>
-                </table>
-            </div>
+            <a
+                hidden
+                class="logo-point"
+                href="https://belajar-ukt.vercel.app"
+                title="Belajar UKOM DJP"
+                >📚
+            </a>
+            <a
+                hidden
+                class="logo-point"
+                href="https://seimpairiyun.thedev.id/me"
+                target="_blank"
+                title="About Me"
+                >🏠
+            </a>
+            <a
+                hidden
+                class="logo-point"
+                href="https://alkfoundation.id"
+                target="_blank"
+                title="First Project"
+                >🚀
+            </a>
         </div>
-    </div>
-    -->
+    </body>
 
-    <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'></script>
-    <script src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js'></script>
-    <script src='JSON.js'></script>
-    <script src='script.js'></script>
+    <!-- partial:index.partial.html -->
+    <script type="x-shader/x-vertex" id="vertexshader">
+        attribute float size;
+        attribute vec3 color;
+        attribute float fade;
 
-</body>
+        varying vec3 vColor;
 
+        void main() {
+          vColor = color;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = size;
+          gl_Position = projectionMatrix * mvPosition;
+        }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform sampler2D pointTexture;
+        varying vec3 vColor;
+        void main() {
+          gl_FragColor = vec4(vColor, 1.0);
+          gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+        }
+    </script>
+
+    <script src="./js/three.render.gsap.js"></script>
+    <script src="./script.js"></script>
 </html>
