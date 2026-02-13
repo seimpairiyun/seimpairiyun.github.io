@@ -1025,7 +1025,7 @@ label svg:last-of-type {
     --z: calc(106 * var(--cm));
     --y: calc(-46 * var(--cm));
     --x: calc(10 * var(--cm));
-    top: 50%;
+    top: 55%;
 }
 
 .monitor--portrait {
@@ -1069,7 +1069,7 @@ label svg:last-of-type {
 
 .monitor__arm--main {
     --x: calc(6 * var(--cm));
-    top: 45%;
+    top: 55%;
 }
 
 .monitor__arm--portrait {
