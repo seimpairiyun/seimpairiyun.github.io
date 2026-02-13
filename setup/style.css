@@ -1069,7 +1069,7 @@ label svg:last-of-type {
 
 .monitor__arm--main {
     --x: calc(6 * var(--cm));
-    top: 55%;
+    top: 50%;
 }
 
 .monitor__arm--portrait {
