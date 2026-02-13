@@ -1069,13 +1069,13 @@ label svg:last-of-type {
 
 .monitor__arm--main {
     --x: calc(6 * var(--cm));
-    top: 65%;
+    top: 45%;
 }
 
 .monitor__arm--portrait {
     --x: calc(20 * var(--cm));
     --rotate-cuboid-z: 30;
-    top: 10%;
+    top: 15%;
 }
 
 .monitor__arm div {
