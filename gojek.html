@@ -343,23 +343,32 @@
   .status-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--primary); margin-right:5px;}
   .status-dot.off{background:var(--ink-faint);}
 
-  /* ===== Focus mode (booking aktif) ===== */
-  .focus-chip{
-    position:fixed; left:50%; bottom:16px; transform:translateX(-50%) translateY(24px);
-    max-width:520px; width:calc(100% - 32px); background:var(--primary-dark); color:#fff;
-    border-radius:16px; padding:11px 14px; display:flex; align-items:center; gap:10px;
-    box-shadow:var(--shadow-lg); z-index:1250; opacity:0; pointer-events:none;
-    transition:opacity .3s var(--ease), transform .3s var(--ease);
+  /* ===== Step accordion (minimize per step) ===== */
+  .step-head{
+    display:flex; align-items:center; gap:10px; cursor:pointer; padding:2px 2px; margin:-2px -2px 0;
+    border-radius:10px; transition:background .18s var(--ease-soft);
   }
-  .focus-chip.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
-  .focus-chip-text{flex:1; font-size:12.5px; font-weight:600; line-height:1.4;}
-  .focus-chip-text b{display:block; font-size:13px; margin-bottom:1px;}
-  .focus-chip-cancel{
-    border:1px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.1); color:#fff;
-    font-family:inherit; font-size:11.5px; font-weight:700; padding:7px 12px; border-radius:10px;
-    cursor:pointer; flex-shrink:0; transition:background .2s var(--ease-soft);
+  .step-head:hover{background:var(--surface-soft);}
+  .step-head-text{flex:1; min-width:0;}
+  .step-head-text h2{margin-bottom:0;}
+  .step-summary{
+    font-size:12px; font-weight:700; color:var(--ink-soft); max-width:120px; text-align:right;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex-shrink:0;
   }
-  .focus-chip-cancel:hover{background:rgba(255,255,255,0.22);}
+  .step-summary.empty{display:none;}
+  .step.open .step-summary{display:none;}
+  .step-chevron{
+    width:18px; height:18px; color:var(--ink-faint); flex-shrink:0;
+    transition:transform .32s var(--ease);
+  }
+  .step.open .step-chevron{transform:rotate(180deg); color:var(--primary);}
+  .step-content-wrap{
+    display:grid; grid-template-rows:0fr; transition:grid-template-rows .38s var(--ease);
+  }
+  .step.open .step-content-wrap{grid-template-rows:1fr;}
+  .step-content-inner{overflow:hidden; min-height:0;}
+  .step-content-inner > *:first-child{margin-top:16px;}
+  .btn-step-next{margin-top:16px; width:100%;}
 
   /* ===== Notifikasi jam sibuk ===== */
   .busy-notice{
@@ -472,9 +481,7 @@
     border-top:1px solid var(--border); box-shadow:0 -6px 22px rgba(15,61,19,0.08);
     display:flex; padding:8px 6px calc(8px + env(safe-area-inset-bottom));
     border-radius:22px 22px 0 0;
-    transition:transform .32s var(--ease), opacity .32s var(--ease-soft);
   }
-  .bottom-nav.hide{transform:translateY(115%); opacity:0; pointer-events:none;}
   .nav-item{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
     border:none; background:transparent; cursor:pointer; padding:7px 4px; border-radius:14px;
@@ -532,25 +539,36 @@
 
       <div class="steps">
 
-        <div class="step done" id="step-1">
+        <div class="step done open" id="step-1">
           <div class="step-marker"><div class="step-num">1</div><div class="step-line"></div></div>
           <div class="step-body">
             <section>
-              <p class="eyebrow">Pilih kendaraan</p>
-              <h2>Kamu mau naik apa?</h2>
-              <div class="vehicle-row">
-                <button type="button" class="vehicle-btn active" data-vehicle="motor" onclick="setVehicle('motor')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M5.5 17.5h6l3-7h4M11 10.5H8l1.5-3H14l1.5 4"/></svg>
-                  Motor
-                </button>
-                <button type="button" class="vehicle-btn" data-vehicle="mobil" onclick="setVehicle('mobil')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16v-3l2-4h12l2 4v3"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M4 16h1M19 16h1"/></svg>
-                  Mobil
-                </button>
+              <div class="step-head" onclick="toggleStep(1)">
+                <div class="step-head-text">
+                  <p class="eyebrow">Pilih kendaraan</p>
+                  <h2>Kamu mau naik apa?</h2>
+                </div>
+                <div class="step-summary" id="stepSummary-1">Motor</div>
+                <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
               </div>
-              <div class="busy-notice" id="busyNoticeHome" style="display:none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-                <div><b>Lagi jam sibuk</b><span id="busyNoticeText">Mitra untuk kendaraan ini sedang penuh.</span> Pesanan tetap bisa dikirim, admin akan carikan mitra secepat mungkin.</div>
+              <div class="step-content-wrap" id="stepWrap-1">
+                <div class="step-content-inner">
+                  <div class="vehicle-row">
+                    <button type="button" class="vehicle-btn active" data-vehicle="motor" onclick="setVehicle('motor')">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M5.5 17.5h6l3-7h4M11 10.5H8l1.5-3H14l1.5 4"/></svg>
+                      Motor
+                    </button>
+                    <button type="button" class="vehicle-btn" data-vehicle="mobil" onclick="setVehicle('mobil')">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16v-3l2-4h12l2 4v3"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M4 16h1M19 16h1"/></svg>
+                      Mobil
+                    </button>
+                  </div>
+                  <div class="busy-notice" id="busyNoticeHome" style="display:none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+                    <div><b>Lagi jam sibuk</b><span id="busyNoticeText">Mitra untuk kendaraan ini sedang penuh.</span> Pesanan tetap bisa dikirim, admin akan carikan mitra secepat mungkin.</div>
+                  </div>
+                  <button type="button" class="btn btn-outline btn-step-next" onclick="goToStep2()">Lanjut ke rute perjalanan</button>
+                </div>
               </div>
             </section>
           </div>
@@ -560,32 +578,43 @@
           <div class="step-marker"><div class="step-num">2</div><div class="step-line"></div></div>
           <div class="step-body">
             <section>
-              <p class="eyebrow">Rute perjalanan</p>
-              <h2>Titik jemput & tujuan</h2>
-              <div class="loc-group">
-                <div class="loc-label"><span class="dot pickup"></span> Titik jemput</div>
-                <div class="loc-input-wrap">
-                  <input type="text" id="pickupInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
-                  <span class="loc-spinner" id="pickupSpinner"></span>
-                  <div class="suggestions" id="pickupSuggestions"></div>
+              <div class="step-head" onclick="toggleStep(2)">
+                <div class="step-head-text">
+                  <p class="eyebrow">Rute perjalanan</p>
+                  <h2>Titik jemput & tujuan</h2>
                 </div>
+                <div class="step-summary empty" id="stepSummary-2"></div>
+                <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
               </div>
-              <div class="loc-group">
-                <div class="loc-label"><span class="dot dest"></span> Titik tujuan</div>
-                <div class="loc-input-wrap">
-                  <input type="text" id="destInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
-                  <span class="loc-spinner" id="destSpinner"></span>
-                  <div class="suggestions" id="destSuggestions"></div>
+              <div class="step-content-wrap" id="stepWrap-2">
+                <div class="step-content-inner">
+                  <div class="loc-group">
+                    <div class="loc-label"><span class="dot pickup"></span> Titik jemput</div>
+                    <div class="loc-input-wrap">
+                      <input type="text" id="pickupInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
+                      <span class="loc-spinner" id="pickupSpinner"></span>
+                      <div class="suggestions" id="pickupSuggestions"></div>
+                    </div>
+                  </div>
+                  <div class="loc-group">
+                    <div class="loc-label"><span class="dot dest"></span> Titik tujuan</div>
+                    <div class="loc-input-wrap">
+                      <input type="text" id="destInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
+                      <span class="loc-spinner" id="destSpinner"></span>
+                      <div class="suggestions" id="destSuggestions"></div>
+                    </div>
+                  </div>
+                  <div id="map" style="margin-top:12px;"></div>
+                  <p class="hint">Ketik alamat lalu pilih dari daftar, atau ketuk langsung di peta.</p>
+                  <div class="price-box">
+                    <div>
+                      <div class="label">Estimasi biaya</div>
+                      <div class="dist" id="distText">Jarak belum dihitung</div>
+                    </div>
+                    <div class="value" id="priceText">Rp —</div>
+                  </div>
+                  <button type="button" class="btn btn-outline btn-step-next" onclick="goToStep3()">Lanjut ke data kamu</button>
                 </div>
-              </div>
-              <div id="map" style="margin-top:12px;"></div>
-              <p class="hint">Ketik alamat lalu pilih dari daftar, atau ketuk langsung di peta.</p>
-              <div class="price-box">
-                <div>
-                  <div class="label">Estimasi biaya</div>
-                  <div class="dist" id="distText">Jarak belum dihitung</div>
-                </div>
-                <div class="value" id="priceText">Rp —</div>
               </div>
             </section>
           </div>
@@ -595,15 +624,26 @@
           <div class="step-marker"><div class="step-num">3</div><div class="step-line"></div></div>
           <div class="step-body">
             <section>
-              <p class="eyebrow">Data kamu</p>
-              <h2>Biar mitra gampang menghubungi</h2>
-              <label for="nama">Nama</label>
-              <input type="text" id="nama" placeholder="Nama lengkap">
-              <label for="hp">Nomor WhatsApp</label>
-              <input type="tel" id="hp" placeholder="08xxxxxxxxxx">
-              <label for="catatan">Keterangan pesanan (opsional)</label>
-              <input type="text" id="catatan" placeholder="ayam penyet warung teh yuli">
-              <p class="hint">Titip beli sesuatu atau ada instruksi khusus? Tulis di sini ya.</p>
+              <div class="step-head" onclick="toggleStep(3)">
+                <div class="step-head-text">
+                  <p class="eyebrow">Data kamu</p>
+                  <h2>Biar mitra gampang menghubungi</h2>
+                </div>
+                <div class="step-summary empty" id="stepSummary-3"></div>
+                <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="step-content-wrap" id="stepWrap-3">
+                <div class="step-content-inner">
+                  <label for="nama">Nama</label>
+                  <input type="text" id="nama" placeholder="Nama lengkap">
+                  <label for="hp">Nomor WhatsApp</label>
+                  <input type="tel" id="hp" placeholder="08xxxxxxxxxx">
+                  <label for="catatan">Keterangan pesanan (opsional)</label>
+                  <input type="text" id="catatan" placeholder="ayam penyet warung teh yuli">
+                  <p class="hint">Titip beli sesuatu atau ada instruksi khusus? Tulis di sini ya.</p>
+                  <button type="button" class="btn btn-outline btn-step-next" onclick="goToStep4()">Lanjut ke pembayaran</button>
+                </div>
+              </div>
             </section>
           </div>
         </div>
@@ -612,18 +652,28 @@
           <div class="step-marker"><div class="step-num">4</div><div class="step-line"></div></div>
           <div class="step-body">
             <section>
-              <p class="eyebrow">Terakhir</p>
-              <h2>Metode pembayaran</h2>
-              <div class="pay-row">
-                <button type="button" class="pay-btn active" data-pay="transfer" onclick="setPay('transfer')">Transfer bank</button>
-                <button type="button" class="pay-btn" data-pay="qris" onclick="setPay('qris')">QRIS</button>
+              <div class="step-head" onclick="toggleStep(4)">
+                <div class="step-head-text">
+                  <p class="eyebrow">Terakhir</p>
+                  <h2>Metode pembayaran</h2>
+                </div>
+                <div class="step-summary" id="stepSummary-4">Transfer bank</div>
+                <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
               </div>
-              <div class="pay-detail" id="payDetail">
-                Transfer ke <b>BSI 7123456789 a.n Tuan Ojek</b>. Kirim bukti transfer lewat WhatsApp setelah dihubungi admin.
-              </div>
-              <div class="manual-note">
-                <span>&#9432;</span>
-                <span>Pembayaran belum otomatis — admin memverifikasi manual setelah menerima bukti transfer/QRIS.</span>
+              <div class="step-content-wrap" id="stepWrap-4">
+                <div class="step-content-inner">
+                  <div class="pay-row">
+                    <button type="button" class="pay-btn active" data-pay="transfer" onclick="setPay('transfer')">Transfer bank</button>
+                    <button type="button" class="pay-btn" data-pay="qris" onclick="setPay('qris')">QRIS</button>
+                  </div>
+                  <div class="pay-detail" id="payDetail">
+                    Transfer ke <b>BSI 7123456789 a.n Tuan Ojek</b>. Kirim bukti transfer lewat WhatsApp setelah dihubungi admin.
+                  </div>
+                  <div class="manual-note">
+                    <span>&#9432;</span>
+                    <span>Pembayaran belum otomatis — admin memverifikasi manual setelah menerima bukti transfer/QRIS.</span>
+                  </div>
+                </div>
               </div>
             </section>
           </div>
@@ -779,11 +829,6 @@
       <span class="nav-dot"></span>
     </button>
   </nav>
-
-  <div class="focus-chip" id="focusChip">
-    <div class="focus-chip-text"><b>Sedang mengisi pesanan</b>Menu lain disembunyikan sementara.</div>
-    <button type="button" class="focus-chip-cancel" onclick="cancelBooking()">Batalkan</button>
-  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -882,9 +927,9 @@
     if(akunAvatar){ akunAvatar.textContent = initial; }
     if(akunPhone){ akunPhone.textContent = phone ? phone : 'Nomor WhatsApp belum diisi'; }
   }
-  document.getElementById('nama').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); updateStepProgress(); updateFocusMode(); });
-  document.getElementById('hp').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); updateStepProgress(); updateFocusMode(); });
-  document.getElementById('catatan').addEventListener('input', () => { updateFocusMode(); });
+  document.getElementById('nama').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); updateStepProgress(); });
+  document.getElementById('hp').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); updateStepProgress(); });
+  document.getElementById('catatan').addEventListener('input', () => {});
 
   // ---------- Role switching ----------
   let currentRole = 'customer';
@@ -908,7 +953,6 @@
     if(role === 'driver') renderDriverView();
     if(role === 'customer'){ renderCustOrders(); updateBusyNotice(); }
     updateProfileUI();
-    updateFocusMode();
   }
 
   // ---------- Customer bottom-nav tabs ----------
@@ -927,7 +971,6 @@
     if(tab === 'promo') renderPromos();
     if(tab === 'akun') renderAkunNotif();
     updateProfileUI();
-    updateFocusMode();
   }
 
   // ================= CUSTOMER VIEW =================
@@ -941,15 +984,73 @@
   let pickupMarker = null, destMarker = null, routeLine = null;
   let lastRouteKm = null, lastRouteCoords = null, routeFetchToken = 0;
 
+  // ---------- Step accordion (minimize per step) ----------
+  let openStep = 1;
+
+  function openStepNum(n){
+    openStep = n;
+    for(let i=1;i<=4;i++){
+      const stepEl = document.getElementById('step-' + i);
+      if(stepEl) stepEl.classList.toggle('open', i === n);
+    }
+  }
+  function toggleStep(n){
+    if(openStep === n){ openStep = null; document.getElementById('step-' + n).classList.remove('open'); }
+    else{ openStepNum(n); }
+  }
+
+  function updateStepSummaries(){
+    const sum1 = document.getElementById('stepSummary-1');
+    if(sum1) sum1.textContent = vehicle === 'motor' ? 'Motor' : 'Mobil';
+
+    const sum2 = document.getElementById('stepSummary-2');
+    if(sum2){
+      if(pickupMarker && destMarker){
+        const p = document.getElementById('pickupInput').value.split(',')[0];
+        const d = document.getElementById('destInput').value.split(',')[0];
+        sum2.textContent = `${p} → ${d}`;
+        sum2.classList.remove('empty');
+      } else { sum2.textContent = ''; sum2.classList.add('empty'); }
+    }
+
+    const sum3 = document.getElementById('stepSummary-3');
+    if(sum3){
+      const nama = document.getElementById('nama').value.trim();
+      const hp = document.getElementById('hp').value.trim();
+      if(nama && hp){ sum3.textContent = nama; sum3.classList.remove('empty'); }
+      else { sum3.textContent = ''; sum3.classList.add('empty'); }
+    }
+
+    const sum4 = document.getElementById('stepSummary-4');
+    if(sum4) sum4.textContent = pay === 'transfer' ? 'Transfer bank' : 'QRIS';
+  }
+
   function updateStepProgress(){
     const s2 = document.getElementById('step-2');
     const s3 = document.getElementById('step-3');
-    if(s2) s2.classList.toggle('done', !!(pickupMarker && destMarker));
+    const locationComplete = !!(pickupMarker && destMarker);
+    if(s2) s2.classList.toggle('done', locationComplete);
     if(s3){
       const nama = document.getElementById('nama').value.trim();
       const hp = document.getElementById('hp').value.trim();
       s3.classList.toggle('done', !!(nama && hp));
     }
+    updateStepSummaries();
+  }
+
+  // ---------- Tombol "Lanjut" manual antar step ----------
+  function goToStep2(){
+    openStepNum(2);
+  }
+  function goToStep3(){
+    if(!pickupMarker || !destMarker){ alert('Tentukan titik jemput dan tujuan dulu ya.'); return; }
+    openStepNum(3);
+  }
+  function goToStep4(){
+    const nama = document.getElementById('nama').value.trim();
+    const hp = document.getElementById('hp').value.trim();
+    if(!nama || !hp){ alert('Isi nama dan nomor WhatsApp dulu ya.'); return; }
+    openStepNum(4);
   }
 
   // ---------- Notifikasi jam sibuk (mitra penuh) ----------
@@ -985,27 +1086,6 @@
     box.innerHTML = row('Motor', motorAvail) + row('Mobil', mobilAvail);
   }
 
-  // ---------- Focus mode (fokus saat isi pesanan) ----------
-  function bookingHasProgress(){
-    const catatan = document.getElementById('catatan').value.trim();
-    return !!(pickupMarker || destMarker || catatan);
-  }
-
-  function updateFocusMode(){
-    const active = currentRole === 'customer' && currentCustTab === 'home' && bookingHasProgress();
-    const nav = document.getElementById('bottomNav');
-    const chip = document.getElementById('focusChip');
-    if(nav) nav.classList.toggle('hide', active);
-    if(chip) chip.classList.toggle('show', active);
-  }
-
-  function cancelBooking(){
-    document.getElementById('nama').value = '';
-    document.getElementById('hp').value = '';
-    resetCustomerForm();
-    updateProfileUI();
-  }
-
   const pickupIcon = L.divIcon({className:'', html:'<div style="width:16px;height:16px;border-radius:50%;background:#1B5E20;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>', iconSize:[16,16], iconAnchor:[8,8]});
   const destIcon = L.divIcon({className:'', html:'<div style="width:16px;height:16px;border-radius:50%;background:#F6A400;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>', iconSize:[16,16], iconAnchor:[8,8]});
 
@@ -1014,6 +1094,7 @@
     document.querySelectorAll('#view-customer .vehicle-btn').forEach(b=>b.classList.toggle('active', b.dataset.vehicle===v));
     updatePrice();
     updateBusyNotice();
+    updateStepSummaries();
   }
   function setMode(m){ mode = m; }
 
@@ -1095,7 +1176,6 @@
     }
     drawRoute();
     updateStepProgress();
-    updateFocusMode();
   }
 
   async function reverseGeocode(latlng, kind){
@@ -1126,6 +1206,7 @@
     } else {
       detail.innerHTML = 'Kode <b>QRIS</b> akan dikirim admin lewat WhatsApp setelah pesanan diproses. Scan dan kirim bukti pembayaran.';
     }
+    updateStepSummaries();
   }
 
   map.on('click', function(e){
@@ -1254,7 +1335,7 @@
     lastRouteKm = null; lastRouteCoords = null;
     updatePrice();
     updateStepProgress();
-    updateFocusMode();
+    openStepNum(1);
   }
 
   // ================= CUSTOMER: DAFTAR PESANAN =================
@@ -1595,8 +1676,9 @@
   renderCustOrders();
   updateProfileUI();
   updateStepProgress();
+  updateStepSummaries();
   updateBusyNotice();
-  updateFocusMode();
+  openStepNum(1);
 </script>
 </body>
 </html>
