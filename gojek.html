@@ -109,8 +109,33 @@
   @keyframes viewIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
 
   .cust-tab{display:none;}
-  .cust-tab.active{display:block; animation:tabIn .32s var(--ease);}
-  @keyframes tabIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  .cust-tab.active{display:block;}
+  .cust-tab.active.slide-right{animation:slideInRight .38s var(--ease);}
+  .cust-tab.active.slide-left{animation:slideInLeft .38s var(--ease);}
+  @keyframes slideInRight{from{opacity:0; transform:translateX(22px);} to{opacity:1; transform:translateX(0);}}
+  @keyframes slideInLeft{from{opacity:0; transform:translateX(-22px);} to{opacity:1; transform:translateX(0);}}
+
+  /* ===== Step flow (booking) ===== */
+  .steps{margin-top:16px;}
+  .step{display:flex; gap:12px; align-items:stretch;}
+  .step-marker{display:flex; flex-direction:column; align-items:center; width:30px; flex-shrink:0; padding-top:24px;}
+  .step-num{
+    width:28px; height:28px; border-radius:50%; background:var(--surface); color:var(--ink-faint);
+    border:2px solid var(--border); display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:12.5px; flex-shrink:0; position:relative; z-index:2;
+    transition:background .35s var(--ease-soft), border-color .35s var(--ease-soft), color .35s var(--ease-soft), transform .35s var(--ease);
+  }
+  .step-line{
+    flex:1; width:2px; min-height:20px; margin-top:2px;
+    background:var(--border);
+    transition:background .5s var(--ease-soft);
+  }
+  .step:last-child .step-line{display:none;}
+  .step.done .step-num{background:var(--primary); border-color:var(--primary); color:#fff; transform:scale(1.06);}
+  .step.done .step-line{background:var(--primary-light);}
+  .step-body{flex:1; min-width:0;}
+  .step-body section{margin-top:0;}
+  .step + .step .step-body section{margin-top:16px;}
 
   section, .card{
     background:var(--surface);
@@ -294,9 +319,12 @@
     font-size:11px; font-weight:700; padding:4px 11px; border-radius:20px; white-space:nowrap;
     border:1px solid transparent;
   }
-  .badge.menunggu{background:var(--accent-soft); color:var(--accent-dark); border-color:rgba(246,164,0,0.3);}
+  .badge.menunggu_verifikasi{background:var(--danger-soft); color:var(--danger); border-color:rgba(198,67,45,0.28);}
+  .badge.menunggu_mitra{background:var(--accent-soft); color:var(--accent-dark); border-color:rgba(246,164,0,0.3);}
   .badge.driver_dipilih{background:var(--primary-soft); color:var(--primary); border-color:rgba(27,94,32,0.25);}
   .badge.terkonfirmasi{background:var(--primary); color:#fff;}
+  .badge.selesai{background:var(--ink); color:#fff;}
+  .badge.ditolak{background:var(--danger); color:#fff;}
   .order-meta{font-size:12.5px; color:var(--ink-soft); margin-top:8px; line-height:1.7;}
   .order-meta b{color:var(--ink); font-weight:700;}
   .order-row{display:flex; gap:8px; margin-top:10px; align-items:center; flex-wrap:wrap;}
@@ -313,6 +341,73 @@
   .driver-name{font-weight:800; font-size:14.5px;}
   .driver-sub{font-size:12px; color:var(--ink-soft); margin-top:2px;}
   .status-dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--primary); margin-right:5px;}
+  .status-dot.off{background:var(--ink-faint);}
+
+  /* ===== Focus mode (booking aktif) ===== */
+  .focus-chip{
+    position:fixed; left:50%; bottom:16px; transform:translateX(-50%) translateY(24px);
+    max-width:520px; width:calc(100% - 32px); background:var(--primary-dark); color:#fff;
+    border-radius:16px; padding:11px 14px; display:flex; align-items:center; gap:10px;
+    box-shadow:var(--shadow-lg); z-index:1250; opacity:0; pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+  }
+  .focus-chip.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+  .focus-chip-text{flex:1; font-size:12.5px; font-weight:600; line-height:1.4;}
+  .focus-chip-text b{display:block; font-size:13px; margin-bottom:1px;}
+  .focus-chip-cancel{
+    border:1px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.1); color:#fff;
+    font-family:inherit; font-size:11.5px; font-weight:700; padding:7px 12px; border-radius:10px;
+    cursor:pointer; flex-shrink:0; transition:background .2s var(--ease-soft);
+  }
+  .focus-chip-cancel:hover{background:rgba(255,255,255,0.22);}
+
+  /* ===== Notifikasi jam sibuk ===== */
+  .busy-notice{
+    display:flex; gap:10px; align-items:flex-start; margin-top:14px; background:var(--danger-soft);
+    border:1px solid rgba(198,67,45,0.25); color:var(--danger); border-radius:15px; padding:12px 14px;
+    font-size:12.5px; line-height:1.5; animation:cardIn .3s var(--ease);
+  }
+  .busy-notice svg{width:18px; height:18px; flex-shrink:0; margin-top:1px;}
+  .busy-notice b{display:block; font-size:13px; margin-bottom:2px;}
+  .notif-row{
+    display:flex; align-items:center; gap:10px; padding:11px 4px; border-bottom:1px solid var(--border-soft);
+  }
+  .notif-row:last-child{border-bottom:none;}
+  .notif-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+  .notif-dot.ok{background:var(--primary);}
+  .notif-dot.busy{background:var(--danger);}
+  .notif-text{flex:1; font-size:12.5px; color:var(--ink);}
+  .notif-text b{font-weight:700;}
+  .notif-status{font-size:11px; font-weight:700;}
+  .notif-status.ok{color:var(--primary);}
+  .notif-status.busy{color:var(--danger);}
+
+  /* ===== Kelola mitra (admin) ===== */
+  .mitra-row{
+    display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid var(--border-soft);
+  }
+  .mitra-row:last-child{border-bottom:none;}
+  .mitra-row .driver-avatar{width:38px; height:38px; font-size:14px;}
+  .mitra-row-name{font-weight:700; font-size:13px; color:var(--ink);}
+  .mitra-row-sub{font-size:11.5px; color:var(--ink-soft); margin-top:1px;}
+  .mitra-toggle{
+    border:1.5px solid var(--border); background:var(--surface-soft); color:var(--ink-soft);
+    font-family:inherit; font-size:11px; font-weight:700; padding:6px 11px; border-radius:9px;
+    cursor:pointer; flex-shrink:0; transition:all .2s var(--ease-soft);
+  }
+  .mitra-toggle.on{border-color:var(--primary); color:var(--primary); background:var(--primary-soft);}
+  .mitra-toggle.off{border-color:var(--danger); color:var(--danger); background:var(--danger-soft);}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .form-grid .full{grid-column:1 / -1;}
+
+  /* ===== Bukti foto selesai (mitra) ===== */
+  .photo-upload{
+    margin-top:10px; border:1.5px dashed var(--border); border-radius:13px; padding:10px 12px;
+    background:var(--surface); font-size:12px; color:var(--ink-soft);
+  }
+  .photo-upload input[type=file]{font-family:inherit; font-size:12px; width:100%;}
+  .photo-preview{width:100%; max-height:150px; object-fit:cover; border-radius:11px; margin-top:8px; display:none; box-shadow:var(--shadow-sm);}
+  .proof-thumb{width:100%; max-height:150px; object-fit:cover; border-radius:12px; margin-top:8px; box-shadow:var(--shadow-sm);}
   .mini-map{height:170px; border-radius:13px; border:1px solid var(--border); margin-top:10px; box-shadow:var(--shadow-sm);}
 
   /* ===== Promo tab ===== */
@@ -377,7 +472,9 @@
     border-top:1px solid var(--border); box-shadow:0 -6px 22px rgba(15,61,19,0.08);
     display:flex; padding:8px 6px calc(8px + env(safe-area-inset-bottom));
     border-radius:22px 22px 0 0;
+    transition:transform .32s var(--ease), opacity .32s var(--ease-soft);
   }
+  .bottom-nav.hide{transform:translateY(115%); opacity:0; pointer-events:none;}
   .nav-item{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
     border:none; background:transparent; cursor:pointer; padding:7px 4px; border-radius:14px;
@@ -433,75 +530,106 @@
         </div>
       </div>
 
-      <section>
-        <p class="eyebrow">Langkah 1</p>
-        <h2>Pilih kendaraan</h2>
-        <div class="vehicle-row">
-          <button type="button" class="vehicle-btn active" data-vehicle="motor" onclick="setVehicle('motor')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M5.5 17.5h6l3-7h4M11 10.5H8l1.5-3H14l1.5 4"/></svg>
-            Motor
-          </button>
-          <button type="button" class="vehicle-btn" data-vehicle="mobil" onclick="setVehicle('mobil')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16v-3l2-4h12l2 4v3"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M4 16h1M19 16h1"/></svg>
-            Mobil
-          </button>
-        </div>
-      </section>
+      <div class="steps">
 
-      <section>
-        <p class="eyebrow">Langkah 2</p>
-        <h2>Tentukan titik jemput & tujuan</h2>
-        <div class="loc-group">
-          <div class="loc-label"><span class="dot pickup"></span> Titik jemput</div>
-          <div class="loc-input-wrap">
-            <input type="text" id="pickupInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
-            <span class="loc-spinner" id="pickupSpinner"></span>
-            <div class="suggestions" id="pickupSuggestions"></div>
+        <div class="step done" id="step-1">
+          <div class="step-marker"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <section>
+              <p class="eyebrow">Pilih kendaraan</p>
+              <h2>Kamu mau naik apa?</h2>
+              <div class="vehicle-row">
+                <button type="button" class="vehicle-btn active" data-vehicle="motor" onclick="setVehicle('motor')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M5.5 17.5h6l3-7h4M11 10.5H8l1.5-3H14l1.5 4"/></svg>
+                  Motor
+                </button>
+                <button type="button" class="vehicle-btn" data-vehicle="mobil" onclick="setVehicle('mobil')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16v-3l2-4h12l2 4v3"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M4 16h1M19 16h1"/></svg>
+                  Mobil
+                </button>
+              </div>
+              <div class="busy-notice" id="busyNoticeHome" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+                <div><b>Lagi jam sibuk</b><span id="busyNoticeText">Mitra untuk kendaraan ini sedang penuh.</span> Pesanan tetap bisa dikirim, admin akan carikan mitra secepat mungkin.</div>
+              </div>
+            </section>
           </div>
         </div>
-        <div class="loc-group">
-          <div class="loc-label"><span class="dot dest"></span> Titik tujuan</div>
-          <div class="loc-input-wrap">
-            <input type="text" id="destInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
-            <span class="loc-spinner" id="destSpinner"></span>
-            <div class="suggestions" id="destSuggestions"></div>
+
+        <div class="step" id="step-2">
+          <div class="step-marker"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <section>
+              <p class="eyebrow">Rute perjalanan</p>
+              <h2>Titik jemput & tujuan</h2>
+              <div class="loc-group">
+                <div class="loc-label"><span class="dot pickup"></span> Titik jemput</div>
+                <div class="loc-input-wrap">
+                  <input type="text" id="pickupInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
+                  <span class="loc-spinner" id="pickupSpinner"></span>
+                  <div class="suggestions" id="pickupSuggestions"></div>
+                </div>
+              </div>
+              <div class="loc-group">
+                <div class="loc-label"><span class="dot dest"></span> Titik tujuan</div>
+                <div class="loc-input-wrap">
+                  <input type="text" id="destInput" autocomplete="off" placeholder="Ketik nama tempat atau alamat...">
+                  <span class="loc-spinner" id="destSpinner"></span>
+                  <div class="suggestions" id="destSuggestions"></div>
+                </div>
+              </div>
+              <div id="map" style="margin-top:12px;"></div>
+              <p class="hint">Ketik alamat lalu pilih dari daftar, atau ketuk langsung di peta.</p>
+              <div class="price-box">
+                <div>
+                  <div class="label">Estimasi biaya</div>
+                  <div class="dist" id="distText">Jarak belum dihitung</div>
+                </div>
+                <div class="value" id="priceText">Rp —</div>
+              </div>
+            </section>
           </div>
         </div>
-        <div id="map" style="margin-top:12px;"></div>
-        <p class="hint">Ketik alamat lalu pilih dari daftar, atau ketuk langsung di peta.</p>
-        <div class="price-box">
-          <div>
-            <div class="label">Estimasi biaya</div>
-            <div class="dist" id="distText">Jarak belum dihitung</div>
+
+        <div class="step" id="step-3">
+          <div class="step-marker"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <section>
+              <p class="eyebrow">Data kamu</p>
+              <h2>Biar mitra gampang menghubungi</h2>
+              <label for="nama">Nama</label>
+              <input type="text" id="nama" placeholder="Nama lengkap">
+              <label for="hp">Nomor WhatsApp</label>
+              <input type="tel" id="hp" placeholder="08xxxxxxxxxx">
+              <label for="catatan">Keterangan pesanan (opsional)</label>
+              <input type="text" id="catatan" placeholder="ayam penyet warung teh yuli">
+              <p class="hint">Titip beli sesuatu atau ada instruksi khusus? Tulis di sini ya.</p>
+            </section>
           </div>
-          <div class="value" id="priceText">Rp —</div>
         </div>
-      </section>
 
-      <section>
-        <p class="eyebrow">Langkah 3</p>
-        <h2>Data kamu</h2>
-        <label for="nama">Nama</label>
-        <input type="text" id="nama" placeholder="Nama lengkap">
-        <label for="hp">Nomor WhatsApp</label>
-        <input type="tel" id="hp" placeholder="08xxxxxxxxxx">
-      </section>
+        <div class="step done" id="step-4">
+          <div class="step-marker"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <section>
+              <p class="eyebrow">Terakhir</p>
+              <h2>Metode pembayaran</h2>
+              <div class="pay-row">
+                <button type="button" class="pay-btn active" data-pay="transfer" onclick="setPay('transfer')">Transfer bank</button>
+                <button type="button" class="pay-btn" data-pay="qris" onclick="setPay('qris')">QRIS</button>
+              </div>
+              <div class="pay-detail" id="payDetail">
+                Transfer ke <b>BSI 7123456789 a.n Tuan Ojek</b>. Kirim bukti transfer lewat WhatsApp setelah dihubungi admin.
+              </div>
+              <div class="manual-note">
+                <span>&#9432;</span>
+                <span>Pembayaran belum otomatis — admin memverifikasi manual setelah menerima bukti transfer/QRIS.</span>
+              </div>
+            </section>
+          </div>
+        </div>
 
-      <section>
-        <p class="eyebrow">Langkah 4</p>
-        <h2>Metode pembayaran</h2>
-        <div class="pay-row">
-          <button type="button" class="pay-btn active" data-pay="transfer" onclick="setPay('transfer')">Transfer bank</button>
-          <button type="button" class="pay-btn" data-pay="qris" onclick="setPay('qris')">QRIS</button>
-        </div>
-        <div class="pay-detail" id="payDetail">
-          Transfer ke <b>BSI 7123456789 a.n Tuan Ojek</b>. Kirim bukti transfer lewat WhatsApp setelah dihubungi admin.
-        </div>
-        <div class="manual-note">
-          <span>&#9432;</span>
-          <span>Pembayaran belum otomatis — admin memverifikasi manual setelah menerima bukti transfer/QRIS.</span>
-        </div>
-      </section>
+      </div>
 
       <button type="button" class="btn btn-accent" id="submitBtn" onclick="submitOrder()" style="margin-top:16px;">Kirim pesanan</button>
       <div id="successBanner" style="display:none;"></div>
@@ -536,6 +664,11 @@
           <div class="akun-phone" id="akunPhone">Nomor WhatsApp belum diisi</div>
         </div>
       </div>
+      <section>
+        <p class="eyebrow">Info terkini</p>
+        <h2>Notifikasi ketersediaan mitra</h2>
+        <div id="akunNotif"></div>
+      </section>
       <section>
         <h2>Menu akun</h2>
         <div class="menu-list">
@@ -579,6 +712,30 @@
       <h2>Persetujuan pesanan & assign mitra</h2>
       <div id="adminOrderList"><div class="empty-state">Belum ada pesanan masuk.</div></div>
     </section>
+
+    <section>
+      <p class="eyebrow">Kelola tim</p>
+      <h2>Daftar mitra</h2>
+      <div id="mitraManageList"></div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Kelola tim</p>
+      <h2>Tambah mitra baru</h2>
+      <label for="mitraNama">Nama mitra</label>
+      <input type="text" id="mitraNama" placeholder="Nama lengkap mitra">
+      <label for="mitraKendaraan">Jenis kendaraan</label>
+      <select id="mitraKendaraan">
+        <option value="motor">Motor</option>
+        <option value="mobil">Mobil</option>
+      </select>
+      <label for="mitraPlat">Plat nomor</label>
+      <input type="text" id="mitraPlat" placeholder="BL 1234 QQ">
+      <label for="mitraHp">Nomor WhatsApp</label>
+      <input type="tel" id="mitraHp" placeholder="08xxxxxxxxxx">
+      <button type="button" class="btn btn-primary" style="margin-top:14px;" onclick="addMitra()">Tambah mitra</button>
+    </section>
+
     <p class="foot-note">Login admin masih placeholder — nanti diganti otentikasi sungguhan (mis. Firebase Auth).</p>
   </div>
 
@@ -622,6 +779,11 @@
       <span class="nav-dot"></span>
     </button>
   </nav>
+
+  <div class="focus-chip" id="focusChip">
+    <div class="focus-chip-text"><b>Sedang mengisi pesanan</b>Menu lain disembunyikan sementara.</div>
+    <button type="button" class="focus-chip-cancel" onclick="cancelBooking()">Batalkan</button>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -720,8 +882,9 @@
     if(akunAvatar){ akunAvatar.textContent = initial; }
     if(akunPhone){ akunPhone.textContent = phone ? phone : 'Nomor WhatsApp belum diisi'; }
   }
-  document.getElementById('nama').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); });
-  document.getElementById('hp').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); });
+  document.getElementById('nama').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); updateStepProgress(); updateFocusMode(); });
+  document.getElementById('hp').addEventListener('input', () => { if(currentRole==='customer') updateProfileUI(); updateStepProgress(); updateFocusMode(); });
+  document.getElementById('catatan').addEventListener('input', () => { updateFocusMode(); });
 
   // ---------- Role switching ----------
   let currentRole = 'customer';
@@ -741,21 +904,30 @@
     if(role === 'customer' && document.getElementById('cust-home').classList.contains('active')){
       setTimeout(()=>map.invalidateSize(), 60);
     }
-    if(role === 'admin') renderAdminOrders();
+    if(role === 'admin'){ renderAdminOrders(); renderMitraManageList(); }
     if(role === 'driver') renderDriverView();
-    if(role === 'customer') renderCustOrders();
+    if(role === 'customer'){ renderCustOrders(); updateBusyNotice(); }
     updateProfileUI();
+    updateFocusMode();
   }
 
   // ---------- Customer bottom-nav tabs ----------
+  const custTabOrder = ['home','pesanan','promo','akun'];
+  let currentCustTab = 'home';
   function showCustTab(tab){
+    if(tab === currentCustTab) return;
+    const dir = custTabOrder.indexOf(tab) > custTabOrder.indexOf(currentCustTab) ? 'slide-right' : 'slide-left';
     document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
-    document.querySelectorAll('.cust-tab').forEach(t=>t.classList.remove('active'));
-    document.getElementById('cust-' + tab).classList.add('active');
+    document.querySelectorAll('.cust-tab').forEach(t=>t.classList.remove('active','slide-right','slide-left'));
+    const next = document.getElementById('cust-' + tab);
+    next.classList.add('active', dir);
+    currentCustTab = tab;
     if(tab === 'home') setTimeout(()=>map.invalidateSize(), 60);
     if(tab === 'pesanan') renderCustOrders();
     if(tab === 'promo') renderPromos();
+    if(tab === 'akun') renderAkunNotif();
     updateProfileUI();
+    updateFocusMode();
   }
 
   // ================= CUSTOMER VIEW =================
@@ -767,6 +939,72 @@
   let mode = 'pickup';
   let pay = 'transfer';
   let pickupMarker = null, destMarker = null, routeLine = null;
+  let lastRouteKm = null, lastRouteCoords = null, routeFetchToken = 0;
+
+  function updateStepProgress(){
+    const s2 = document.getElementById('step-2');
+    const s3 = document.getElementById('step-3');
+    if(s2) s2.classList.toggle('done', !!(pickupMarker && destMarker));
+    if(s3){
+      const nama = document.getElementById('nama').value.trim();
+      const hp = document.getElementById('hp').value.trim();
+      s3.classList.toggle('done', !!(nama && hp));
+    }
+  }
+
+  // ---------- Notifikasi jam sibuk (mitra penuh) ----------
+  function driverAvailability(v){
+    return drivers.filter(d => d.vehicle === v && d.status === 'tersedia').length;
+  }
+
+  function updateBusyNotice(){
+    const availSelected = driverAvailability(vehicle);
+    const homeBox = document.getElementById('busyNoticeHome');
+    const homeText = document.getElementById('busyNoticeText');
+    if(homeBox){
+      const busy = availSelected === 0;
+      homeBox.style.display = busy ? 'flex' : 'none';
+      if(homeText) homeText.textContent = `Mitra ${vehicle === 'motor' ? 'motor' : 'mobil'} untuk sementara penuh.`;
+    }
+    renderAkunNotif();
+  }
+
+  function renderAkunNotif(){
+    const box = document.getElementById('akunNotif');
+    if(!box) return;
+    const motorAvail = driverAvailability('motor');
+    const mobilAvail = driverAvailability('mobil');
+    const row = (label, avail) => {
+      const busy = avail === 0;
+      return `<div class="notif-row">
+        <span class="notif-dot ${busy ? 'busy' : 'ok'}"></span>
+        <span class="notif-text"><b>${label}</b> — ${busy ? 'lagi jam sibuk, semua mitra sedang mengantar' : avail + ' mitra tersedia'}</span>
+        <span class="notif-status ${busy ? 'busy' : 'ok'}">${busy ? 'Penuh' : 'Siap'}</span>
+      </div>`;
+    };
+    box.innerHTML = row('Motor', motorAvail) + row('Mobil', mobilAvail);
+  }
+
+  // ---------- Focus mode (fokus saat isi pesanan) ----------
+  function bookingHasProgress(){
+    const catatan = document.getElementById('catatan').value.trim();
+    return !!(pickupMarker || destMarker || catatan);
+  }
+
+  function updateFocusMode(){
+    const active = currentRole === 'customer' && currentCustTab === 'home' && bookingHasProgress();
+    const nav = document.getElementById('bottomNav');
+    const chip = document.getElementById('focusChip');
+    if(nav) nav.classList.toggle('hide', active);
+    if(chip) chip.classList.toggle('show', active);
+  }
+
+  function cancelBooking(){
+    document.getElementById('nama').value = '';
+    document.getElementById('hp').value = '';
+    resetCustomerForm();
+    updateProfileUI();
+  }
 
   const pickupIcon = L.divIcon({className:'', html:'<div style="width:16px;height:16px;border-radius:50%;background:#1B5E20;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>', iconSize:[16,16], iconAnchor:[8,8]});
   const destIcon = L.divIcon({className:'', html:'<div style="width:16px;height:16px;border-radius:50%;background:#F6A400;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>', iconSize:[16,16], iconAnchor:[8,8]});
@@ -775,6 +1013,7 @@
     vehicle = v;
     document.querySelectorAll('#view-customer .vehicle-btn').forEach(b=>b.classList.toggle('active', b.dataset.vehicle===v));
     updatePrice();
+    updateBusyNotice();
   }
   function setMode(m){ mode = m; }
 
@@ -855,7 +1094,8 @@
       else destMarker = L.marker(latlng, {icon:destIcon}).addTo(map);
     }
     drawRoute();
-    updatePrice();
+    updateStepProgress();
+    updateFocusMode();
   }
 
   async function reverseGeocode(latlng, kind){
@@ -893,12 +1133,40 @@
     reverseGeocode(e.latlng, mode);
   });
 
-  function drawRoute(){
+  async function drawRoute(){
     if(routeLine){ map.removeLayer(routeLine); routeLine = null; }
-    if(pickupMarker && destMarker){
-      routeLine = L.polyline([pickupMarker.getLatLng(), destMarker.getLatLng()], {color:'#1B5E20', weight:3, dashArray:'6 6'}).addTo(map);
-      map.fitBounds(routeLine.getBounds(), {padding:[30,30]});
+    if(!(pickupMarker && destMarker)){
+      lastRouteKm = null; lastRouteCoords = null;
+      return;
     }
+    const a = pickupMarker.getLatLng(), b = destMarker.getLatLng();
+    const myToken = ++routeFetchToken;
+
+    // garis lurus sementara sambil rute jalan dihitung, biar terasa responsif
+    routeLine = L.polyline([a, b], {color:'#1B5E20', weight:3, dashArray:'6 6', opacity:0.55}).addTo(map);
+    map.fitBounds(routeLine.getBounds(), {padding:[30,30]});
+    document.getElementById('distText').textContent = 'Menghitung rute jalan...';
+
+    try{
+      const url = `https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if(myToken !== routeFetchToken) return; // sudah ada request lebih baru, abaikan hasil ini
+      if(data && data.routes && data.routes[0]){
+        const coords = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+        if(routeLine){ map.removeLayer(routeLine); }
+        routeLine = L.polyline(coords, {color:'#1B5E20', weight:4, opacity:0.88, lineJoin:'round', lineCap:'round'}).addTo(map);
+        map.fitBounds(routeLine.getBounds(), {padding:[30,30]});
+        lastRouteKm = data.routes[0].distance / 1000;
+        lastRouteCoords = coords;
+      } else {
+        lastRouteKm = null; lastRouteCoords = null;
+      }
+    }catch(err){
+      if(myToken !== routeFetchToken) return;
+      lastRouteKm = null; lastRouteCoords = null;
+    }
+    if(myToken === routeFetchToken) updatePrice();
   }
 
   function haversineKm(a, b){
@@ -910,7 +1178,7 @@
   }
 
   function currentPrice(){
-    const km = haversineKm(pickupMarker.getLatLng(), destMarker.getLatLng());
+    const km = (lastRouteKm !== null) ? lastRouteKm : haversineKm(pickupMarker.getLatLng(), destMarker.getLatLng());
     const base = vehicle === 'motor' ? 5000 : 10000;
     const perKm = vehicle === 'motor' ? 2500 : 5000;
     let price = Math.ceil((base + km*perKm)/500)*500;
@@ -926,7 +1194,8 @@
       return;
     }
     const {km, price} = currentPrice();
-    distEl.textContent = `${km.toFixed(1)} km — ${vehicle}`;
+    const routeNote = (lastRouteKm !== null) ? 'rute jalan' : 'estimasi garis lurus';
+    distEl.textContent = `${km.toFixed(1)} km · ${routeNote} — ${vehicle}`;
     priceEl.textContent = 'Rp ' + price.toLocaleString('id-ID');
   }
 
@@ -943,23 +1212,26 @@
       createdAt: new Date(),
       customerName: nama,
       customerPhone: hp,
+      notes: document.getElementById('catatan').value.trim(),
       vehicle: vehicle,
       pickupName: document.getElementById('pickupInput').value,
       destName: document.getElementById('destInput').value,
       pickupLatLng: pickupMarker.getLatLng(),
       destLatLng: destMarker.getLatLng(),
+      routeCoords: lastRouteCoords ? lastRouteCoords.slice() : null,
       distanceKm: km,
       priceText: 'Rp ' + price.toLocaleString('id-ID'),
       payMethod: pay,
-      status: 'menunggu',
-      driverId: null
+      status: 'menunggu_verifikasi',
+      driverId: null,
+      proofPhoto: null
     };
     orders.unshift(order);
 
     const banner = document.getElementById('successBanner');
     banner.style.display = 'block';
     banner.className = 'success-banner';
-    banner.innerHTML = `<b>Pesanan #${order.id} terkirim</b>Menunggu admin memilihkan mitra untuk kamu. Kamu akan dihubungi lewat WhatsApp.`;
+    banner.innerHTML = `<b>Pesanan #${order.id} terkirim</b>Admin akan verifikasi bukti pembayaran kamu, lalu memilihkan mitra. Kamu akan dihubungi lewat WhatsApp.`;
 
     document.getElementById('submitBtn').disabled = true;
     setTimeout(() => {
@@ -969,15 +1241,20 @@
     }, 3500);
 
     renderCustOrders();
+    updateBusyNotice();
   }
 
   function resetCustomerForm(){
     document.getElementById('pickupInput').value = '';
     document.getElementById('destInput').value = '';
+    document.getElementById('catatan').value = '';
     if(pickupMarker){ map.removeLayer(pickupMarker); pickupMarker = null; }
     if(destMarker){ map.removeLayer(destMarker); destMarker = null; }
     if(routeLine){ map.removeLayer(routeLine); routeLine = null; }
+    lastRouteKm = null; lastRouteCoords = null;
     updatePrice();
+    updateStepProgress();
+    updateFocusMode();
   }
 
   // ================= CUSTOMER: DAFTAR PESANAN =================
@@ -1004,25 +1281,34 @@
         <div class="order-meta">
           ${order.vehicle === 'motor' ? 'Motor' : 'Mobil'} · ${order.distanceKm.toFixed(1)} km · ${order.priceText}<br>
           Dari: ${order.pickupName}<br>Ke: ${order.destName}
+          ${order.notes ? `<br><b>Catatan:</b> ${order.notes}` : ''}
           ${d ? `<br><b>Mitra:</b> ${d.name} — ${d.plate}` : ''}
-        </div>`;
+        </div>
+        ${order.proofPhoto ? `<img class="proof-thumb" src="${order.proofPhoto}" alt="Bukti selesai">` : ''}`;
       box.appendChild(card);
     });
   }
 
   // ================= ADMIN VIEW =================
-  const statusLabel = {menunggu:'Menunggu mitra', driver_dipilih:'Mitra dipilih', terkonfirmasi:'Terkirim ke pemesan'};
+  const statusLabel = {
+    menunggu_verifikasi:'Menunggu verifikasi',
+    menunggu_mitra:'Menunggu mitra',
+    driver_dipilih:'Mitra dipilih',
+    terkonfirmasi:'Sedang diantar',
+    selesai:'Selesai',
+    ditolak:'Ditolak'
+  };
 
   function renderAdminStats(){
     const box = document.getElementById('adminStats');
     if(!box) return;
-    const menunggu = orders.filter(o => o.status === 'menunggu').length;
-    const berjalan = orders.filter(o => o.status === 'driver_dipilih').length;
-    const selesai = orders.filter(o => o.status === 'terkonfirmasi').length;
+    const verifikasi = orders.filter(o => o.status === 'menunggu_verifikasi').length;
+    const berjalan = orders.filter(o => o.status === 'driver_dipilih' || o.status === 'terkonfirmasi').length;
+    const selesai = orders.filter(o => o.status === 'selesai').length;
     box.innerHTML = `
-      <div class="stat-card"><div class="stat-num">${menunggu}</div><div class="stat-label">Menunggu mitra</div></div>
+      <div class="stat-card"><div class="stat-num">${verifikasi}</div><div class="stat-label">Perlu verifikasi</div></div>
       <div class="stat-card"><div class="stat-num">${berjalan}</div><div class="stat-label">Sedang diantar</div></div>
-      <div class="stat-card"><div class="stat-num">${selesai}</div><div class="stat-label">Selesai dikirim</div></div>`;
+      <div class="stat-card"><div class="stat-num">${selesai}</div><div class="stat-label">Selesai</div></div>`;
   }
 
   function renderAdminOrders(){
@@ -1036,7 +1322,13 @@
       const time = order.createdAt.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
       let bottom = '';
 
-      if(order.status === 'menunggu'){
+      if(order.status === 'menunggu_verifikasi'){
+        bottom = `<p class="hint">Cek dulu bukti transfer/QRIS dari pemesan di WhatsApp sebelum lanjut assign mitra.</p>
+             <div class="order-row">
+               <button type="button" class="btn btn-primary btn-sm" onclick="verifyPayment(${order.id})">Pembayaran terverifikasi</button>
+               <button type="button" class="btn btn-danger-outline btn-sm" onclick="rejectOrder(${order.id})">Tolak pesanan</button>
+             </div>`;
+      } else if(order.status === 'menunggu_mitra'){
         const eligible = drivers.filter(d => d.vehicle === order.vehicle && d.status === 'tersedia');
         const options = eligible.map(d => `<option value="${d.id}">${d.name} — ${d.plate}</option>`).join('');
         bottom = eligible.length
@@ -1045,13 +1337,18 @@
                <button type="button" class="btn btn-primary btn-sm" onclick="assignDriver(${order.id})">Tetapkan mitra</button>
              </div>`
           : `<p class="hint">Tidak ada mitra ${order.vehicle} yang tersedia saat ini.</p>`;
+      } else if(order.status === 'ditolak'){
+        bottom = `<p class="hint">&#10005; Pesanan ini ditolak (bukti pembayaran tidak valid/bermasalah).</p>`;
       } else {
         const d = drivers.find(x => x.id === order.driverId);
         bottom = `<div class="order-meta"><b>Mitra:</b> ${d ? d.name + ' — ' + d.plate : '-'}</div>`;
         if(order.status === 'driver_dipilih'){
           bottom += `<div class="order-row"><button type="button" class="btn btn-accent btn-sm" onclick="sendWaToCustomer(${order.id})">Kirim ke WA pemesan</button></div>`;
-        } else {
-          bottom += `<p class="hint">&#10003; Sudah dikirim ke WhatsApp pemesan.</p>`;
+        } else if(order.status === 'terkonfirmasi'){
+          bottom += `<p class="hint">&#10003; Sudah dikirim ke WhatsApp pemesan, mitra sedang mengantar.</p>`;
+        } else if(order.status === 'selesai'){
+          bottom += `<p class="hint">&#10003; Perjalanan selesai.</p>`;
+          if(order.proofPhoto) bottom += `<img class="proof-thumb" src="${order.proofPhoto}" alt="Bukti selesai">`;
         }
       }
 
@@ -1064,11 +1361,27 @@
           <b>${order.customerName}</b> · ${order.customerPhone}<br>
           ${order.vehicle === 'motor' ? 'Motor' : 'Mobil'} · ${order.distanceKm.toFixed(1)} km · ${order.priceText} · ${order.payMethod === 'transfer' ? 'Transfer bank' : 'QRIS'}<br>
           Dari: ${order.pickupName}<br>Ke: ${order.destName}
+          ${order.notes ? `<br><b>Catatan:</b> ${order.notes}` : ''}
         </div>
         ${bottom}
       `;
       box.appendChild(card);
     });
+  }
+
+  function verifyPayment(orderId){
+    const order = orders.find(o => o.id === orderId);
+    if(!order) return;
+    order.status = 'menunggu_mitra';
+    renderAdminOrders();
+  }
+
+  function rejectOrder(orderId){
+    const order = orders.find(o => o.id === orderId);
+    if(!order) return;
+    if(!confirm(`Tolak pesanan #${order.id}? Pesanan tidak akan diproses lebih lanjut.`)) return;
+    order.status = 'ditolak';
+    renderAdminOrders();
   }
 
   function assignDriver(orderId){
@@ -1081,6 +1394,8 @@
     order.status = 'driver_dipilih';
     driver.status = 'mengantar';
     renderAdminOrders();
+    renderMitraManageList();
+    updateBusyNotice();
   }
 
   function sendWaToCustomer(orderId){
@@ -1097,16 +1412,98 @@
     renderAdminOrders();
   }
 
+  // ================= KELOLA MITRA (ADMIN) =================
+  function renderMitraManageList(){
+    const box = document.getElementById('mitraManageList');
+    if(!box) return;
+    if(drivers.length === 0){ box.innerHTML = `<div class="empty-state">Belum ada mitra terdaftar.</div>`; return; }
+    box.innerHTML = '';
+    drivers.forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'mitra-row';
+      const isOn = d.status !== 'nonaktif';
+      const statusText = d.status === 'tersedia' ? 'Tersedia' : (d.status === 'mengantar' ? 'Sedang mengantar' : 'Nonaktif');
+      row.innerHTML = `
+        <div class="driver-avatar">${d.name.charAt(0)}</div>
+        <div style="flex:1; min-width:0;">
+          <div class="mitra-row-name">${d.name}</div>
+          <div class="mitra-row-sub">${d.vehicle === 'motor' ? 'Motor' : 'Mobil'} · ${d.plate} · ${statusText}</div>
+        </div>
+        <button type="button" class="mitra-toggle ${isOn ? 'on' : 'off'}" onclick="toggleMitraStatus(${d.id})" ${d.status === 'mengantar' ? 'disabled' : ''}>${isOn ? 'Aktif' : 'Nonaktif'}</button>
+      `;
+      box.appendChild(row);
+    });
+  }
+
+  function toggleMitraStatus(driverId){
+    const d = drivers.find(x => x.id === driverId);
+    if(!d || d.status === 'mengantar') return;
+    d.status = (d.status === 'tersedia') ? 'nonaktif' : 'tersedia';
+    renderMitraManageList();
+    updateBusyNotice();
+  }
+
+  function addMitra(){
+    const nama = document.getElementById('mitraNama').value.trim();
+    const kendaraan = document.getElementById('mitraKendaraan').value;
+    const plat = document.getElementById('mitraPlat').value.trim();
+    const hp = document.getElementById('mitraHp').value.trim();
+    if(!nama || !plat || !hp){ alert('Lengkapi nama, plat nomor, dan nomor WhatsApp mitra dulu ya.'); return; }
+    const newId = drivers.length ? Math.max(...drivers.map(d => d.id)) + 1 : 1;
+    drivers.push({id:newId, name:nama, vehicle:kendaraan, plate:plat, phone:hp.replace(/^0/, '62'), status:'tersedia'});
+    document.getElementById('mitraNama').value = '';
+    document.getElementById('mitraPlat').value = '';
+    document.getElementById('mitraHp').value = '';
+    rebuildDriverPicker();
+    renderMitraManageList();
+    renderAdminOrders();
+    updateBusyNotice();
+    showToast(`Mitra ${nama} berhasil ditambahkan.`);
+  }
+
   // ================= DRIVER / MITRA VIEW =================
+  function rebuildDriverPicker(){
+    const picker = document.getElementById('driverPicker');
+    const prevValue = picker.value;
+    picker.innerHTML = '';
+    drivers.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = `${d.name} (${d.vehicle === 'motor' ? 'Motor' : 'Mobil'})`;
+      picker.appendChild(opt);
+    });
+    if(prevValue && drivers.some(d => String(d.id) === prevValue)) picker.value = prevValue;
+  }
+  rebuildDriverPicker();
   const driverPicker = document.getElementById('driverPicker');
-  drivers.forEach(d => {
-    const opt = document.createElement('option');
-    opt.value = d.id;
-    opt.textContent = `${d.name} (${d.vehicle === 'motor' ? 'Motor' : 'Mobil'})`;
-    driverPicker.appendChild(opt);
-  });
 
   const driverMiniMaps = {};
+  const pendingPhotos = {};
+
+  function handleProofPhoto(orderId, input){
+    const file = input.files && input.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      pendingPhotos[orderId] = reader.result;
+      const preview = document.getElementById('photoPreview-' + orderId);
+      if(preview){ preview.src = reader.result; preview.style.display = 'block'; }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function completeOrder(orderId){
+    const order = orders.find(o => o.id === orderId);
+    if(!order) return;
+    order.status = 'selesai';
+    order.proofPhoto = pendingPhotos[orderId] || null;
+    delete pendingPhotos[orderId];
+    const driver = drivers.find(d => d.id === order.driverId);
+    if(driver) driver.status = 'tersedia';
+    renderDriverView();
+    updateBusyNotice();
+    showToast(`Pesanan #${order.id} ditandai selesai.`);
+  }
 
   function renderDriverView(){
     const driverId = parseInt(driverPicker.value);
@@ -1119,7 +1516,7 @@
         <div>
           <div class="driver-name">${driver.name}</div>
           <div class="driver-sub">${driver.vehicle === 'motor' ? 'Motor' : 'Mobil'} · ${driver.plate}</div>
-          <div class="driver-sub"><span class="status-dot"></span>${driver.status === 'tersedia' ? 'Tersedia' : 'Sedang mengantar'}</div>
+          <div class="driver-sub"><span class="status-dot ${driver.status === 'tersedia' ? '' : 'off'}"></span>${driver.status === 'tersedia' ? 'Tersedia' : (driver.status === 'mengantar' ? 'Sedang mengantar' : 'Nonaktif')}</div>
         </div>
       </div>`;
 
@@ -1131,6 +1528,25 @@
       const card = document.createElement('div');
       card.className = 'order-card';
       const mapId = `driverMap-${order.id}`;
+
+      let action = '';
+      if(order.status === 'driver_dipilih'){
+        action = `<p class="hint">Menunggu admin mengirim info ke pemesan lewat WhatsApp sebelum trip dimulai.</p>`;
+      } else if(order.status === 'terkonfirmasi'){
+        if(order.notes){
+          action = `<div class="photo-upload">
+              <label style="margin:0 0 6px;">Bukti foto (opsional, disarankan karena ada titip beli)</label>
+              <input type="file" accept="image/*" onchange="handleProofPhoto(${order.id}, this)">
+              <img class="photo-preview" id="photoPreview-${order.id}">
+            </div>
+            <div class="order-row"><button type="button" class="btn btn-primary btn-sm" onclick="completeOrder(${order.id})">Tandai selesai</button></div>`;
+        } else {
+          action = `<div class="order-row"><button type="button" class="btn btn-primary btn-sm" onclick="completeOrder(${order.id})">Tandai selesai</button></div>`;
+        }
+      } else if(order.status === 'selesai'){
+        action = `<p class="hint">&#10003; Sudah kamu tandai selesai.</p>${order.proofPhoto ? `<img class="proof-thumb" src="${order.proofPhoto}" alt="Bukti selesai">` : ''}`;
+      }
+
       card.innerHTML = `
         <div class="order-top">
           <div class="order-id">Pesanan #${order.id}</div>
@@ -1149,7 +1565,9 @@
           <b>Data pemesan</b><br>
           ${order.customerName} · ${order.customerPhone}<br>
           ${order.distanceKm.toFixed(1)} km · ${order.priceText} · ${order.payMethod === 'transfer' ? 'Transfer bank' : 'QRIS'}
+          ${order.notes ? `<br><b>Catatan:</b> ${order.notes}` : ''}
         </div>
+        ${action}
       `;
       box.appendChild(card);
       setTimeout(() => initDriverMiniMap(mapId, order), 30);
@@ -1163,7 +1581,9 @@
     m.attributionControl.setPrefix('Tuan Ojek');
     L.marker(order.pickupLatLng, {icon:pickupIcon}).addTo(m);
     L.marker(order.destLatLng, {icon:destIcon}).addTo(m);
-    const line = L.polyline([order.pickupLatLng, order.destLatLng], {color:'#1B5E20', weight:3, dashArray:'6 6'}).addTo(m);
+    const line = (order.routeCoords && order.routeCoords.length)
+      ? L.polyline(order.routeCoords, {color:'#1B5E20', weight:4, opacity:0.88, lineJoin:'round', lineCap:'round'}).addTo(m)
+      : L.polyline([order.pickupLatLng, order.destLatLng], {color:'#1B5E20', weight:3, dashArray:'6 6'}).addTo(m);
     m.fitBounds(line.getBounds(), {padding:[24,24]});
     driverMiniMaps[mapId] = m;
   }
@@ -1174,6 +1594,9 @@
   renderPromos();
   renderCustOrders();
   updateProfileUI();
+  updateStepProgress();
+  updateBusyNotice();
+  updateFocusMode();
 </script>
 </body>
 </html>
