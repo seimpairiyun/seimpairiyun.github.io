@@ -410,13 +410,47 @@
   .form-grid .full{grid-column:1 / -1;}
 
   /* ===== Bukti foto selesai (mitra) ===== */
-  .photo-upload{
-    margin-top:10px; border:1.5px dashed var(--border); border-radius:13px; padding:10px 12px;
-    background:var(--surface); font-size:12px; color:var(--ink-soft);
+  .photo-upload-card{margin-top:12px;}
+  .photo-upload-label{font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; display:block;}
+  .photo-dropzone{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    border:1.5px dashed var(--border); border-radius:15px; padding:20px 14px; cursor:pointer;
+    background:var(--surface-soft); text-align:center; transition:border-color .2s var(--ease-soft), background .2s var(--ease-soft), transform .15s var(--ease-soft);
   }
-  .photo-upload input[type=file]{font-family:inherit; font-size:12px; width:100%;}
-  .photo-preview{width:100%; max-height:150px; object-fit:cover; border-radius:11px; margin-top:8px; display:none; box-shadow:var(--shadow-sm);}
-  .proof-thumb{width:100%; max-height:150px; object-fit:cover; border-radius:12px; margin-top:8px; box-shadow:var(--shadow-sm);}
+  .photo-dropzone:hover{border-color:var(--primary-light); background:var(--primary-soft);}
+  .photo-dropzone:active{transform:scale(0.99);}
+  .photo-dropzone-icon{
+    width:38px; height:38px; border-radius:50%; background:var(--primary-soft); color:var(--primary);
+    display:flex; align-items:center; justify-content:center; margin-bottom:2px;
+  }
+  .photo-dropzone-icon svg{width:19px; height:19px;}
+  .photo-dropzone-title{font-size:12.5px; font-weight:700; color:var(--ink);}
+  .photo-dropzone-sub{font-size:11px; color:var(--ink-soft); line-height:1.4;}
+  .photo-dropzone.hidden{display:none;}
+
+  .photo-attached{
+    display:none; gap:11px; align-items:center; border:1px solid var(--border); border-radius:15px;
+    padding:10px; background:var(--surface); box-shadow:var(--shadow-sm); animation:cardIn .3s var(--ease);
+  }
+  .photo-attached.show{display:flex;}
+  .photo-attached-thumb{width:56px; height:56px; border-radius:11px; object-fit:cover; flex-shrink:0; box-shadow:var(--shadow-sm);}
+  .photo-attached-info{flex:1; min-width:0;}
+  .photo-attached-name{
+    font-size:12.5px; font-weight:700; color:var(--primary-dark); display:flex; align-items:center; gap:5px;
+  }
+  .photo-attached-name svg{width:14px; height:14px; flex-shrink:0;}
+  .photo-attached-sub{font-size:11px; color:var(--ink-soft); margin-top:1px;}
+  .photo-attached-remove{
+    border:none; background:transparent; color:var(--danger); font-family:inherit; font-size:11.5px;
+    font-weight:700; cursor:pointer; padding:2px 0; margin-top:3px;
+  }
+  .photo-attached-remove:hover{text-decoration:underline;}
+  .proof-final{margin-top:10px; border:1px solid var(--border); border-radius:15px; padding:10px; background:var(--surface-soft);}
+  .proof-final-label{
+    font-size:11.5px; font-weight:700; color:var(--ink-soft); display:flex; align-items:center; gap:5px; margin-bottom:7px;
+  }
+  .proof-final-label svg{width:14px; height:14px; color:var(--primary);}
+  .proof-final-thumb{width:100%; max-height:150px; object-fit:cover; border-radius:11px; box-shadow:var(--shadow-sm); display:block;}
   .mini-map{height:170px; border-radius:13px; border:1px solid var(--border); margin-top:10px; box-shadow:var(--shadow-sm);}
 
   /* ===== Promo tab ===== */
@@ -567,7 +601,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
                     <div><b>Lagi jam sibuk</b><span id="busyNoticeText">Mitra untuk kendaraan ini sedang penuh.</span> Pesanan tetap bisa dikirim, admin akan carikan mitra secepat mungkin.</div>
                   </div>
-                  <button type="button" class="btn btn-outline btn-step-next" onclick="goToStep2()">Lanjut ke rute perjalanan</button>
                 </div>
               </div>
             </section>
@@ -982,7 +1015,7 @@
   let mode = 'pickup';
   let pay = 'transfer';
   let pickupMarker = null, destMarker = null, routeLine = null;
-  let lastRouteKm = null, lastRouteCoords = null, routeFetchToken = 0;
+  let lastRouteKm = null, lastRouteCoords = null, routeFetchToken = 0, routeIsReal = false;
 
   // ---------- Step accordion (minimize per step) ----------
   let openStep = 1;
@@ -1095,6 +1128,7 @@
     updatePrice();
     updateBusyNotice();
     updateStepSummaries();
+    if(openStep === 1) setTimeout(() => openStepNum(2), 180);
   }
   function setMode(m){ mode = m; }
 
@@ -1214,19 +1248,47 @@
     reverseGeocode(e.latlng, mode);
   });
 
+  // Bikin garis lengkung (bukan lurus) mengikuti arah umum jalan, dipakai kalau layanan
+  // rute jalan asli (OSRM) tidak bisa diakses — misalnya diblok sandbox preview.
+  function seededRand(seed){
+    const x = Math.sin(seed * 12.9898) * 43758.5453;
+    return x - Math.floor(x);
+  }
+  function fallbackCurvedRoute(a, b){
+    const dx = b.lng - a.lng, dy = b.lat - a.lat;
+    const dist = Math.sqrt(dx*dx + dy*dy) || 0.0001;
+    const segments = Math.min(18, Math.max(6, Math.round(dist * 500)));
+    const px = -dy / dist, py = dx / dist; // vektor tegak lurus garis lurus
+    const bulge = dist * 0.14;
+    const seed = (a.lat + a.lng) * 1000;
+    const points = [];
+    for(let i = 0; i <= segments; i++){
+      const t = i / segments;
+      const baseLat = a.lat + dy * t;
+      const baseLng = a.lng + dx * t;
+      const envelope = Math.sin(Math.PI * t); // 0 di ujung, maksimum di tengah
+      const wobble = (seededRand(seed + i) - 0.5) * dist * 0.06 * envelope;
+      const offset = bulge * envelope + wobble;
+      points.push([baseLat + py * offset, baseLng + px * offset]);
+    }
+    return points;
+  }
+
   async function drawRoute(){
     if(routeLine){ map.removeLayer(routeLine); routeLine = null; }
     if(!(pickupMarker && destMarker)){
-      lastRouteKm = null; lastRouteCoords = null;
+      lastRouteKm = null; lastRouteCoords = null; routeIsReal = false;
       return;
     }
     const a = pickupMarker.getLatLng(), b = destMarker.getLatLng();
     const myToken = ++routeFetchToken;
 
-    // garis lurus sementara sambil rute jalan dihitung, biar terasa responsif
-    routeLine = L.polyline([a, b], {color:'#1B5E20', weight:3, dashArray:'6 6', opacity:0.55}).addTo(map);
+    // kurva sementara (bukan garis lurus) sambil rute jalan asli dihitung
+    const curve = fallbackCurvedRoute(a, b);
+    routeLine = L.polyline(curve, {color:'#1B5E20', weight:3.2, dashArray:'7 6', opacity:0.6}).addTo(map);
     map.fitBounds(routeLine.getBounds(), {padding:[30,30]});
-    document.getElementById('distText').textContent = 'Menghitung rute jalan...';
+    lastRouteCoords = curve; lastRouteKm = null; routeIsReal = false;
+    document.getElementById('distText').textContent = 'Menghitung rute...';
 
     try{
       const url = `https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson`;
@@ -1240,12 +1302,14 @@
         map.fitBounds(routeLine.getBounds(), {padding:[30,30]});
         lastRouteKm = data.routes[0].distance / 1000;
         lastRouteCoords = coords;
-      } else {
-        lastRouteKm = null; lastRouteCoords = null;
+        routeIsReal = true;
+      } else if(routeLine){
+        routeLine.setStyle({opacity:0.8});
       }
     }catch(err){
+      // layanan rute jalan asli tidak terjangkau (mis. diblok sandbox) — tetap pakai kurva perkiraan di atas
       if(myToken !== routeFetchToken) return;
-      lastRouteKm = null; lastRouteCoords = null;
+      if(routeLine) routeLine.setStyle({opacity:0.8});
     }
     if(myToken === routeFetchToken) updatePrice();
   }
@@ -1275,7 +1339,7 @@
       return;
     }
     const {km, price} = currentPrice();
-    const routeNote = (lastRouteKm !== null) ? 'rute jalan' : 'estimasi garis lurus';
+    const routeNote = routeIsReal ? 'rute jalan' : 'estimasi rute';
     distEl.textContent = `${km.toFixed(1)} km · ${routeNote} — ${vehicle}`;
     priceEl.textContent = 'Rp ' + price.toLocaleString('id-ID');
   }
@@ -1332,7 +1396,7 @@
     if(pickupMarker){ map.removeLayer(pickupMarker); pickupMarker = null; }
     if(destMarker){ map.removeLayer(destMarker); destMarker = null; }
     if(routeLine){ map.removeLayer(routeLine); routeLine = null; }
-    lastRouteKm = null; lastRouteCoords = null;
+    lastRouteKm = null; lastRouteCoords = null; routeIsReal = false;
     updatePrice();
     updateStepProgress();
     openStepNum(1);
@@ -1340,6 +1404,14 @@
 
   // ================= CUSTOMER: DAFTAR PESANAN =================
   const emptyOrdersSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>';
+
+  function proofFinalHtml(photo){
+    if(!photo) return '';
+    return `<div class="proof-final">
+      <div class="proof-final-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>Bukti foto selesai</div>
+      <img class="proof-final-thumb" src="${photo}" alt="Bukti selesai">
+    </div>`;
+  }
 
   function renderCustOrders(){
     const box = document.getElementById('custOrderList');
@@ -1365,7 +1437,7 @@
           ${order.notes ? `<br><b>Catatan:</b> ${order.notes}` : ''}
           ${d ? `<br><b>Mitra:</b> ${d.name} — ${d.plate}` : ''}
         </div>
-        ${order.proofPhoto ? `<img class="proof-thumb" src="${order.proofPhoto}" alt="Bukti selesai">` : ''}`;
+        ${proofFinalHtml(order.proofPhoto)}`;
       box.appendChild(card);
     });
   }
@@ -1429,7 +1501,7 @@
           bottom += `<p class="hint">&#10003; Sudah dikirim ke WhatsApp pemesan, mitra sedang mengantar.</p>`;
         } else if(order.status === 'selesai'){
           bottom += `<p class="hint">&#10003; Perjalanan selesai.</p>`;
-          if(order.proofPhoto) bottom += `<img class="proof-thumb" src="${order.proofPhoto}" alt="Bukti selesai">`;
+          if(order.proofPhoto) bottom += proofFinalHtml(order.proofPhoto);
         }
       }
 
@@ -1567,10 +1639,24 @@
     const reader = new FileReader();
     reader.onload = () => {
       pendingPhotos[orderId] = reader.result;
+      const dropzone = document.getElementById('photoDropzone-' + orderId);
+      const attached = document.getElementById('photoAttached-' + orderId);
       const preview = document.getElementById('photoPreview-' + orderId);
-      if(preview){ preview.src = reader.result; preview.style.display = 'block'; }
+      if(preview) preview.src = reader.result;
+      if(dropzone) dropzone.classList.add('hidden');
+      if(attached) attached.classList.add('show');
     };
     reader.readAsDataURL(file);
+  }
+
+  function removeProofPhoto(orderId){
+    delete pendingPhotos[orderId];
+    const dropzone = document.getElementById('photoDropzone-' + orderId);
+    const attached = document.getElementById('photoAttached-' + orderId);
+    const input = document.getElementById('photoInput-' + orderId);
+    if(input) input.value = '';
+    if(dropzone) dropzone.classList.remove('hidden');
+    if(attached) attached.classList.remove('show');
   }
 
   function completeOrder(orderId){
@@ -1615,17 +1701,32 @@
         action = `<p class="hint">Menunggu admin mengirim info ke pemesan lewat WhatsApp sebelum trip dimulai.</p>`;
       } else if(order.status === 'terkonfirmasi'){
         if(order.notes){
-          action = `<div class="photo-upload">
-              <label style="margin:0 0 6px;">Bukti foto (opsional, disarankan karena ada titip beli)</label>
-              <input type="file" accept="image/*" onchange="handleProofPhoto(${order.id}, this)">
-              <img class="photo-preview" id="photoPreview-${order.id}">
+          const hasPhoto = !!pendingPhotos[order.id];
+          action = `<div class="photo-upload-card">
+              <label class="photo-upload-label">Bukti foto (opsional, disarankan karena ada titip beli)</label>
+              <label class="photo-dropzone ${hasPhoto ? 'hidden' : ''}" id="photoDropzone-${order.id}" for="photoInput-${order.id}">
+                <span class="photo-dropzone-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8a2 2 0 0 1 2-2h1.5l1-1.5h7l1 1.5H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12.5" r="3.3"/></svg>
+                </span>
+                <span class="photo-dropzone-title">Ketuk untuk ambil/pilih foto</span>
+                <span class="photo-dropzone-sub">Format JPG/PNG, disimpan hanya untuk sesi ini</span>
+              </label>
+              <input type="file" accept="image/*" id="photoInput-${order.id}" style="display:none;" onchange="handleProofPhoto(${order.id}, this)">
+              <div class="photo-attached ${hasPhoto ? 'show' : ''}" id="photoAttached-${order.id}">
+                <img class="photo-attached-thumb" id="photoPreview-${order.id}" src="${pendingPhotos[order.id] || ''}">
+                <div class="photo-attached-info">
+                  <div class="photo-attached-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>Foto terlampir</div>
+                  <div class="photo-attached-sub">Siap dikirim sebagai bukti</div>
+                  <button type="button" class="photo-attached-remove" onclick="removeProofPhoto(${order.id})">Hapus & pilih ulang</button>
+                </div>
+              </div>
             </div>
             <div class="order-row"><button type="button" class="btn btn-primary btn-sm" onclick="completeOrder(${order.id})">Tandai selesai</button></div>`;
         } else {
           action = `<div class="order-row"><button type="button" class="btn btn-primary btn-sm" onclick="completeOrder(${order.id})">Tandai selesai</button></div>`;
         }
       } else if(order.status === 'selesai'){
-        action = `<p class="hint">&#10003; Sudah kamu tandai selesai.</p>${order.proofPhoto ? `<img class="proof-thumb" src="${order.proofPhoto}" alt="Bukti selesai">` : ''}`;
+        action = `<p class="hint">&#10003; Sudah kamu tandai selesai.</p>${proofFinalHtml(order.proofPhoto)}`;
       }
 
       card.innerHTML = `
