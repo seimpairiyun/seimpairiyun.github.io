@@ -1998,14 +1998,24 @@
                         title="Ganti tema"
                         aria-pressed="false"
                     >
-                        <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg
+                            class="ic-sun"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
                             <circle cx="12" cy="12" r="4" />
                             <path
                                 d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
                             />
                         </svg>
-                        <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        <svg
+                            class="ic-moon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -2063,8 +2073,12 @@
 
                 <div class="filter-bar" id="filterBar">
                     <button class="chip active" data-filter="all">Semua</button>
-                    <button class="chip" data-filter="OK">✅ OK / Normal</button>
-                    <button class="chip" data-filter="Bermasalah">⚠️ Bermasalah</button>
+                    <button class="chip" data-filter="OK">
+                        ✅ OK / Normal
+                    </button>
+                    <button class="chip" data-filter="Bermasalah">
+                        ⚠️ Bermasalah
+                    </button>
                 </div>
 
                 <div class="table-wrapper">
@@ -2072,14 +2086,24 @@
                         <table class="checkup-table" id="checkupTable">
                             <thead>
                                 <tr>
-                                    <th style="width: 52px; text-align: center">No</th>
+                                    <th style="width: 52px; text-align: center">
+                                        No
+                                    </th>
                                     <th style="width: 190px">Area / Barang</th>
                                     <th style="width: 130px">Status</th>
-                                    <th style="width: 230px">Kondisi Lapangan</th>
-                                    <th style="width: 220px">Laporan Masalah</th>
+                                    <th style="width: 230px">
+                                        Kondisi Lapangan
+                                    </th>
+                                    <th style="width: 220px">
+                                        Laporan Masalah
+                                    </th>
                                     <th style="width: 200px">Tindak Lanjut</th>
                                     <th style="width: 150px">Keterangan</th>
-                                    <th style="width: 100px; text-align: center">Aksi</th>
+                                    <th
+                                        style="width: 100px; text-align: center"
+                                    >
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody"></tbody>
@@ -2132,11 +2156,19 @@
                 </div>
                 <div class="form-group">
                     <label for="modalKeterangan">Keterangan</label>
-                    <input type="text" id="modalKeterangan" placeholder="Opsional" />
+                    <input
+                        type="text"
+                        id="modalKeterangan"
+                        placeholder="Opsional"
+                    />
                 </div>
                 <div class="modal-actions">
-                    <button class="btn btn-secondary" id="btnModalCancel">Batal</button>
-                    <button class="btn btn-success" id="btnModalSave">💾 Simpan Item</button>
+                    <button class="btn btn-secondary" id="btnModalCancel">
+                        Batal
+                    </button>
+                    <button class="btn btn-success" id="btnModalSave">
+                        💾 Simpan Item
+                    </button>
                 </div>
             </div>
         </div>
@@ -2152,19 +2184,31 @@
                 <div class="area-tabs" id="areaTabs"></div>
                 <div class="assign-row">
                     <div class="form-group" style="margin: 0">
-                        <label for="assignSupervisor">ART Penanggung Jawab</label>
+                        <label for="assignSupervisor"
+                            >ART Penanggung Jawab</label
+                        >
                         <select id="assignSupervisor"></select>
                     </div>
-                    <button class="btn btn-primary" id="btnAssignSpv">💾 Simpan</button>
+                    <button class="btn btn-primary" id="btnAssignSpv">
+                        💾 Simpan
+                    </button>
                 </div>
                 <span class="section-label">Daftar Item</span>
                 <div class="item-list" id="itemList"></div>
                 <div class="item-add-row">
-                    <input type="text" id="newItemInput" placeholder="Nama item baru..." />
-                    <button class="btn btn-success" id="btnAddItem">+ Tambah</button>
+                    <input
+                        type="text"
+                        id="newItemInput"
+                        placeholder="Nama item baru..."
+                    />
+                    <button class="btn btn-success" id="btnAddItem">
+                        + Tambah
+                    </button>
                 </div>
                 <div class="modal-actions">
-                    <button class="btn btn-secondary" id="btnKelolaClose">Tutup</button>
+                    <button class="btn btn-secondary" id="btnKelolaClose">
+                        Tutup
+                    </button>
                 </div>
             </div>
         </div>
@@ -2175,7 +2219,8 @@
                 <div class="sheet-handle"></div>
                 <h2>👥 Kelola ART</h2>
                 <p class="modal-subtitle">
-                    Tambah, rename, atau hapus ART. Assign ke area lewat menu Kelola Area.
+                    Tambah, rename, atau hapus ART. Assign ke area lewat menu
+                    Kelola Area.
                 </p>
                 <div class="sup-list" id="supList"></div>
                 <div class="sup-add-row">
@@ -2184,10 +2229,14 @@
                         id="newSupInput"
                         placeholder="Nama ART baru (contoh: ART-K)"
                     />
-                    <button class="btn btn-success" id="btnAddSup">+ Tambah</button>
+                    <button class="btn btn-success" id="btnAddSup">
+                        + Tambah
+                    </button>
                 </div>
                 <div class="modal-actions">
-                    <button class="btn btn-secondary" id="btnSupClose">Tutup</button>
+                    <button class="btn btn-secondary" id="btnSupClose">
+                        Tutup
+                    </button>
                 </div>
             </div>
         </div>
@@ -2195,10 +2244,28 @@
         <!-- PHOTO VIEWER -->
         <div class="photo-viewer-overlay" id="photoViewerOverlay">
             <div class="photo-viewer">
-                <button class="photo-viewer-close" id="photoViewerClose" title="Tutup">✕</button>
-                <button class="photo-nav photo-prev" id="photoPrev" title="Sebelumnya">‹</button>
+                <button
+                    class="photo-viewer-close"
+                    id="photoViewerClose"
+                    title="Tutup"
+                >
+                    ✕
+                </button>
+                <button
+                    class="photo-nav photo-prev"
+                    id="photoPrev"
+                    title="Sebelumnya"
+                >
+                    ‹
+                </button>
                 <img id="photoViewerImg" src="" alt="Preview Foto" />
-                <button class="photo-nav photo-next" id="photoNext" title="Berikutnya">›</button>
+                <button
+                    class="photo-nav photo-next"
+                    id="photoNext"
+                    title="Berikutnya"
+                >
+                    ›
+                </button>
                 <div class="photo-viewer-info">
                     <div class="title" id="photoViewerTitle">-</div>
                     <div class="counter" id="photoViewerCounter"></div>
@@ -2224,7 +2291,9 @@
                 function sync() {
                     const dark = root.getAttribute("data-theme") === "dark";
                     btn.setAttribute("aria-pressed", String(dark));
-                    btn.title = dark ? "Ganti ke mode terang" : "Ganti ke mode gelap";
+                    btn.title = dark
+                        ? "Ganti ke mode terang"
+                        : "Ganti ke mode gelap";
                     meta.setAttribute("content", dark ? "#0c1530" : "#1d4ed8");
                 }
                 function setTheme(t, persist) {
@@ -2232,21 +2301,34 @@
                     root.setAttribute("data-theme", t);
                     sync();
                     if (persist) {
-                        try { localStorage.setItem("dawet_theme", t); } catch (e) {}
+                        try {
+                            localStorage.setItem("dawet_theme", t);
+                        } catch (e) {}
                     }
                     setTimeout(() => root.classList.remove("theme-anim"), 450);
                 }
                 btn.addEventListener("click", () => {
-                    setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
+                    setTheme(
+                        root.getAttribute("data-theme") === "dark"
+                            ? "light"
+                            : "dark",
+                        true,
+                    );
                 });
                 if (window.matchMedia) {
-                    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+                    const mq = window.matchMedia(
+                        "(prefers-color-scheme: dark)",
+                    );
                     const onChange = (e) => {
                         let saved = null;
-                        try { saved = localStorage.getItem("dawet_theme"); } catch (er) {}
-                        if (!saved) setTheme(e.matches ? "dark" : "light", false);
+                        try {
+                            saved = localStorage.getItem("dawet_theme");
+                        } catch (er) {}
+                        if (!saved)
+                            setTheme(e.matches ? "dark" : "light", false);
                     };
-                    if (mq.addEventListener) mq.addEventListener("change", onChange);
+                    if (mq.addEventListener)
+                        mq.addEventListener("change", onChange);
                 }
                 sync();
             })();
@@ -2274,16 +2356,24 @@
                 areas: [],
                 areaItems: [],
                 checkups: [],
-                loaded: false
+                loaded: false,
             };
 
-            function supervisorById(id) { return DB.supervisors.find(s => s.id === id); }
-            function supervisorByName(name) { return DB.supervisors.find(s => s.name === name); }
-            function areaById(id) { return DB.areas.find(a => a.id === id); }
-            function areaByKey(key) { return DB.areas.find(a => a.key === key); }
+            function supervisorById(id) {
+                return DB.supervisors.find((s) => s.id === id);
+            }
+            function supervisorByName(name) {
+                return DB.supervisors.find((s) => s.name === name);
+            }
+            function areaById(id) {
+                return DB.areas.find((a) => a.id === id);
+            }
+            function areaByKey(key) {
+                return DB.areas.find((a) => a.key === key);
+            }
             function areaItemsOf(areaId) {
                 return DB.areaItems
-                    .filter(it => it.area_id === areaId)
+                    .filter((it) => it.area_id === areaId)
                     .sort((a, b) => a.sort_order - b.sort_order);
             }
 
@@ -2297,7 +2387,7 @@
                     key: area.key,
                     label: area.label,
                     supervisor: spv ? spv.name : "",
-                    items: areaItemsOf(area.id).map(it => it.name)
+                    items: areaItemsOf(area.id).map((it) => it.name),
                 };
             }
             function getAreas() {
@@ -2307,7 +2397,7 @@
                     .map(areaToLegacy);
             }
             function getSupervisors() {
-                return DB.supervisors.map(s => s.name);
+                return DB.supervisors.map((s) => s.name);
             }
             function getAreaByKey(key) {
                 const a = areaByKey(key);
@@ -2316,42 +2406,53 @@
             function getAreaBySupervisor(name) {
                 const s = supervisorByName(name);
                 if (!s) return null;
-                const a = DB.areas.find(x => x.supervisor_id === s.id);
+                const a = DB.areas.find((x) => x.supervisor_id === s.id);
                 return a ? areaToLegacy(a) : null;
             }
-            function getCheckups() { return DB.checkups; }
+            function getCheckups() {
+                return DB.checkups;
+            }
 
             /* ========================================================
                3. LOAD DARI SUPABASE
                ======================================================== */
             async function loadAllFromSupabase() {
-                const { data: sups, error: e1 } = await sb.from("supervisors")
-                    .select("id, name").order("name");
+                const { data: sups, error: e1 } = await sb
+                    .from("supervisors")
+                    .select("id, name")
+                    .order("name");
                 if (e1) throw e1;
                 DB.supervisors = sups || [];
 
-                const { data: areas, error: e2 } = await sb.from("areas")
+                const { data: areas, error: e2 } = await sb
+                    .from("areas")
                     .select("id, key, label, supervisor_id, sort_order")
                     .order("sort_order");
                 if (e2) throw e2;
                 DB.areas = areas || [];
 
-                const { data: items, error: e3 } = await sb.from("area_items")
+                const { data: items, error: e3 } = await sb
+                    .from("area_items")
                     .select("id, area_id, name, sort_order")
                     .order("sort_order");
                 if (e3) throw e3;
                 DB.areaItems = items || [];
 
-                const { data: chk, error: e4 } = await sb.from("checkups").select(`
+                const { data: chk, error: e4 } = await sb
+                    .from("checkups")
+                    .select(
+                        `
                     id, area_id, supervisor_id, checkup_date, updated_at, created_at,
                     items:checkup_items (
                         id, status, laporan_masalah, tindak_lanjut, keterangan, foto_urls,
                         area_item:area_items ( id, name, sort_order )
                     )
-                `).order("updated_at", { ascending: false });
+                `,
+                    )
+                    .order("updated_at", { ascending: false });
                 if (e4) throw e4;
 
-                DB.checkups = (chk || []).map(c => ({
+                DB.checkups = (chk || []).map((c) => ({
                     id: c.id,
                     area_id: c.area_id,
                     supervisor_id: c.supervisor_id,
@@ -2359,8 +2460,12 @@
                     created_at: c.created_at,
                     updatedAt: c.updated_at,
                     items: (c.items || [])
-                        .sort((a, b) => (a.area_item?.sort_order ?? 0) - (b.area_item?.sort_order ?? 0))
-                        .map(it => ({
+                        .sort(
+                            (a, b) =>
+                                (a.area_item?.sort_order ?? 0) -
+                                (b.area_item?.sort_order ?? 0),
+                        )
+                        .map((it) => ({
                             id: it.id,
                             area_item_id: it.area_item?.id,
                             areaBarang: it.area_item?.name || "",
@@ -2368,8 +2473,8 @@
                             kondisiFoto: it.foto_urls || [],
                             laporanMasalah: it.laporan_masalah || "",
                             tindakLanjut: it.tindak_lanjut || "",
-                            keterangan: it.keterangan || ""
-                        }))
+                            keterangan: it.keterangan || "",
+                        })),
                 }));
 
                 DB.loaded = true;
@@ -2380,7 +2485,8 @@
                ======================================================== */
             async function compressImage(file, maxW = 1280, quality = 0.7) {
                 if (!file.type.startsWith("image/")) return file;
-                if (file.type === "image/svg+xml" || file.type === "image/gif") return file;
+                if (file.type === "image/svg+xml" || file.type === "image/gif")
+                    return file;
                 return new Promise((resolve) => {
                     const img = new Image();
                     img.onload = () => {
@@ -2391,7 +2497,11 @@
                         canvas.width = w;
                         canvas.height = h;
                         canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-                        canvas.toBlob((blob) => resolve(blob || file), "image/jpeg", quality);
+                        canvas.toBlob(
+                            (blob) => resolve(blob || file),
+                            "image/jpeg",
+                            quality,
+                        );
                     };
                     img.onerror = () => resolve(file);
                     img.src = URL.createObjectURL(file);
@@ -2401,12 +2511,16 @@
             /* ========================================================
                5. UPLOAD / DELETE FOTO
                ======================================================== */
-            async function uploadFoto(file, checkupId, areaItemId, index) {
+            async function uploadFoto(file, checkupId, areaItemId) {
                 const blob = await compressImage(file, 1280, 0.7);
-                const path = `${checkupId}/${areaItemId}-${index}.jpg`;
+                const uniqueId =
+                    (crypto.randomUUID && crypto.randomUUID()) ||
+                    Math.random().toString(36).slice(2) +
+                        Date.now().toString(36);
+                const path = `${checkupId}/${areaItemId}-${uniqueId}.jpg`;
                 const { error } = await sb.storage
                     .from(BUCKET)
-                    .upload(path, blob, { contentType: "image/jpeg", upsert: true });
+                    .upload(path, blob, { contentType: "image/jpeg" }); // upsert: false
                 if (error) throw error;
                 const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
                 return data.publicUrl;
@@ -2423,8 +2537,11 @@
                6. CRUD SUPERVISORS
                ======================================================== */
             async function sbAddSupervisor(name) {
-                const { data, error } = await sb.from("supervisors")
-                    .insert({ name }).select().single();
+                const { data, error } = await sb
+                    .from("supervisors")
+                    .insert({ name })
+                    .select()
+                    .single();
                 if (error) throw error;
                 DB.supervisors.push(data);
                 DB.supervisors.sort((a, b) => a.name.localeCompare(b.name));
@@ -2433,21 +2550,39 @@
             async function sbRenameSupervisor(oldName, newName) {
                 const s = supervisorByName(oldName);
                 if (!s) throw new Error("ART tidak ditemukan");
-                const { data, error } = await sb.from("supervisors")
-                    .update({ name: newName }).eq("id", s.id).select().single();
+                const { data, error } = await sb
+                    .from("supervisors")
+                    .update({ name: newName })
+                    .eq("id", s.id)
+                    .select()
+                    .single();
                 if (error) throw error;
                 DB.supervisors = DB.supervisors
-                    .map(x => x.id === s.id ? data : x)
+                    .map((x) => (x.id === s.id ? data : x))
                     .sort((a, b) => a.name.localeCompare(b.name));
+                // ← area sudah referensi supervisor_id (bukan nama) → otomatis update
                 return data;
             }
             async function sbDeleteSupervisor(name) {
                 const s = supervisorByName(name);
                 if (!s) throw new Error("ART tidak ditemukan");
-                const { error } = await sb.from("supervisors").delete().eq("id", s.id);
+                // lepas dari semua area yang dipegang
+                const { error: e1 } = await sb
+                    .from("areas")
+                    .update({ supervisor_id: null })
+                    .eq("supervisor_id", s.id);
+                if (e1) throw e1;
+                DB.areas.forEach((a) => {
+                    if (a.supervisor_id === s.id) a.supervisor_id = null;
+                });
+
+                // hapus ART
+                const { error } = await sb
+                    .from("supervisors")
+                    .delete()
+                    .eq("id", s.id);
                 if (error) throw error;
-                DB.supervisors = DB.supervisors.filter(x => x.id !== s.id);
-                DB.areas.forEach(a => { if (a.supervisor_id === s.id) a.supervisor_id = null; });
+                DB.supervisors = DB.supervisors.filter((x) => x.id !== s.id);
             }
 
             /* ========================================================
@@ -2456,29 +2591,34 @@
             async function sbAssignSupervisor(areaKey, supervisorName) {
                 const a = areaByKey(areaKey);
                 if (!a) throw new Error("Area tidak ditemukan");
-                const s = supervisorName ? supervisorByName(supervisorName) : null;
+                const s = supervisorName
+                    ? supervisorByName(supervisorName)
+                    : null;
 
-                if (s) {
-                    const conflict = DB.areas.find(x => x.id !== a.id && x.supervisor_id === s.id);
-                    if (conflict) {
-                        const { error } = await sb.from("areas")
-                            .update({ supervisor_id: null }).eq("id", conflict.id);
-                        if (error) throw error;
-                        conflict.supervisor_id = null;
-                    }
-                }
-                const { error } = await sb.from("areas")
-                    .update({ supervisor_id: s ? s.id : null }).eq("id", a.id);
+                const { error } = await sb
+                    .from("areas")
+                    .update({ supervisor_id: s ? s.id : null })
+                    .eq("id", a.id);
                 if (error) throw error;
                 a.supervisor_id = s ? s.id : null;
+                // ← tidak ada lagi: conflict.supervisor_id = null
             }
             async function sbAddAreaItem(areaKey, itemName) {
                 const a = areaByKey(areaKey);
                 if (!a) throw new Error("Area tidak ditemukan");
-                const maxSort = areaItemsOf(a.id).reduce((m, it) => Math.max(m, it.sort_order), 0);
-                const { data, error } = await sb.from("area_items")
-                    .insert({ area_id: a.id, name: itemName, sort_order: maxSort + 1 })
-                    .select().single();
+                const maxSort = areaItemsOf(a.id).reduce(
+                    (m, it) => Math.max(m, it.sort_order),
+                    0,
+                );
+                const { data, error } = await sb
+                    .from("area_items")
+                    .insert({
+                        area_id: a.id,
+                        name: itemName,
+                        sort_order: maxSort + 1,
+                    })
+                    .select()
+                    .single();
                 if (error) throw error;
                 DB.areaItems.push(data);
                 return data;
@@ -2486,28 +2626,41 @@
             async function sbRenameAreaItem(areaKey, oldName, newName) {
                 const a = areaByKey(areaKey);
                 if (!a) throw new Error("Area tidak ditemukan");
-                const it = DB.areaItems.find(x => x.area_id === a.id && x.name === oldName);
+                const it = DB.areaItems.find(
+                    (x) => x.area_id === a.id && x.name === oldName,
+                );
                 if (!it) throw new Error("Item tidak ditemukan");
-                const { data, error } = await sb.from("area_items")
-                    .update({ name: newName }).eq("id", it.id).select().single();
+                const { data, error } = await sb
+                    .from("area_items")
+                    .update({ name: newName })
+                    .eq("id", it.id)
+                    .select()
+                    .single();
                 if (error) throw error;
                 Object.assign(it, data);
-                DB.checkups.forEach(c => {
+                DB.checkups.forEach((c) => {
                     if (c.area_id !== a.id) return;
-                    c.items.forEach(ci => { if (ci.area_item_id === it.id) ci.areaBarang = newName; });
+                    c.items.forEach((ci) => {
+                        if (ci.area_item_id === it.id) ci.areaBarang = newName;
+                    });
                 });
                 return data;
             }
             async function sbDeleteAreaItem(areaKey, itemName) {
                 const a = areaByKey(areaKey);
                 if (!a) throw new Error("Area tidak ditemukan");
-                const it = DB.areaItems.find(x => x.area_id === a.id && x.name === itemName);
+                const it = DB.areaItems.find(
+                    (x) => x.area_id === a.id && x.name === itemName,
+                );
                 if (!it) throw new Error("Item tidak ditemukan");
-                const { error } = await sb.from("area_items").delete().eq("id", it.id);
+                const { error } = await sb
+                    .from("area_items")
+                    .delete()
+                    .eq("id", it.id);
                 if (error) throw error;
-                DB.areaItems = DB.areaItems.filter(x => x.id !== it.id);
-                DB.checkups.forEach(c => {
-                    c.items = c.items.filter(ci => ci.area_item_id !== it.id);
+                DB.areaItems = DB.areaItems.filter((x) => x.id !== it.id);
+                DB.checkups.forEach((c) => {
+                    c.items = c.items.filter((ci) => ci.area_item_id !== it.id);
                 });
             }
 
@@ -2519,60 +2672,95 @@
                 if (!a) throw new Error("Area tidak ditemukan");
                 const today = new Date().toISOString().slice(0, 10);
 
-                const { data: existing } = await sb.from("checkups")
-                    .select("id, area_id, supervisor_id, checkup_date, created_at, updated_at")
-                    .eq("area_id", a.id).eq("checkup_date", today).maybeSingle();
+                const { data: existing } = await sb
+                    .from("checkups")
+                    .select(
+                        "id, area_id, supervisor_id, checkup_date, created_at, updated_at",
+                    )
+                    .eq("area_id", a.id)
+                    .eq("checkup_date", today)
+                    .maybeSingle();
 
                 let checkup = existing;
                 if (!checkup) {
-                    const { data, error } = await sb.from("checkups")
-                        .insert({ area_id: a.id, supervisor_id: a.supervisor_id, checkup_date: today })
-                        .select().single();
+                    const { data, error } = await sb
+                        .from("checkups")
+                        .insert({
+                            area_id: a.id,
+                            supervisor_id: a.supervisor_id,
+                            checkup_date: today,
+                        })
+                        .select()
+                        .single();
                     if (error) throw error;
                     checkup = data;
                     const itemsNow = areaItemsOf(a.id);
                     if (itemsNow.length) {
-                        const rows = itemsNow.map(it => ({
-                            checkup_id: checkup.id, area_item_id: it.id, status: "OK"
+                        const rows = itemsNow.map((it) => ({
+                            checkup_id: checkup.id,
+                            area_item_id: it.id,
+                            status: "OK",
                         }));
-                        const { error: e2 } = await sb.from("checkup_items").insert(rows);
+                        const { error: e2 } = await sb
+                            .from("checkup_items")
+                            .insert(rows);
                         if (e2) throw e2;
                     }
                 } else {
-                    const { data: existingItems } = await sb.from("checkup_items")
-                        .select("area_item_id").eq("checkup_id", checkup.id);
-                    const existingIds = new Set((existingItems || []).map(x => x.area_item_id));
-                    const toAdd = areaItemsOf(a.id).filter(it => !existingIds.has(it.id));
+                    const { data: existingItems } = await sb
+                        .from("checkup_items")
+                        .select("area_item_id")
+                        .eq("checkup_id", checkup.id);
+                    const existingIds = new Set(
+                        (existingItems || []).map((x) => x.area_item_id),
+                    );
+                    const toAdd = areaItemsOf(a.id).filter(
+                        (it) => !existingIds.has(it.id),
+                    );
                     if (toAdd.length) {
-                        const rows = toAdd.map(it => ({
-                            checkup_id: checkup.id, area_item_id: it.id, status: "OK"
+                        const rows = toAdd.map((it) => ({
+                            checkup_id: checkup.id,
+                            area_item_id: it.id,
+                            status: "OK",
                         }));
-                        const { error } = await sb.from("checkup_items").insert(rows);
+                        const { error } = await sb
+                            .from("checkup_items")
+                            .insert(rows);
                         if (error) throw error;
                     }
                 }
 
-                const { data: full, error: e3 } = await sb.from("checkups")
-                    .select(`
+                const { data: full, error: e3 } = await sb
+                    .from("checkups")
+                    .select(
+                        `
                         id, area_id, supervisor_id, checkup_date, created_at, updated_at,
                         items:checkup_items (
                             id, status, laporan_masalah, tindak_lanjut, keterangan, foto_urls,
                             area_item:area_items ( id, name, sort_order )
                         )
-                    `).eq("id", checkup.id).single();
+                    `,
+                    )
+                    .eq("id", checkup.id)
+                    .single();
                 if (e3) throw e3;
 
                 const legacy = {
                     id: full.id,
                     area_id: full.area_id,
                     supervisor_id: full.supervisor_id,
-                    supervisor: (supervisorById(full.supervisor_id) || {}).name || "",
+                    supervisor:
+                        (supervisorById(full.supervisor_id) || {}).name || "",
                     areaKey: a.key,
                     areaLabel: a.label,
                     updatedAt: full.updated_at,
                     items: (full.items || [])
-                        .sort((x, y) => (x.area_item?.sort_order ?? 0) - (y.area_item?.sort_order ?? 0))
-                        .map(it => ({
+                        .sort(
+                            (x, y) =>
+                                (x.area_item?.sort_order ?? 0) -
+                                (y.area_item?.sort_order ?? 0),
+                        )
+                        .map((it) => ({
                             id: it.id,
                             area_item_id: it.area_item?.id,
                             areaBarang: it.area_item?.name || "",
@@ -2580,11 +2768,11 @@
                             kondisiFoto: it.foto_urls || [],
                             laporanMasalah: it.laporan_masalah || "",
                             tindakLanjut: it.tindak_lanjut || "",
-                            keterangan: it.keterangan || ""
-                        }))
+                            keterangan: it.keterangan || "",
+                        })),
                 };
 
-                const idx = DB.checkups.findIndex(c => c.id === legacy.id);
+                const idx = DB.checkups.findIndex((c) => c.id === legacy.id);
                 if (idx >= 0) DB.checkups[idx] = legacy;
                 else DB.checkups.unshift(legacy);
                 return legacy;
@@ -2592,30 +2780,35 @@
 
             async function sbSaveCheckupItem(legacyItem, filesBaru, fotoLama) {
                 const checkupId = currentRecord.id;
-                const startIdx = fotoLama?.length || 0;
                 const uploads = await Promise.all(
-                    (filesBaru || []).map((file, i) =>
-                        uploadFoto(file, checkupId, legacyItem.area_item_id, startIdx + i + 1)
-                    )
+                    (filesBaru || []).map((file) =>
+                        uploadFoto(file, checkupId, legacyItem.area_item_id),
+                    ),
                 );
                 const allUrls = [...(fotoLama || []), ...uploads];
 
-                const { data, error } = await sb.from("checkup_items")
+                const { data, error } = await sb
+                    .from("checkup_items")
                     .update({
                         status: legacyItem.status,
                         laporan_masalah: legacyItem.laporanMasalah || "",
                         tindak_lanjut: legacyItem.tindakLanjut || "",
                         keterangan: legacyItem.keterangan || "",
-                        foto_urls: allUrls
+                        foto_urls: allUrls,
                     })
-                    .eq("id", legacyItem.id).select().single();
+                    .eq("id", legacyItem.id)
+                    .select()
+                    .single();
                 if (error) throw error;
 
-                await sb.from("checkups")
+                await sb
+                    .from("checkups")
                     .update({ updated_at: new Date().toISOString() })
                     .eq("id", checkupId);
 
-                const cached = currentRecord.items.find(x => x.id === legacyItem.id);
+                const cached = currentRecord.items.find(
+                    (x) => x.id === legacyItem.id,
+                );
                 if (cached) {
                     cached.status = data.status;
                     cached.laporanMasalah = data.laporan_masalah || "";
@@ -2626,7 +2819,6 @@
                 currentRecord.updatedAt = new Date().toISOString();
                 return data;
             }
-
             /* ========================================================
                9. STATE
                ======================================================== */
@@ -2639,28 +2831,39 @@
             /* ========================================================
                10. SUPERVISOR SELECT
                ======================================================== */
-            const supervisorSelect = document.getElementById("supervisorSelect");
+            const supervisorSelect =
+                document.getElementById("supervisorSelect");
 
             function populateSupervisorOptions() {
-                const sups = getSupervisors();
-                const areas = getAreas();
+                const areas = getAreas(); // semua area, urut sort_order
                 const selected = supervisorSelect.value;
-                supervisorSelect.innerHTML = '<option value="">-- Pilih Lokasi --</option>';
-                sups.forEach((spv) => {
-                    const area = areas.find(a => a.supervisor === spv);
+                supervisorSelect.innerHTML =
+                    '<option value="">-- Pilih Lokasi --</option>';
+                areas.forEach((area) => {
                     const opt = document.createElement("option");
-                    opt.value = spv;
-                    opt.textContent = area ? area.label : spv;
+                    opt.value = area.key; // ← value = area.key
+                    opt.textContent = area.supervisor
+                        ? `${area.label} — ${area.supervisor}` // contoh: "Lantai 2 — ART-G"
+                        : `${area.label} — (belum ada ART)`;
                     supervisorSelect.appendChild(opt);
                 });
-                if (selected && sups.includes(selected)) supervisorSelect.value = selected;
+                if (selected && areas.some((a) => a.key === selected))
+                    supervisorSelect.value = selected;
             }
 
             supervisorSelect.addEventListener("change", async () => {
-                const spv = supervisorSelect.value;
-                if (!spv) { currentRecord = null; renderTable(true); return; }
-                const area = getAreaBySupervisor(spv);
-                if (!area) { currentRecord = null; renderTable(true); return; }
+                const areaKey = supervisorSelect.value;
+                if (!areaKey) {
+                    currentRecord = null;
+                    renderTable(true);
+                    return;
+                }
+                const area = getAreaByKey(areaKey);
+                if (!area) {
+                    currentRecord = null;
+                    renderTable(true);
+                    return;
+                }
                 try {
                     currentRecord = await sbGetOrCreateCheckup(area.key);
                     renderTable(true);
@@ -2670,24 +2873,30 @@
                 }
             });
 
-            document.getElementById("btnReload").addEventListener("click", async (e) => {
-                const b = e.currentTarget;
-                b.classList.remove("loading"); void b.offsetWidth; b.classList.add("loading");
-                try {
-                    await loadAllFromSupabase();
-                    populateSupervisorOptions();
-                    if (supervisorSelect.value) {
-                        const area = getAreaBySupervisor(supervisorSelect.value);
-                        if (area) currentRecord = await sbGetOrCreateCheckup(area.key);
+            document
+                .getElementById("btnReload")
+                .addEventListener("click", async (e) => {
+                    const b = e.currentTarget;
+                    b.classList.remove("loading");
+                    void b.offsetWidth;
+                    b.classList.add("loading");
+                    try {
+                        await loadAllFromSupabase();
+                        populateSupervisorOptions();
+                        if (supervisorSelect.value) {
+                            const area = getAreaByKey(supervisorSelect.value);
+                            if (area)
+                                currentRecord = await sbGetOrCreateCheckup(
+                                    area.key,
+                                );
+                        }
+                        renderTable(true);
+                        showToast("Data dimuat ulang.", "success");
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Gagal refresh: " + err.message, "error");
                     }
-                    renderTable(true);
-                    showToast("Data dimuat ulang.", "success");
-                } catch (err) {
-                    console.error(err);
-                    showToast("Gagal refresh: " + err.message, "error");
-                }
-            });
-
+                });
             /* ========================================================
                11. RENDER TABEL
                ======================================================== */
@@ -2706,15 +2915,39 @@
                 if (!iso) return "-";
                 const d = new Date(iso);
                 if (isNaN(d.getTime())) return "-";
-                const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-                const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-                return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,"0")}.${String(d.getMinutes()).padStart(2,"0")} WIB`;
+                const hari = [
+                    "Minggu",
+                    "Senin",
+                    "Selasa",
+                    "Rabu",
+                    "Kamis",
+                    "Jumat",
+                    "Sabtu",
+                ];
+                const bulan = [
+                    "Januari",
+                    "Februari",
+                    "Maret",
+                    "April",
+                    "Mei",
+                    "Juni",
+                    "Juli",
+                    "Agustus",
+                    "September",
+                    "Oktober",
+                    "November",
+                    "Desember",
+                ];
+                return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2, "0")}.${String(d.getMinutes()).padStart(2, "0")} WIB`;
             }
             function escapeHtml(str) {
                 if (!str) return "";
                 return String(str)
-                    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
             }
 
             filterBar.addEventListener("click", (e) => {
@@ -2728,11 +2961,14 @@
                 const labels = {
                     all: `Semua (${total})`,
                     OK: `✅ OK / Normal (${ok})`,
-                    Bermasalah: `⚠️ Bermasalah (${bad})`
+                    Bermasalah: `⚠️ Bermasalah (${bad})`,
                 };
                 filterBar.querySelectorAll(".chip").forEach((chip) => {
                     chip.textContent = labels[chip.dataset.filter];
-                    chip.classList.toggle("active", chip.dataset.filter === activeFilter);
+                    chip.classList.toggle(
+                        "active",
+                        chip.dataset.filter === activeFilter,
+                    );
                 });
             }
             function updateProgress(total, ok) {
@@ -2762,29 +2998,44 @@
                     updateFilterChips(0, 0, 0);
                     updateProgress(0, 0);
                     tableBody.innerHTML = emptyRow(
-                        "📋","Belum ada data yang dimuat",
-                        "Pilih <b>Lokasi</b> untuk memuat data area."
+                        "📋",
+                        "Belum ada data yang dimuat",
+                        "Pilih <b>Lokasi</b> untuk memuat data area.",
                     );
                     return;
                 }
                 const area = getAreaByKey(currentRecord.areaKey);
                 const items = currentRecord.items;
-                const okCount = items.filter(i => i.status !== "Bermasalah").length;
+                const okCount = items.filter(
+                    (i) => i.status !== "Bermasalah",
+                ).length;
                 const badCount = items.length - okCount;
 
-                hdrAreaName.textContent = area ? area.label : currentRecord.areaLabel || "-";
+                hdrAreaName.textContent = area
+                    ? area.label
+                    : currentRecord.areaLabel || "-";
                 hdrSupervisor.textContent = currentRecord.supervisor;
                 hdrJumlah.textContent = `${items.length} item`;
-                hdrTanggal.textContent = formatTanggalFull(currentRecord.updatedAt);
+                hdrTanggal.textContent = formatTanggalFull(
+                    currentRecord.updatedAt,
+                );
                 updateFilterChips(items.length, okCount, badCount);
                 updateProgress(items.length, okCount);
 
                 const visible = items
                     .map((item, idx) => ({ item, idx }))
-                    .filter(({ item }) => activeFilter === "all" || item.status === activeFilter);
+                    .filter(
+                        ({ item }) =>
+                            activeFilter === "all" ||
+                            item.status === activeFilter,
+                    );
 
                 if (visible.length === 0) {
-                    tableBody.innerHTML = emptyRow("🔍","Tidak ada item","Tidak ada item dengan status yang dipilih.");
+                    tableBody.innerHTML = emptyRow(
+                        "🔍",
+                        "Tidak ada item",
+                        "Tidak ada item dengan status yang dipilih.",
+                    );
                     return;
                 }
 
@@ -2797,7 +3048,9 @@
                     const statusClass = bad ? "status-masalah" : "status-ok";
                     const statusLabel = bad ? "Bermasalah" : "OK";
 
-                    const fotos = Array.isArray(item.kondisiFoto) ? item.kondisiFoto : [];
+                    const fotos = Array.isArray(item.kondisiFoto)
+                        ? item.kondisiFoto
+                        : [];
                     let fotoHtml;
                     if (fotos.length === 0) {
                         fotoHtml = `<span class="no-photo">No foto</span>`;
@@ -2830,13 +3083,17 @@
             /* ========================================================
                12. PHOTO VIEWER
                ======================================================== */
-            const photoViewerOverlay = document.getElementById("photoViewerOverlay");
+            const photoViewerOverlay =
+                document.getElementById("photoViewerOverlay");
             const photoViewerImg = document.getElementById("photoViewerImg");
-            const photoViewerTitle = document.getElementById("photoViewerTitle");
-            const photoViewerCounter = document.getElementById("photoViewerCounter");
+            const photoViewerTitle =
+                document.getElementById("photoViewerTitle");
+            const photoViewerCounter =
+                document.getElementById("photoViewerCounter");
             const photoPrev = document.getElementById("photoPrev");
             const photoNext = document.getElementById("photoNext");
-            const photoViewerClose = document.getElementById("photoViewerClose");
+            const photoViewerClose =
+                document.getElementById("photoViewerClose");
             let viewerState = { itemIdx: 0, fotoIdx: 0 };
 
             function openPhotoViewer(itemIdx, fotoIdx = 0) {
@@ -2848,10 +3105,13 @@
                 if (!currentRecord) return;
                 const item = currentRecord.items[viewerState.itemIdx];
                 if (!item) return;
-                const fotos = Array.isArray(item.kondisiFoto) ? item.kondisiFoto : [];
+                const fotos = Array.isArray(item.kondisiFoto)
+                    ? item.kondisiFoto
+                    : [];
                 if (fotos.length === 0) return;
                 if (viewerState.fotoIdx < 0) viewerState.fotoIdx = 0;
-                if (viewerState.fotoIdx >= fotos.length) viewerState.fotoIdx = fotos.length - 1;
+                if (viewerState.fotoIdx >= fotos.length)
+                    viewerState.fotoIdx = fotos.length - 1;
                 photoViewerImg.classList.remove("swap");
                 void photoViewerImg.offsetWidth;
                 photoViewerImg.classList.add("swap");
@@ -2862,29 +3122,53 @@
                 photoNext.disabled = viewerState.fotoIdx === fotos.length - 1;
             }
             photoPrev.addEventListener("click", () => {
-                if (viewerState.fotoIdx > 0) { viewerState.fotoIdx--; showPhotoInViewer(); }
+                if (viewerState.fotoIdx > 0) {
+                    viewerState.fotoIdx--;
+                    showPhotoInViewer();
+                }
             });
             photoNext.addEventListener("click", () => {
                 const item = currentRecord.items[viewerState.itemIdx];
-                const fotos = Array.isArray(item.kondisiFoto) ? item.kondisiFoto : [];
-                if (viewerState.fotoIdx < fotos.length - 1) { viewerState.fotoIdx++; showPhotoInViewer(); }
+                const fotos = Array.isArray(item.kondisiFoto)
+                    ? item.kondisiFoto
+                    : [];
+                if (viewerState.fotoIdx < fotos.length - 1) {
+                    viewerState.fotoIdx++;
+                    showPhotoInViewer();
+                }
             });
-            photoViewerClose.addEventListener("click", () => photoViewerOverlay.classList.remove("active"));
+            photoViewerClose.addEventListener("click", () =>
+                photoViewerOverlay.classList.remove("active"),
+            );
             photoViewerOverlay.addEventListener("click", (e) => {
-                if (e.target === photoViewerOverlay) photoViewerOverlay.classList.remove("active");
+                if (e.target === photoViewerOverlay)
+                    photoViewerOverlay.classList.remove("active");
             });
             document.addEventListener("keydown", (e) => {
                 if (e.key === "Escape") {
-                    [photoViewerOverlay, modalOverlay, modalKelolaOverlay, modalSupOverlay].forEach(o => o.classList.remove("active"));
+                    [
+                        photoViewerOverlay,
+                        modalOverlay,
+                        modalKelolaOverlay,
+                        modalSupOverlay,
+                    ].forEach((o) => o.classList.remove("active"));
                     return;
                 }
                 if (!photoViewerOverlay.classList.contains("active")) return;
-                if (e.key === "ArrowLeft" && !photoPrev.disabled) photoPrev.click();
-                if (e.key === "ArrowRight" && !photoNext.disabled) photoNext.click();
+                if (e.key === "ArrowLeft" && !photoPrev.disabled)
+                    photoPrev.click();
+                if (e.key === "ArrowRight" && !photoNext.disabled)
+                    photoNext.click();
             });
             (function () {
                 let startX = null;
-                photoViewerImg.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+                photoViewerImg.addEventListener(
+                    "touchstart",
+                    (e) => {
+                        startX = e.touches[0].clientX;
+                    },
+                    { passive: true },
+                );
                 photoViewerImg.addEventListener("touchend", (e) => {
                     if (startX === null) return;
                     const dx = e.changedTouches[0].clientX - startX;
@@ -2915,11 +3199,15 @@
                 const area = getAreaByKey(currentRecord.areaKey);
                 modalTitle.textContent = `Edit: ${item.areaBarang}`;
                 modalSubtitle.textContent = `${area ? area.label : currentRecord.areaLabel} • ${currentRecord.supervisor}`;
-                modalStatus.value = item.status === "Bermasalah" ? "Bermasalah" : "OK";
+                modalStatus.value =
+                    item.status === "Bermasalah" ? "Bermasalah" : "OK";
                 modalLaporan.value = item.laporanMasalah;
                 modalTindak.value = item.tindakLanjut;
                 modalKeterangan.value = item.keterangan;
-                editingFotos = (item.kondisiFoto || []).map(url => ({ type: "existing", url }));
+                editingFotos = (item.kondisiFoto || []).map((url) => ({
+                    type: "existing",
+                    url,
+                }));
                 renderFotoEditGrid();
                 modalOverlay.classList.add("active");
                 modalOverlay.querySelector(".modal").scrollTop = 0;
@@ -2927,7 +3215,10 @@
             function renderFotoEditGrid() {
                 fotoEditGrid.innerHTML = "";
                 editingFotos.forEach((entry, i) => {
-                    const src = entry.type === "existing" ? entry.url : URL.createObjectURL(entry.file);
+                    const src =
+                        entry.type === "existing"
+                            ? entry.url
+                            : URL.createObjectURL(entry.file);
                     const el = document.createElement("div");
                     el.className = "foto-edit-item";
                     el.innerHTML = `
@@ -2946,7 +3237,9 @@
             <span class="count">${editingFotos.length} / ${MAX_FOTO}</span>
             <input type="file" accept="image/*" multiple style="display:none;" id="fotoUploaderInput">
         `;
-                    uploader.querySelector("input").addEventListener("change", handleFotoUpload);
+                    uploader
+                        .querySelector("input")
+                        .addEventListener("change", handleFotoUpload);
                     fotoEditGrid.appendChild(uploader);
                 }
                 fotoLimitNote.textContent =
@@ -2959,75 +3252,103 @@
                 const files = Array.from(e.target.files || []);
                 if (files.length === 0) return;
                 const available = MAX_FOTO - editingFotos.length;
-                if (available <= 0) { showToast("Maksimal 10 foto per item.", "error"); return; }
+                if (available <= 0) {
+                    showToast("Maksimal 10 foto per item.", "error");
+                    return;
+                }
                 const accepted = files.slice(0, available);
                 accepted.forEach((file) => {
                     if (!file.type.startsWith("image/")) return;
                     editingFotos.push({ type: "new", file });
                 });
                 renderFotoEditGrid();
-                if (files.length > available) showToast(`Hanya ${available} foto ditambahkan (maks 10).`, "error");
+                if (files.length > available)
+                    showToast(
+                        `Hanya ${available} foto ditambahkan (maks 10).`,
+                        "error",
+                    );
             }
-            function removeFotoEdit(i) { editingFotos.splice(i, 1); renderFotoEditGrid(); }
+            function removeFotoEdit(i) {
+                editingFotos.splice(i, 1);
+                renderFotoEditGrid();
+            }
             function closeModal() {
                 modalOverlay.classList.remove("active");
                 editingItem = null;
                 editingFotos = [];
             }
-            document.getElementById("btnModalCancel").addEventListener("click", closeModal);
+            document
+                .getElementById("btnModalCancel")
+                .addEventListener("click", closeModal);
             modalOverlay.addEventListener("click", (e) => {
                 if (e.target === modalOverlay) closeModal();
             });
-            document.getElementById("btnModalSave").addEventListener("click", async () => {
-                if (!editingItem) return;
-                const idx = editingItem.index;
-                const oldItem = currentRecord.items[idx];
+            document
+                .getElementById("btnModalSave")
+                .addEventListener("click", async () => {
+                    if (!editingItem) return;
+                    const idx = editingItem.index;
+                    const oldItem = currentRecord.items[idx];
 
-                const fotoLama = editingFotos.filter(f => f.type === "existing").map(f => f.url);
-                const filesBaru = editingFotos.filter(f => f.type === "new").map(f => f.file);
-                const fotoDihapus = (oldItem.kondisiFoto || []).filter(url => !fotoLama.includes(url));
+                    const fotoLama = editingFotos
+                        .filter((f) => f.type === "existing")
+                        .map((f) => f.url);
+                    const filesBaru = editingFotos
+                        .filter((f) => f.type === "new")
+                        .map((f) => f.file);
+                    const fotoDihapus = (oldItem.kondisiFoto || []).filter(
+                        (url) => !fotoLama.includes(url),
+                    );
 
-                const payload = {
-                    ...oldItem,
-                    status: modalStatus.value,
-                    laporanMasalah: modalLaporan.value.trim(),
-                    tindakLanjut: modalTindak.value.trim(),
-                    keterangan: modalKeterangan.value.trim()
-                };
+                    const payload = {
+                        ...oldItem,
+                        status: modalStatus.value,
+                        laporanMasalah: modalLaporan.value.trim(),
+                        tindakLanjut: modalTindak.value.trim(),
+                        keterangan: modalKeterangan.value.trim(),
+                    };
 
-                const btn = document.getElementById("btnModalSave");
-                const oldText = btn.innerHTML;
-                btn.disabled = true;
-                btn.innerHTML = "⏳ Menyimpan...";
+                    const btn = document.getElementById("btnModalSave");
+                    const oldText = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.innerHTML = "⏳ Menyimpan...";
 
-                try {
-                    for (const url of fotoDihapus) {
-                        try { await deleteFotoByUrl(url); } catch (e) { console.warn(e); }
+                    try {
+                        for (const url of fotoDihapus) {
+                            try {
+                                await deleteFotoByUrl(url);
+                            } catch (e) {
+                                console.warn(e);
+                            }
+                        }
+                        await sbSaveCheckupItem(payload, filesBaru, fotoLama);
+                        renderTable(false);
+                        closeModal();
+                        showToast("Item berhasil disimpan.", "success");
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Gagal menyimpan: " + err.message, "error");
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = oldText;
                     }
-                    await sbSaveCheckupItem(payload, filesBaru, fotoLama);
-                    renderTable(false);
-                    closeModal();
-                    showToast("Item berhasil disimpan.", "success");
-                } catch (err) {
-                    console.error(err);
-                    showToast("Gagal menyimpan: " + err.message, "error");
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = oldText;
-                }
-            });
+                });
 
             /* ========================================================
                14. KELOLA AREA
                ======================================================== */
-            const modalKelolaOverlay = document.getElementById("modalKelolaOverlay");
+            const modalKelolaOverlay =
+                document.getElementById("modalKelolaOverlay");
             const areaTabs = document.getElementById("areaTabs");
-            const assignSupervisor = document.getElementById("assignSupervisor");
+            const assignSupervisor =
+                document.getElementById("assignSupervisor");
             const itemList = document.getElementById("itemList");
             const newItemInput = document.getElementById("newItemInput");
 
-            const ICON_TRASH = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg>';
-            const ICON_EDIT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
+            const ICON_TRASH =
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg>';
+            const ICON_EDIT =
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
 
             (function () {
                 const el = areaTabs;
@@ -3038,25 +3359,43 @@
                 }
                 el.addEventListener("scroll", updateFades, { passive: true });
                 window.addEventListener("resize", updateFades);
-                new MutationObserver(() => requestAnimationFrame(updateFades)).observe(el, { childList: true });
-                document.getElementById("btnKelolaArea").addEventListener("click", () => setTimeout(updateFades, 60));
-                el.addEventListener("wheel", (e) => {
-                    if (el.scrollWidth <= el.clientWidth) return;
-                    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                        e.preventDefault();
-                        el.scrollBy({ left: e.deltaY, behavior: "auto" });
-                    }
-                }, { passive: false });
-                let down = false, moved = false, startX = 0, startLeft = 0;
+                new MutationObserver(() =>
+                    requestAnimationFrame(updateFades),
+                ).observe(el, { childList: true });
+                document
+                    .getElementById("btnKelolaArea")
+                    .addEventListener("click", () =>
+                        setTimeout(updateFades, 60),
+                    );
+                el.addEventListener(
+                    "wheel",
+                    (e) => {
+                        if (el.scrollWidth <= el.clientWidth) return;
+                        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                            e.preventDefault();
+                            el.scrollBy({ left: e.deltaY, behavior: "auto" });
+                        }
+                    },
+                    { passive: false },
+                );
+                let down = false,
+                    moved = false,
+                    startX = 0,
+                    startLeft = 0;
                 el.addEventListener("mousedown", (e) => {
                     if (e.button !== 0) return;
-                    down = true; moved = false;
-                    startX = e.pageX; startLeft = el.scrollLeft;
+                    down = true;
+                    moved = false;
+                    startX = e.pageX;
+                    startLeft = el.scrollLeft;
                 });
                 window.addEventListener("mousemove", (e) => {
                     if (!down) return;
                     const dx = e.pageX - startX;
-                    if (!moved && Math.abs(dx) > 5) { moved = true; el.classList.add("dragging"); }
+                    if (!moved && Math.abs(dx) > 5) {
+                        moved = true;
+                        el.classList.add("dragging");
+                    }
                     if (moved) el.scrollLeft = startLeft - dx;
                 });
                 window.addEventListener("mouseup", () => {
@@ -3064,46 +3403,66 @@
                     down = false;
                     el.classList.remove("dragging");
                 });
-                el.addEventListener("click", (e) => {
-                    if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
-                }, true);
+                el.addEventListener(
+                    "click",
+                    (e) => {
+                        if (moved) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            moved = false;
+                        }
+                    },
+                    true,
+                );
             })();
 
-            document.getElementById("btnKelolaArea").addEventListener("click", () => {
-                kelolaAreaKey = null;
-                populateAssignOptions();
-                renderAreaTabs();
-                const areas = getAreas();
-                if (areas.length > 0) selectKelolaArea(areas[0].key);
-                modalKelolaOverlay.classList.add("active");
-            });
-            document.getElementById("btnKelolaClose").addEventListener("click", () =>
-                modalKelolaOverlay.classList.remove("active")
-            );
+            document
+                .getElementById("btnKelolaArea")
+                .addEventListener("click", () => {
+                    kelolaAreaKey = null;
+                    populateAssignOptions();
+                    renderAreaTabs();
+                    const areas = getAreas();
+                    if (areas.length > 0) selectKelolaArea(areas[0].key);
+                    modalKelolaOverlay.classList.add("active");
+                });
+            document
+                .getElementById("btnKelolaClose")
+                .addEventListener("click", () =>
+                    modalKelolaOverlay.classList.remove("active"),
+                );
             modalKelolaOverlay.addEventListener("click", (e) => {
-                if (e.target === modalKelolaOverlay) modalKelolaOverlay.classList.remove("active");
+                if (e.target === modalKelolaOverlay)
+                    modalKelolaOverlay.classList.remove("active");
             });
 
             function populateAssignOptions() {
                 const sups = getSupervisors();
                 const current = assignSupervisor.value;
-                assignSupervisor.innerHTML = '<option value="">-- Tidak ada --</option>';
+                assignSupervisor.innerHTML =
+                    '<option value="">-- Tidak ada --</option>';
                 sups.forEach((s) => {
                     const opt = document.createElement("option");
-                    opt.value = s; opt.textContent = s;
+                    opt.value = s;
+                    opt.textContent = s;
                     assignSupervisor.appendChild(opt);
                 });
-                if (current && sups.includes(current)) assignSupervisor.value = current;
+                if (current && sups.includes(current))
+                    assignSupervisor.value = current;
             }
             function renderAreaTabs() {
                 const areas = getAreas();
                 areaTabs.innerHTML = "";
                 areas.forEach((area) => {
                     const btn = document.createElement("button");
-                    btn.className = "area-tab" + (area.key === kelolaAreaKey ? " active" : "");
+                    btn.className =
+                        "area-tab" +
+                        (area.key === kelolaAreaKey ? " active" : "");
                     btn.textContent = area.label;
                     btn.title = `${area.key} — ${area.supervisor || "(belum)"}`;
-                    btn.addEventListener("click", () => selectKelolaArea(area.key));
+                    btn.addEventListener("click", () =>
+                        selectKelolaArea(area.key),
+                    );
                     areaTabs.appendChild(btn);
                 });
             }
@@ -3116,8 +3475,10 @@
                     btn.classList.toggle("active", on);
                     if (on) {
                         areaTabs.scrollTo({
-                            left: btn.offsetLeft - (areaTabs.clientWidth - btn.offsetWidth) / 2,
-                            behavior: "smooth"
+                            left:
+                                btn.offsetLeft -
+                                (areaTabs.clientWidth - btn.offsetWidth) / 2,
+                            behavior: "smooth",
                         });
                     }
                 });
@@ -3139,42 +3500,50 @@
                     });
                 }
             }
-            function escapeAttr(s) { return String(s).replace(/"/g, "&quot;"); }
-            function escapeAttrJs(s) { return String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'"); }
+            function escapeAttr(s) {
+                return String(s).replace(/"/g, "&quot;");
+            }
+            function escapeAttrJs(s) {
+                return String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+            }
 
-            document.getElementById("btnAssignSpv").addEventListener("click", async () => {
-                if (!kelolaAreaKey) return;
-                const area = getAreaByKey(kelolaAreaKey);
-                if (!area) return;
-                const newSpv = assignSupervisor.value || "";
+            document
+                .getElementById("btnAssignSpv")
+                .addEventListener("click", async () => {
+                    if (!kelolaAreaKey) return;
+                    const area = getAreaByKey(kelolaAreaKey);
+                    if (!area) return;
+                    const newSpv = assignSupervisor.value || "";
 
-                if (newSpv) {
-                    const conflict = getAreas().find(a => a.key !== kelolaAreaKey && a.supervisor === newSpv);
-                    if (conflict) {
-                        if (!confirm(`${newSpv} sudah menjadi ART untuk ${conflict.label}. Pindahkan ke ${area.label}?`)) return;
+                    // ← tidak ada lagi konfirmasi conflict
+                    try {
+                        await sbAssignSupervisor(kelolaAreaKey, newSpv);
+                        populateSupervisorOptions();
+                        renderAreaTabs();
+                        showToast(
+                            `ART ${area.label} = ${newSpv || "(kosong)"}`,
+                            "success",
+                        );
+                        if (supervisorSelect.value === kelolaAreaKey) {
+                            currentRecord =
+                                await sbGetOrCreateCheckup(kelolaAreaKey);
+                            renderTable(false);
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Gagal assign: " + err.message, "error");
                     }
-                }
-                try {
-                    await sbAssignSupervisor(kelolaAreaKey, newSpv);
-                    populateSupervisorOptions();
-                    renderAreaTabs();
-                    showToast(`ART ${area.label} = ${newSpv || "(kosong)"}`, "success");
-                    if (supervisorSelect.value === newSpv) {
-                        currentRecord = await sbGetOrCreateCheckup(kelolaAreaKey);
-                        renderTable(false);
-                    }
-                } catch (err) {
-                    console.error(err);
-                    showToast("Gagal assign: " + err.message, "error");
-                }
-            });
+                });
 
             async function renameItem(areaKey, index, inputEl) {
                 const area = getAreaByKey(areaKey);
                 if (!area) return;
                 const oldName = area.items[index];
                 const newName = inputEl.value.trim();
-                if (!newName) { inputEl.value = oldName; return; }
+                if (!newName) {
+                    inputEl.value = oldName;
+                    return;
+                }
                 if (newName === oldName) return;
                 try {
                     await sbRenameAreaItem(areaKey, oldName, newName);
@@ -3184,7 +3553,10 @@
                         currentRecord = await sbGetOrCreateCheckup(areaKey);
                         renderTable(false);
                     }
-                    showToast(`Item di-rename: ${oldName} → ${newName}`, "success");
+                    showToast(
+                        `Item di-rename: ${oldName} → ${newName}`,
+                        "success",
+                    );
                 } catch (err) {
                     console.error(err);
                     showToast("Gagal rename: " + err.message, "error");
@@ -3195,7 +3567,8 @@
                 const area = getAreaByKey(areaKey);
                 if (!area) return;
                 const name = area.items[index];
-                if (!confirm(`Hapus item "${name}" dari ${area.label}?`)) return;
+                if (!confirm(`Hapus item "${name}" dari ${area.label}?`))
+                    return;
                 try {
                     await sbDeleteAreaItem(areaKey, name);
                     renderAreaTabs();
@@ -3211,30 +3584,46 @@
                 }
             }
 
-            document.getElementById("btnAddItem").addEventListener("click", async () => {
-                if (!kelolaAreaKey) return;
-                const name = newItemInput.value.trim();
-                if (!name) { showToast("Nama item tidak boleh kosong.", "error"); return; }
-                const area = getAreaByKey(kelolaAreaKey);
-                if (!area) return;
-                if (area.items.includes(name)) { showToast(`Item "${name}" sudah ada.`, "error"); return; }
-                try {
-                    await sbAddAreaItem(kelolaAreaKey, name);
-                    newItemInput.value = "";
-                    renderAreaTabs();
-                    selectKelolaArea(kelolaAreaKey);
-                    if (currentRecord && currentRecord.areaKey === area.key) {
-                        currentRecord = await sbGetOrCreateCheckup(area.key);
-                        renderTable(false);
+            document
+                .getElementById("btnAddItem")
+                .addEventListener("click", async () => {
+                    if (!kelolaAreaKey) return;
+                    const name = newItemInput.value.trim();
+                    if (!name) {
+                        showToast("Nama item tidak boleh kosong.", "error");
+                        return;
                     }
-                    showToast(`Item ditambahkan: ${name}`, "success");
-                } catch (err) {
-                    console.error(err);
-                    showToast("Gagal tambah: " + err.message, "error");
-                }
-            });
+                    const area = getAreaByKey(kelolaAreaKey);
+                    if (!area) return;
+                    if (area.items.includes(name)) {
+                        showToast(`Item "${name}" sudah ada.`, "error");
+                        return;
+                    }
+                    try {
+                        await sbAddAreaItem(kelolaAreaKey, name);
+                        newItemInput.value = "";
+                        renderAreaTabs();
+                        selectKelolaArea(kelolaAreaKey);
+                        if (
+                            currentRecord &&
+                            currentRecord.areaKey === area.key
+                        ) {
+                            currentRecord = await sbGetOrCreateCheckup(
+                                area.key,
+                            );
+                            renderTable(false);
+                        }
+                        showToast(`Item ditambahkan: ${name}`, "success");
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Gagal tambah: " + err.message, "error");
+                    }
+                });
             newItemInput.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") { e.preventDefault(); document.getElementById("btnAddItem").click(); }
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementById("btnAddItem").click();
+                }
             });
 
             /* ========================================================
@@ -3244,15 +3633,20 @@
             const supListEl = document.getElementById("supList");
             const newSupInput = document.getElementById("newSupInput");
 
-            document.getElementById("btnKelolaSupervisor").addEventListener("click", () => {
-                renderSupList();
-                modalSupOverlay.classList.add("active");
-            });
-            document.getElementById("btnSupClose").addEventListener("click", () =>
-                modalSupOverlay.classList.remove("active")
-            );
+            document
+                .getElementById("btnKelolaSupervisor")
+                .addEventListener("click", () => {
+                    renderSupList();
+                    modalSupOverlay.classList.add("active");
+                });
+            document
+                .getElementById("btnSupClose")
+                .addEventListener("click", () =>
+                    modalSupOverlay.classList.remove("active"),
+                );
             modalSupOverlay.addEventListener("click", (e) => {
-                if (e.target === modalSupOverlay) modalSupOverlay.classList.remove("active");
+                if (e.target === modalSupOverlay)
+                    modalSupOverlay.classList.remove("active");
             });
 
             function renderSupList() {
@@ -3264,32 +3658,43 @@
                     return;
                 }
                 sups.forEach((spv, i) => {
-                    const assignedAreas = areas.filter(a => a.supervisor === spv).map(a => a.label);
+                    // ← filter semua area yang dipegang ART ini
+                    const assignedAreas = areas
+                        .filter((a) => a.supervisor === spv)
+                        .map((a) => a.label);
                     const row = document.createElement("div");
                     row.className = "sup-row";
                     row.style.animationDelay = Math.min(i, 10) * 25 + "ms";
-                    const initials = spv.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "AR";
+                    const initials =
+                        spv
+                            .replace(/[^A-Za-z0-9]/g, "")
+                            .slice(0, 2)
+                            .toUpperCase() || "AR";
                     row.innerHTML = `
-            <div class="sup-avatar">${escapeHtml(initials)}</div>
-            <div class="sup-info">
-                <div class="sup-name">${escapeHtml(spv)}</div>
-                <div class="sup-meta">
-                    ${assignedAreas.length > 0
-                        ? `📌 ${assignedAreas.map(k => `<span class="info-badge">${escapeHtml(k)}</span>`).join(" ")}`
-                        : "Belum di-assign ke area"}
-                </div>
-            </div>
-            <div class="sup-actions">
-                <button class="icon-btn edit" title="Rename ART" aria-label="Rename ART" onclick="renameSupervisor('${escapeAttrJs(spv)}')">${ICON_EDIT}</button>
-                <button class="icon-btn del" title="Hapus ART" aria-label="Hapus ART" onclick="deleteSupervisor('${escapeAttrJs(spv)}')">${ICON_TRASH}</button>
-            </div>
-        `;
+                        <div class="sup-avatar">${escapeHtml(initials)}</div>
+                        <div class="sup-info">
+                            <div class="sup-name">${escapeHtml(spv)}</div>
+                            <div class="sup-meta">
+                                ${
+                                    assignedAreas.length > 0
+                                        ? `📌 ${assignedAreas.map((k) => `<span class="info-badge">${escapeHtml(k)}</span>`).join(" ")}`
+                                        : "Belum di-assign ke area"
+                                }
+                            </div>
+                        </div>
+                        <div class="sup-actions">
+                            <button class="icon-btn edit" title="Rename ART" aria-label="Rename ART" onclick="renameSupervisor('${escapeAttrJs(spv)}')">${ICON_EDIT}</button>
+                            <button class="icon-btn del" title="Hapus ART" aria-label="Hapus ART" onclick="deleteSupervisor('${escapeAttrJs(spv)}')">${ICON_TRASH}</button>
+                        </div>
+                    `;
                     supListEl.appendChild(row);
                 });
             }
-
             async function renameSupervisor(oldName) {
-                const newName = prompt(`Rename ART "${oldName}" menjadi:`, oldName);
+                const newName = prompt(
+                    `Rename ART "${oldName}" menjadi:`,
+                    oldName,
+                );
                 if (newName === null) return;
                 const trimmed = newName.trim();
                 if (!trimmed || trimmed === oldName) return;
@@ -3299,27 +3704,38 @@
                 }
                 try {
                     await sbRenameSupervisor(oldName, trimmed);
-                    if (supervisorSelect.value === oldName) supervisorSelect.value = trimmed;
                     populateSupervisorOptions();
                     renderSupList();
-                    if (currentRecord && currentRecord.supervisor === oldName) {
-                        const area = getAreaBySupervisor(trimmed);
-                        if (area) { currentRecord = await sbGetOrCreateCheckup(area.key); renderTable(false); }
+                    // refresh tabel jika yang aktif adalah area yang ART-nya di-rename
+                    if (currentRecord) {
+                        const area = getAreaByKey(currentRecord.areaKey);
+                        if (area && area.supervisor === trimmed) {
+                            currentRecord = await sbGetOrCreateCheckup(
+                                area.key,
+                            );
+                            renderTable(false);
+                        }
                     }
-                    showToast(`ART di-rename: ${oldName} → ${trimmed}`, "success");
+                    showToast(
+                        `ART di-rename: ${oldName} → ${trimmed}`,
+                        "success",
+                    );
                 } catch (err) {
                     console.error(err);
                     showToast("Gagal rename: " + err.message, "error");
                 }
             }
-
             async function deleteSupervisor(name) {
-                if (!confirm(`Hapus ART "${name}"? Area yang di-assign akan menjadi tanpa ART.`)) return;
+                if (
+                    !confirm(
+                        `Hapus ART "${name}"? Semua area yang dipegang akan menjadi tanpa ART.`,
+                    )
+                )
+                    return;
                 try {
                     await sbDeleteSupervisor(name);
                     if (supervisorSelect.value === name) {
-                        supervisorSelect.value = "";
-                        currentRecord = null;
+                        /* tidak berlaku lagi, karena value = area.key */
                     }
                     populateSupervisorOptions();
                     renderSupList();
@@ -3330,24 +3746,34 @@
                     showToast("Gagal hapus: " + err.message, "error");
                 }
             }
-
-            document.getElementById("btnAddSup").addEventListener("click", async () => {
-                const name = newSupInput.value.trim();
-                if (!name) { showToast("Nama ART tidak boleh kosong.", "error"); return; }
-                if (getSupervisors().includes(name)) { showToast(`ART "${name}" sudah ada.`, "error"); return; }
-                try {
-                    await sbAddSupervisor(name);
-                    newSupInput.value = "";
-                    populateSupervisorOptions();
-                    renderSupList();
-                    showToast(`ART ditambahkan: ${name}`, "success");
-                } catch (err) {
-                    console.error(err);
-                    showToast("Gagal tambah: " + err.message, "error");
-                }
-            });
+            document
+                .getElementById("btnAddSup")
+                .addEventListener("click", async () => {
+                    const name = newSupInput.value.trim();
+                    if (!name) {
+                        showToast("Nama ART tidak boleh kosong.", "error");
+                        return;
+                    }
+                    if (getSupervisors().includes(name)) {
+                        showToast(`ART "${name}" sudah ada.`, "error");
+                        return;
+                    }
+                    try {
+                        await sbAddSupervisor(name);
+                        newSupInput.value = "";
+                        populateSupervisorOptions();
+                        renderSupList();
+                        showToast(`ART ditambahkan: ${name}`, "success");
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Gagal tambah: " + err.message, "error");
+                    }
+                });
             newSupInput.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") { e.preventDefault(); document.getElementById("btnAddSup").click(); }
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementById("btnAddSup").click();
+                }
             });
 
             /* ========================================================
@@ -3356,20 +3782,26 @@
             function escapeXml(str) {
                 if (str == null) return "";
                 return String(str)
-                    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&apos;");
             }
             function toExcelDateTime(iso) {
                 if (!iso) return "";
                 const d = new Date(iso);
                 if (isNaN(d.getTime())) return "";
                 const pad = (n) => String(n).padStart(2, "0");
-                return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+                return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
             }
             async function exportToExcel() {
                 showToast("Mengambil data...", "success");
                 try {
-                    const { data: chk, error } = await sb.from("checkups").select(`
+                    const { data: chk, error } = await sb
+                        .from("checkups")
+                        .select(
+                            `
                         checkup_date, updated_at,
                         supervisor:supervisors ( name ),
                         area:areas ( label, key ),
@@ -3377,34 +3809,59 @@
                             status, laporan_masalah, tindak_lanjut, keterangan,
                             area_item:area_items ( name, sort_order )
                         )
-                    `).order("updated_at", { ascending: false });
+                    `,
+                        )
+                        .order("updated_at", { ascending: false });
                     if (error) throw error;
 
-                    const headers = ["Area", "Supervisor", "Item", "Status", "Masalah", "Tindak Lanjut", "Keterangan", "Update"];
+                    const headers = [
+                        "Area",
+                        "Supervisor",
+                        "Item",
+                        "Status",
+                        "Masalah",
+                        "Tindak Lanjut",
+                        "Keterangan",
+                        "Update",
+                    ];
                     const rows = [];
-                    (chk || []).forEach(c => {
+                    (chk || []).forEach((c) => {
                         const areaName = c.area?.label || c.area?.key || "";
                         const spvName = c.supervisor?.name || "";
-                        (c.items || []).forEach(it => {
+                        (c.items || []).forEach((it) => {
                             rows.push([
                                 areaName,
                                 spvName,
                                 it.area_item?.name || "",
-                                it.status === "Bermasalah" ? "Bermasalah" : "OK",
+                                it.status === "Bermasalah"
+                                    ? "Bermasalah"
+                                    : "OK",
                                 it.laporan_masalah || "",
                                 it.tindak_lanjut || "",
                                 it.keterangan || "",
-                                toExcelDateTime(c.updated_at)
+                                toExcelDateTime(c.updated_at),
                             ]);
                         });
                     });
 
-                    const cols = headers.map(() => `<Column ss:AutoFitWidth="0" ss:Width="140"/>`).join("");
+                    const cols = headers
+                        .map(
+                            () =>
+                                `<Column ss:AutoFitWidth="0" ss:Width="140"/>`,
+                        )
+                        .join("");
                     const headerRow = `<Row ss:StyleID="sHeader">${headers
-                        .map(h => `<Cell><Data ss:Type="String">${escapeXml(h)}</Data></Cell>`).join("")}</Row>`;
-                    const dataRows = rows.map(r =>
-                        `<Row>${r.map(c => `<Cell><Data ss:Type="String">${escapeXml(c)}</Data></Cell>`).join("")}</Row>`
-                    ).join("");
+                        .map(
+                            (h) =>
+                                `<Cell><Data ss:Type="String">${escapeXml(h)}</Data></Cell>`,
+                        )
+                        .join("")}</Row>`;
+                    const dataRows = rows
+                        .map(
+                            (r) =>
+                                `<Row>${r.map((c) => `<Cell><Data ss:Type="String">${escapeXml(c)}</Data></Cell>`).join("")}</Row>`,
+                        )
+                        .join("");
 
                     const xml = `<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
@@ -3424,7 +3881,9 @@
 </Worksheet>
 </Workbook>`;
 
-                    const blob = new Blob([xml], { type: "application/vnd.ms-excel;charset=utf-8" });
+                    const blob = new Blob([xml], {
+                        type: "application/vnd.ms-excel;charset=utf-8",
+                    });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement("a");
                     a.href = url;
@@ -3437,7 +3896,9 @@
                     showToast("Gagal export: " + err.message, "error");
                 }
             }
-            document.getElementById("btnExportExcel").addEventListener("click", exportToExcel);
+            document
+                .getElementById("btnExportExcel")
+                .addEventListener("click", exportToExcel);
 
             /* ========================================================
                17. TOAST
@@ -3448,13 +3909,17 @@
                 toastEl.textContent = msg;
                 toastEl.className = "toast show " + type;
                 clearTimeout(toastTimer);
-                toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2400);
+                toastTimer = setTimeout(
+                    () => toastEl.classList.remove("show"),
+                    2400,
+                );
             }
 
             /* ========================================================
                18. INIT
                ======================================================== */
-            document.getElementById("footerYear").textContent = new Date().getFullYear();
+            document.getElementById("footerYear").textContent =
+                new Date().getFullYear();
 
             async function initApp() {
                 const loadingScreen = document.getElementById("loadingScreen");
@@ -3462,14 +3927,17 @@
                     await loadAllFromSupabase();
                     populateSupervisorOptions();
                     renderTable(true);
-                    // auto-load first area
                     const firstArea = getAreas()[0];
-                    if (firstArea && firstArea.supervisor) {
-                        supervisorSelect.value = firstArea.supervisor;
+                    if (firstArea) {
+                        supervisorSelect.value = firstArea.key;
                         try {
-                            currentRecord = await sbGetOrCreateCheckup(firstArea.key);
+                            currentRecord = await sbGetOrCreateCheckup(
+                                firstArea.key,
+                            );
                             renderTable(true);
-                        } catch (e) { console.error(e); }
+                        } catch (e) {
+                            console.error(e);
+                        }
                     }
                     loadingScreen.classList.add("hide");
                     setTimeout(() => loadingScreen.remove(), 350);
