@@ -435,8 +435,8 @@ footer { background:#0b1120; color:#94a3b8; border-top:1px solid var(--border); 
   .btn-edit .i { font-size:1.05rem; }
   .is-bad .btn-edit { background:linear-gradient(135deg,var(--danger),#b91c1c); box-shadow:0 6px 16px -4px rgba(220,38,38,.5); }
   .empty-state { padding:40px 16px; }
-
-  .modal-overlay { align-items:flex-end; padding:0; }
+//check responsibility
+  .modal-overlay:not(.viewer) { align-items:flex-end; padding:0; }
   .modal, .modal.wide { max-width:none; max-height:94dvh; padding:8px 18px calc(18px + env(safe-area-inset-bottom)); border-radius:24px 24px 0 0; opacity:1; transform:translateY(100%); }
   .modal-overlay.active .modal { transform:none; }
   .sheet-handle { display:block; width:42px; height:5px; margin:4px auto 14px; border-radius:3px; background:var(--border-strong); }
