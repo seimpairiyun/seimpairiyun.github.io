@@ -1,0 +1,3312 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <meta name="theme-color" content="#1d4ed8" id="metaTheme" />
+        <meta name="color-scheme" content="light dark" />
+        <title>DAWET</title>
+        <script>
+            (function () {
+                var t = null;
+                try {
+                    t = localStorage.getItem("dawet_theme");
+                } catch (e) {}
+                if (t !== "light" && t !== "dark") {
+                    t =
+                        window.matchMedia &&
+                        window.matchMedia("(prefers-color-scheme: light)")
+                            .matches
+                            ? "dark"
+                            : "light";
+                }
+                document.documentElement.setAttribute("data-theme", t);
+            })();
+        </script>
+        <style>
+            :root {
+                --primary: #2563eb;
+                --primary-dark: #1d4ed8;
+                --primary-ink: #1e3a8a;
+                --primary-soft: #eff6ff;
+                --primary-line: #bfdbfe;
+                --success: #16a34a;
+                --success-soft: #ecfdf5;
+                --success-ink: #166534;
+                --danger: #dc2626;
+                --danger-soft: #fef2f2;
+                --danger-hover: #fee2e2;
+                --danger-ink: #991b1b;
+                --warning: #d97706;
+                --bg: #f4f6fb;
+                --surface: #ffffff;
+                --surface-2: #f8fafc;
+                --surface-3: #eef1f6;
+                --surface-4: #e1e6ef;
+                --row-hover: #f6f9ff;
+                --border: #e5e9f2;
+                --border-strong: #cfd6e4;
+                --text: #0f172a;
+                --text-2: #475569;
+                --text-muted: #8190a8;
+                --scroll: #cbd5e1;
+                --nav-bg: rgba(255, 255, 255, 0.94);
+                --header-grad: linear-gradient(
+                    135deg,
+                    #1e3a8a 0%,
+                    #2563eb 100%
+                );
+                --overlay: rgba(15, 23, 42, 0.55);
+                --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+                --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+                --shadow-md: 0 10px 28px -8px rgba(15, 23, 42, 0.16);
+                --shadow-lg: 0 24px 48px -12px rgba(15, 23, 42, 0.28);
+                --r-lg: 16px;
+                --r-md: 12px;
+                --r-sm: 8px;
+                --nav-h: 66px;
+                --ease: cubic-bezier(0.22, 0.9, 0.3, 1);
+            }
+            [data-theme="dark"] {
+                --primary: #3b82f6;
+                --primary-dark: #2563eb;
+                --primary-ink: #bfdbfe;
+                --primary-soft: rgba(59, 130, 246, 0.14);
+                --primary-line: rgba(96, 165, 250, 0.38);
+                --success: #22c55e;
+                --success-soft: rgba(34, 197, 94, 0.14);
+                --success-ink: #86efac;
+                --danger: #ef4444;
+                --danger-soft: rgba(239, 68, 68, 0.14);
+                --danger-hover: rgba(239, 68, 68, 0.26);
+                --danger-ink: #fca5a5;
+                --bg: #0a101e;
+                --surface: #111a2e;
+                --surface-2: #0e1628;
+                --surface-3: #1a2540;
+                --surface-4: #243252;
+                --row-hover: #16213a;
+                --border: #1f2b46;
+                --border-strong: #2e3d62;
+                --text: #e8edf8;
+                --text-2: #aab6cf;
+                --text-muted: #7384a3;
+                --scroll: #2e3d62;
+                --nav-bg: rgba(14, 22, 40, 0.94);
+                --header-grad: linear-gradient(
+                    135deg,
+                    #0c1530 0%,
+                    #1e3a8a 100%
+                );
+                --overlay: rgba(2, 6, 16, 0.7);
+                --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+                --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+                --shadow-md: 0 10px 28px -8px rgba(0, 0, 0, 0.55);
+                --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+            }
+
+            * {
+                box-sizing: border-box;
+                -webkit-tap-highlight-color: transparent;
+            }
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                color-scheme: light;
+            }
+            html[data-theme="dark"] {
+                color-scheme: dark;
+            }
+            body {
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    Roboto,
+                    "Helvetica Neue",
+                    sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.5;
+                -webkit-font-smoothing: antialiased;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                min-height: 100dvh;
+            }
+            button {
+                font-family: inherit;
+            }
+            :focus-visible {
+                outline: 3px solid rgba(59, 130, 246, 0.55);
+                outline-offset: 2px;
+            }
+            html.theme-anim *,
+            html.theme-anim *::before,
+            html.theme-anim *::after {
+                transition:
+                    background-color 0.35s ease,
+                    color 0.35s ease,
+                    border-color 0.35s ease,
+                    box-shadow 0.35s ease !important;
+            }
+
+            /* HEADER */
+            .app-header {
+                background: var(--header-grad);
+                color: #fff;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 4px 18px rgba(15, 23, 42, 0.28);
+                padding-top: env(safe-area-inset-top);
+            }
+            .app-header-inner {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 14px 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+            }
+            .app-brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                min-width: 0;
+            }
+            .app-logo {
+                width: 42px;
+                height: 42px;
+                flex-shrink: 0;
+                background: rgba(255, 255, 255, 0.16);
+                border: 1px solid rgba(255, 255, 255, 0.24);
+                border-radius: 12px;
+                display: grid;
+                place-items: center;
+                font-size: 1.3rem;
+                transition: transform 0.35s var(--ease);
+            }
+            .app-brand:hover .app-logo {
+                transform: rotate(-8deg) scale(1.06);
+            }
+            .app-title-block h1 {
+                margin: 0;
+                font-size: 1.2rem;
+                font-weight: 800;
+                letter-spacing: 0.02em;
+                line-height: 1.2;
+            }
+            .app-title-block p {
+                margin: 0;
+                font-size: 0.75rem;
+                opacity: 0.8;
+            }
+            .header-actions {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .app-nav {
+                display: flex;
+                gap: 8px;
+            }
+            .nav-btn {
+                background: rgba(255, 255, 255, 0.12);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: #fff;
+                padding: 9px 14px;
+                border-radius: 10px;
+                font-size: 0.82rem;
+                font-weight: 600;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition:
+                    background 0.2s,
+                    transform 0.2s var(--ease),
+                    box-shadow 0.2s;
+                white-space: nowrap;
+            }
+            .nav-btn:hover {
+                background: rgba(255, 255, 255, 0.24);
+                transform: translateY(-1px);
+                box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+            }
+            .nav-btn:active {
+                transform: scale(0.97);
+            }
+            .nav-ic {
+                font-size: 1rem;
+                line-height: 1;
+            }
+
+            .theme-toggle {
+                position: relative;
+                width: 42px;
+                height: 42px;
+                flex-shrink: 0;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.14);
+                border: 1px solid rgba(255, 255, 255, 0.26);
+                color: #fff;
+                cursor: pointer;
+                display: grid;
+                place-items: center;
+                overflow: hidden;
+                transition:
+                    background 0.2s,
+                    transform 0.2s var(--ease),
+                    box-shadow 0.2s;
+            }
+            .theme-toggle:hover {
+                background: rgba(255, 255, 255, 0.26);
+                transform: translateY(-1px);
+                box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+            }
+            .theme-toggle:active {
+                transform: scale(0.93);
+            }
+            .theme-toggle svg {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                transition:
+                    transform 0.5s var(--ease),
+                    opacity 0.3s ease;
+            }
+            .theme-toggle .ic-sun {
+                opacity: 1;
+                transform: rotate(0) scale(1);
+            }
+            .theme-toggle .ic-moon {
+                opacity: 0;
+                transform: rotate(-90deg) scale(0.4);
+            }
+            [data-theme="dark"] .theme-toggle .ic-sun {
+                opacity: 0;
+                transform: rotate(90deg) scale(0.4);
+            }
+            [data-theme="dark"] .theme-toggle .ic-moon {
+                opacity: 1;
+                transform: rotate(0) scale(1);
+            }
+
+            /* MAIN */
+            main {
+                flex: 1;
+                width: 100%;
+                padding: 24px 16px 40px;
+            }
+            .container {
+                max-width: 1280px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .container > * {
+                animation: riseIn 0.5s var(--ease) both;
+            }
+            .container > *:nth-child(2) {
+                animation-delay: 0.06s;
+            }
+            .container > *:nth-child(3) {
+                animation-delay: 0.12s;
+            }
+            .container > *:nth-child(4) {
+                animation-delay: 0.18s;
+            }
+            @keyframes riseIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(14px);
+                }
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            /* TOOLBAR */
+            .toolbar {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--r-lg);
+                box-shadow: var(--shadow-sm);
+                padding: 18px 20px;
+                display: flex;
+                gap: 14px;
+                align-items: flex-end;
+            }
+            .toolbar .field {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .field label,
+            .modal .form-group label {
+                display: block;
+                font-size: 0.72rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--text-muted);
+                margin-bottom: 6px;
+            }
+            input[type="text"],
+            select,
+            textarea {
+                width: 100%;
+                padding: 0 14px;
+                height: 44px;
+                border: 1.5px solid var(--border-strong);
+                border-radius: var(--r-md);
+                font-size: 0.92rem;
+                font-family: inherit;
+                background: var(--surface);
+                color: var(--text);
+                transition:
+                    border-color 0.2s,
+                    box-shadow 0.2s,
+                    background-color 0.2s;
+            }
+            input::placeholder,
+            textarea::placeholder {
+                color: var(--text-muted);
+                opacity: 0.8;
+            }
+            select {
+                appearance: none;
+                -webkit-appearance: none;
+                background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 14px center;
+                padding-right: 38px;
+                cursor: pointer;
+            }
+            select option {
+                background: var(--surface);
+                color: var(--text);
+            }
+            textarea {
+                height: auto;
+                padding: 11px 14px;
+                resize: vertical;
+                min-height: 84px;
+                line-height: 1.45;
+            }
+            input[type="text"]:focus,
+            select:focus,
+            textarea:focus {
+                outline: none;
+                border-color: var(--primary);
+            }
+
+            /* BUTTONS */
+            .btn {
+                position: relative;
+                overflow: hidden;
+                height: 44px;
+                padding: 0 20px;
+                font-size: 0.88rem;
+                font-weight: 600;
+                border: none;
+                border-radius: var(--r-md);
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                transition:
+                    background 0.2s,
+                    transform 0.2s var(--ease),
+                    box-shadow 0.2s;
+                white-space: nowrap;
+            }
+            .btn:hover:not(:disabled) {
+                transform: translateY(-1px);
+            }
+            .btn:active {
+                transform: scale(0.97);
+            }
+            .btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            .btn-primary {
+                background: var(--primary);
+                color: #fff;
+                box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+            }
+            .btn-primary:hover:not(:disabled) {
+                background: var(--primary-dark);
+                box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
+            }
+            .btn-secondary {
+                background: var(--surface-3);
+                color: var(--text-2);
+            }
+            .btn-secondary:hover:not(:disabled) {
+                background: var(--surface-4);
+                color: var(--text);
+            }
+            .btn-success {
+                background: var(--success);
+                color: #fff;
+                box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+            }
+            .btn-success:hover:not(:disabled) {
+                filter: brightness(0.92);
+                box-shadow: 0 8px 18px rgba(22, 163, 74, 0.35);
+            }
+            .btn-danger {
+                background: var(--danger-soft);
+                color: var(--danger);
+            }
+            .btn-danger:hover:not(:disabled) {
+                background: var(--danger-hover);
+            }
+            .btn-xs {
+                height: 34px;
+                padding: 0 12px;
+                font-size: 0.78rem;
+                border-radius: 10px;
+            }
+            .btn-reload {
+                min-width: 130px;
+                flex-shrink: 0;
+            }
+            .btn-reload .spin {
+                display: inline-block;
+            }
+            .btn-reload.loading .spin {
+                animation: spin 0.7s linear;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                pointer-events: none;
+                background: rgba(255, 255, 255, 0.4);
+                transform: scale(0);
+                animation: ripple 0.6s ease-out;
+            }
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+
+            /* INFO CARD */
+            .info-card {
+                position: relative;
+                overflow: hidden;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--r-lg);
+                box-shadow: var(--shadow-sm);
+                padding: 18px 20px;
+            }
+            .info-card::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background: linear-gradient(180deg, var(--primary), #7c3aed);
+            }
+            .info-title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin-bottom: 14px;
+                padding-left: 4px;
+            }
+            .info-title h2 {
+                margin: 0;
+                font-size: 1.1rem;
+                font-weight: 800;
+                color: var(--text);
+                letter-spacing: -0.01em;
+            }
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
+                padding-left: 4px;
+            }
+            .info-cell {
+                background: var(--primary-soft);
+                border: 1px solid transparent;
+                border-radius: var(--r-md);
+                padding: 10px 14px;
+                min-width: 0;
+                transition:
+                    transform 0.25s var(--ease),
+                    border-color 0.2s;
+            }
+            .info-cell:hover {
+                transform: translateY(-2px);
+                border-color: var(--primary-line);
+            }
+            .info-cell .k {
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--text-muted);
+            }
+            .info-cell .v {
+                font-size: 0.94rem;
+                font-weight: 700;
+                color: var(--primary-ink);
+                overflow-wrap: anywhere;
+            }
+            .info-cell.wide {
+                grid-column: span 2;
+            }
+
+            .progress-wrap {
+                margin: 16px 0 0 4px;
+            }
+            .progress-head {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                gap: 10px;
+                margin-bottom: 8px;
+                font-size: 0.78rem;
+                font-weight: 600;
+                color: var(--text-2);
+            }
+            .progress-head b {
+                color: var(--text);
+                font-weight: 800;
+            }
+            .progress {
+                height: 10px;
+                border-radius: 999px;
+                background: var(--danger-soft);
+                overflow: hidden;
+                display: flex;
+            }
+            .progress-bar {
+                height: 100%;
+                width: 0;
+                background: linear-gradient(90deg, #16a34a, #4ade80);
+                border-radius: 999px;
+                transition: width 0.9s var(--ease);
+                position: relative;
+                overflow: hidden;
+            }
+            .progress-bar::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.45),
+                    transparent
+                );
+                transform: translateX(-100%);
+                animation: shine 2.6s ease-in-out infinite;
+            }
+            @keyframes shine {
+                60%,
+                100% {
+                    transform: translateX(100%);
+                }
+            }
+
+            /* FILTER */
+            .filter-bar {
+                display: flex;
+                gap: 8px;
+                overflow-x: auto;
+                scrollbar-width: none;
+                padding: 4px 2px 6px;
+            }
+            .filter-bar::-webkit-scrollbar {
+                display: none;
+            }
+            .chip {
+                flex-shrink: 0;
+                height: 40px;
+                padding: 0 18px;
+                border-radius: 999px;
+                border: 1.5px solid var(--border-strong);
+                background: var(--surface);
+                color: var(--text-2);
+                font-size: 0.82rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.25s var(--ease);
+            }
+            .chip:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+                transform: translateY(-1px);
+            }
+            .chip:active {
+                transform: scale(0.96);
+            }
+            .chip.active {
+                background: var(--primary);
+                border-color: var(--primary);
+                color: #fff;
+            }
+
+            /* STATUS BADGE */
+            .status-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                padding: 5px 12px;
+                border-radius: 999px;
+                font-size: 0.74rem;
+                font-weight: 700;
+                white-space: nowrap;
+                border: 1px solid transparent;
+            }
+            .status-badge::before {
+                content: "";
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+            }
+            .status-ok {
+                background: var(--success-soft);
+                color: var(--success-ink);
+                border-color: rgba(22, 163, 74, 0.25);
+            }
+            .status-ok::before {
+                background: var(--success);
+            }
+            .status-masalah {
+                background: var(--danger-soft);
+                color: var(--danger-ink);
+                border-color: rgba(220, 38, 38, 0.28);
+            }
+            .status-masalah::before {
+                background: var(--danger);
+                animation: pulseDot 1.8s ease-out infinite;
+            }
+            @keyframes pulseDot {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+                }
+                70% {
+                    box-shadow: 0 0 0 7px rgba(239, 68, 68, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+                }
+            }
+
+            /* TABLE */
+            .table-wrapper {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--r-lg);
+                box-shadow: var(--shadow-sm);
+                overflow: hidden;
+            }
+            .table-scroll {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table.checkup-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                min-width: 1050px;
+            }
+            table.checkup-table thead th {
+                background: var(--surface-2);
+                color: var(--text-muted);
+                font-size: 0.7rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                text-align: left;
+                padding: 15px 14px;
+                border-bottom: 2px solid var(--border);
+                white-space: nowrap;
+            }
+            tr.item-row {
+                position: relative;
+                transition:
+                    background-color 0.2s,
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s;
+            }
+            tr.item-row td {
+                padding: 16px 14px;
+                font-size: 0.85rem;
+                border-bottom: 1px solid var(--border);
+                vertical-align: top;
+                color: var(--text-2);
+                transition: background-color 0.2s;
+            }
+            tr.item-row:last-child td {
+                border-bottom: none;
+            }
+            tr.item-row:hover td {
+                background: var(--row-hover);
+            }
+            tr.item-row td.c-no {
+                text-align: center;
+                font-weight: 800;
+                color: var(--text-muted);
+                width: 52px;
+                box-shadow: inset 4px 0 0 var(--success);
+            }
+            tr.item-row.is-bad td.c-no {
+                box-shadow: inset 4px 0 0 var(--danger);
+            }
+            tr.item-row.is-bad td {
+                background-image: linear-gradient(
+                    90deg,
+                    var(--danger-soft),
+                    transparent 28%
+                );
+            }
+            tr.item-row td.c-name {
+                font-weight: 700;
+                color: var(--text);
+                min-width: 170px;
+                font-size: 0.9rem;
+            }
+            tr.item-row td.c-act {
+                text-align: center;
+                width: 100px;
+            }
+            .idx-mob {
+                display: none;
+            }
+
+            .animate tr.item-row {
+                animation: rowIn 0.5s var(--ease) both;
+                animation-delay: calc(var(--i, 0) * 45ms);
+            }
+            @keyframes rowIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(16px) scale(0.985);
+                }
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            .foto-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 5px;
+                max-width: 220px;
+            }
+            .foto-grid .img-thumbnail {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 1;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 1px solid var(--border-strong);
+                cursor: pointer;
+                display: block;
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s,
+                    border-color 0.2s;
+            }
+            .foto-grid .img-thumbnail:hover {
+                transform: scale(1.14);
+                z-index: 2;
+                box-shadow: var(--shadow-md);
+                border-color: var(--primary);
+            }
+            .foto-more {
+                display: grid;
+                place-items: center;
+                aspect-ratio: 1;
+                background: var(--primary-soft);
+                color: var(--primary-ink);
+                border: 1px dashed var(--primary);
+                border-radius: 8px;
+                font-size: 0.72rem;
+                font-weight: 800;
+                cursor: pointer;
+                transition:
+                    background 0.2s,
+                    transform 0.2s var(--ease);
+            }
+            .foto-more:hover {
+                background: var(--primary);
+                color: #fff;
+                transform: scale(1.08);
+            }
+            .no-photo {
+                display: inline-block;
+                padding: 6px 12px;
+                border: 1.5px dashed var(--border-strong);
+                border-radius: 8px;
+                color: var(--text-muted);
+                font-size: 0.74rem;
+                background: var(--surface-2);
+            }
+            .text-empty {
+                color: var(--border-strong);
+            }
+
+            .btn-edit {
+                height: 36px;
+                padding: 0 14px;
+                background: var(--primary-soft);
+                color: var(--primary-ink);
+                border: 1px solid var(--primary-line);
+                border-radius: 10px;
+                font-size: 0.78rem;
+                font-weight: 700;
+                cursor: pointer;
+                white-space: nowrap;
+                transition:
+                    background 0.2s,
+                    color 0.2s,
+                    transform 0.2s var(--ease),
+                    box-shadow 0.2s;
+            }
+            .btn-edit:hover {
+                background: var(--primary);
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 16px rgba(37, 99, 235, 0.35);
+            }
+            .btn-edit:active {
+                transform: scale(0.96);
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: 60px 20px;
+                color: var(--text-muted);
+            }
+            .empty-state .icon {
+                font-size: 2.8rem;
+                display: block;
+                margin-bottom: 10px;
+                animation: floaty 3s ease-in-out infinite;
+            }
+            @keyframes floaty {
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+            .empty-state h3 {
+                margin: 0 0 6px;
+                color: var(--text);
+                font-size: 1.02rem;
+            }
+            .empty-state p {
+                margin: 0;
+                font-size: 0.88rem;
+            }
+
+            /* MODAL */
+            .modal-overlay {
+                position: fixed;
+                inset: 0;
+                background: var(--overlay);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                z-index: 1000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 16px;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition:
+                    opacity 0.25s ease,
+                    visibility 0s linear 0.25s;
+            }
+            .modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transition: opacity 0.25s ease;
+            }
+            .modal {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                width: 100%;
+                max-width: 560px;
+                max-height: 92vh;
+                max-height: 92dvh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                box-shadow: var(--shadow-lg);
+                padding: 24px;
+                transform: translateY(24px) scale(0.97);
+                opacity: 0;
+                transition:
+                    transform 0.35s var(--ease),
+                    opacity 0.25s ease;
+            }
+            .modal-overlay.active .modal {
+                transform: none;
+                opacity: 1;
+            }
+            .modal.wide {
+                max-width: 760px;
+            }
+            .modal h2 {
+                margin: 0 0 4px;
+                font-size: 1.15rem;
+                font-weight: 800;
+                color: var(--text);
+            }
+            .modal-subtitle {
+                margin: 0 0 20px;
+                font-size: 0.82rem;
+                color: var(--text-muted);
+            }
+            .modal .form-group {
+                margin-bottom: 16px;
+            }
+            .modal-actions {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+                margin-top: 22px;
+                padding-top: 16px;
+                border-top: 1px solid var(--border);
+            }
+            .sheet-handle {
+                display: none;
+            }
+
+            .foto-edit-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+                gap: 10px;
+            }
+            .foto-edit-item {
+                position: relative;
+                aspect-ratio: 1;
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid var(--border-strong);
+                background: var(--surface-2);
+                animation: popIn 0.3s var(--ease) both;
+            }
+            @keyframes popIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+            .foto-edit-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .btn-del-foto {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                background: var(--danger);
+                color: #fff;
+                border: none;
+                font-size: 0.72rem;
+                font-weight: 700;
+                cursor: pointer;
+                display: grid;
+                place-items: center;
+                box-shadow: var(--shadow-sm);
+                transition: transform 0.2s var(--ease);
+            }
+            .btn-del-foto:hover {
+                transform: scale(1.15) rotate(90deg);
+            }
+            .foto-num {
+                position: absolute;
+                bottom: 5px;
+                left: 5px;
+                background: rgba(15, 23, 42, 0.7);
+                color: #fff;
+                font-size: 0.65rem;
+                font-weight: 700;
+                padding: 1px 7px;
+                border-radius: 6px;
+            }
+            .foto-uploader {
+                aspect-ratio: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+                border: 2px dashed var(--border-strong);
+                border-radius: 10px;
+                background: var(--surface-2);
+                color: var(--text-muted);
+                cursor: pointer;
+                font-size: 0.74rem;
+                font-weight: 600;
+                text-align: center;
+                transition: all 0.2s;
+            }
+            .foto-uploader:hover {
+                border-color: var(--primary);
+                background: var(--primary-soft);
+                color: var(--primary-ink);
+                transform: translateY(-2px);
+            }
+            .foto-uploader .icon {
+                font-size: 1.4rem;
+            }
+            .foto-uploader .count {
+                font-size: 0.66rem;
+                font-weight: 500;
+            }
+            .foto-limit-note {
+                font-size: 0.76rem;
+                color: var(--text-muted);
+                margin-top: 8px;
+            }
+
+            /* PHOTO VIEWER */
+            .photo-viewer-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.93);
+                z-index: 2000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition:
+                    opacity 0.25s ease,
+                    visibility 0s linear 0.25s;
+            }
+            .photo-viewer-overlay.active {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transition: opacity 0.25s ease;
+            }
+            .photo-viewer {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                max-width: 100%;
+                transform: scale(0.94);
+                transition: transform 0.35s var(--ease);
+            }
+            .photo-viewer-overlay.active .photo-viewer {
+                transform: none;
+            }
+            .photo-viewer img {
+                max-width: 90vw;
+                max-height: 74vh;
+                object-fit: contain;
+                border-radius: 12px;
+                background: #111;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            }
+            .photo-viewer-info {
+                color: #fff;
+                margin-top: 14px;
+                text-align: center;
+            }
+            .photo-viewer-info .title {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+            .photo-viewer-info .counter {
+                color: #cbd5e1;
+                font-size: 0.82rem;
+                margin-top: 2px;
+            }
+            .photo-viewer-close,
+            .photo-nav {
+                background: rgba(255, 255, 255, 0.16);
+                border: none;
+                color: #fff;
+                border-radius: 50%;
+                cursor: pointer;
+                display: grid;
+                place-items: center;
+                transition:
+                    background 0.2s,
+                    transform 0.2s var(--ease);
+            }
+            .photo-viewer-close:hover,
+            .photo-nav:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+            .photo-viewer-close:hover {
+                transform: rotate(90deg);
+            }
+            .photo-viewer-close {
+                position: absolute;
+                top: -50px;
+                right: 0;
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            .photo-nav {
+                position: absolute;
+                top: 37%;
+                transform: translateY(-50%);
+                width: 48px;
+                height: 48px;
+                font-size: 1.6rem;
+                z-index: 2;
+            }
+            .photo-nav:hover:not(:disabled) {
+                transform: translateY(-50%) scale(1.1);
+            }
+            .photo-nav:disabled {
+                opacity: 0.25;
+                cursor: not-allowed;
+            }
+            .photo-prev {
+                left: -64px;
+            }
+            .photo-next {
+                right: -64px;
+            }
+            .photo-viewer img.swap {
+                animation: imgSwap 0.3s var(--ease);
+            }
+            @keyframes imgSwap {
+                from {
+                    opacity: 0;
+                    transform: scale(0.97);
+                }
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            /* KELOLA AREA */
+            .area-tabs {
+                position: relative;
+                display: flex;
+                gap: 8px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x proximity;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                padding: 2px 2px 14px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid var(--border);
+                cursor: grab;
+                scrollbar-width: thin;
+                scrollbar-color: var(--scroll) transparent;
+            }
+            .area-tabs::-webkit-scrollbar {
+                height: 6px;
+            }
+            .area-tabs::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .area-tabs::-webkit-scrollbar-thumb {
+                background: var(--scroll);
+                border-radius: 6px;
+            }
+            .area-tabs::-webkit-scrollbar-thumb:hover {
+                background: var(--text-muted);
+            }
+            .area-tabs.dragging {
+                cursor: grabbing;
+                scroll-behavior: auto;
+                scroll-snap-type: none;
+                user-select: none;
+            }
+            .area-tabs.fade-r {
+                -webkit-mask-image: linear-gradient(
+                    90deg,
+                    #000 calc(100% - 40px),
+                    transparent
+                );
+                mask-image: linear-gradient(
+                    90deg,
+                    #000 calc(100% - 40px),
+                    transparent
+                );
+            }
+            .area-tabs.fade-l {
+                -webkit-mask-image: linear-gradient(
+                    90deg,
+                    transparent,
+                    #000 40px
+                );
+                mask-image: linear-gradient(90deg, transparent, #000 40px);
+            }
+            .area-tabs.fade-l.fade-r {
+                -webkit-mask-image: linear-gradient(
+                    90deg,
+                    transparent,
+                    #000 40px,
+                    #000 calc(100% - 40px),
+                    transparent
+                );
+                mask-image: linear-gradient(
+                    90deg,
+                    transparent,
+                    #000 40px,
+                    #000 calc(100% - 40px),
+                    transparent
+                );
+            }
+            .area-tab {
+                flex-shrink: 0;
+                height: 36px;
+                padding: 0 16px;
+                scroll-snap-align: center;
+                border-radius: 999px;
+                border: 1.5px solid var(--border-strong);
+                background: var(--surface);
+                color: var(--text-2);
+                font-size: 0.78rem;
+                font-weight: 600;
+                cursor: pointer;
+                white-space: nowrap;
+                transition: all 0.2s var(--ease);
+            }
+            .area-tab:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+            }
+            .area-tab.active {
+                background: var(--primary);
+                border-color: var(--primary);
+                color: #fff;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            }
+            .assign-row {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 12px;
+                align-items: end;
+                padding: 14px;
+                margin-bottom: 20px;
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: var(--r-md);
+            }
+            .section-label {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 0.72rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--text-muted);
+            }
+            .item-list,
+            .sup-list {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                max-height: 320px;
+                overflow-y: auto;
+                padding-right: 2px;
+            }
+            .item-row-edit {
+                display: grid;
+                grid-template-columns: 28px 1fr auto;
+                gap: 10px;
+                align-items: center;
+                padding: 6px 8px 6px 10px;
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: var(--r-md);
+                animation: popIn 0.3s var(--ease) both;
+                transition:
+                    border-color 0.2s,
+                    box-shadow 0.2s;
+            }
+            .item-row-edit:hover,
+            .item-row-edit:focus-within {
+                border-color: var(--primary-line);
+                box-shadow: var(--shadow-xs);
+            }
+            .item-row-edit .num {
+                width: 26px;
+                height: 26px;
+                border-radius: 8px;
+                display: grid;
+                place-items: center;
+                background: var(--primary-soft);
+                color: var(--primary-ink);
+                font-weight: 800;
+                font-size: 0.72rem;
+            }
+            .item-row-edit input {
+                height: 36px;
+                font-size: 0.86rem;
+                font-weight: 600;
+                border-radius: 9px;
+                border-color: transparent;
+                background: transparent;
+                padding: 0 10px;
+            }
+            .item-row-edit input:hover {
+                background: var(--surface);
+                border-color: var(--border);
+            }
+            .item-row-edit input:focus {
+                background: var(--surface);
+                border-color: var(--primary);
+            }
+
+            .icon-btn {
+                width: 34px;
+                height: 34px;
+                flex-shrink: 0;
+                display: inline-grid;
+                place-items: center;
+                border: 1px solid transparent;
+                border-radius: 10px;
+                background: transparent;
+                color: var(--text-muted);
+                cursor: pointer;
+                transition:
+                    background 0.2s,
+                    color 0.2s,
+                    border-color 0.2s,
+                    transform 0.2s var(--ease);
+            }
+            .icon-btn svg {
+                width: 17px;
+                height: 17px;
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .icon-btn:hover {
+                transform: translateY(-1px);
+            }
+            .icon-btn:active {
+                transform: scale(0.92);
+            }
+            .icon-btn.edit:hover {
+                background: var(--primary-soft);
+                color: var(--primary);
+                border-color: var(--primary-line);
+            }
+            .icon-btn.del:hover {
+                background: var(--danger-soft);
+                color: var(--danger);
+                border-color: rgba(220, 38, 38, 0.3);
+            }
+            .item-add-row,
+            .sup-add-row {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 10px;
+                margin-top: 14px;
+            }
+            .sup-add-row {
+                padding-top: 14px;
+                border-top: 1px solid var(--border);
+            }
+            .sup-list {
+                max-height: 360px;
+                margin-bottom: 4px;
+            }
+            .sup-row {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 12px;
+                align-items: center;
+                padding: 10px 14px;
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: var(--r-md);
+                animation: popIn 0.3s var(--ease) both;
+                transition:
+                    border-color 0.2s,
+                    transform 0.2s var(--ease);
+            }
+            .sup-row:hover {
+                border-color: var(--primary-line);
+                transform: translateX(2px);
+            }
+            .sup-avatar {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary), #7c3aed);
+                color: #fff;
+                display: grid;
+                place-items: center;
+                font-weight: 700;
+                font-size: 0.85rem;
+            }
+            .sup-info {
+                min-width: 0;
+            }
+            .sup-name {
+                font-weight: 700;
+                font-size: 0.9rem;
+                color: var(--text);
+            }
+            .sup-meta {
+                font-size: 0.76rem;
+                color: var(--text-muted);
+                margin-top: 2px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                align-items: center;
+            }
+            .sup-actions {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                padding-left: 8px;
+                border-left: 1px solid var(--border);
+            }
+            .sup-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .info-badge {
+                display: inline-block;
+                padding: 1px 8px;
+                background: var(--primary-soft);
+                color: var(--primary-ink);
+                border-radius: 6px;
+                font-size: 0.72rem;
+                font-weight: 700;
+            }
+            .list-empty {
+                color: var(--text-muted);
+                font-style: italic;
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+
+            /* FOOTER */
+            footer {
+                background: #0b1120;
+                color: #94a3b8;
+                text-align: center;
+                padding: 20px 16px;
+                font-size: 0.8rem;
+                border-top: 1px solid var(--border);
+            }
+            footer .footer-brand {
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.9rem;
+                margin-bottom: 2px;
+            }
+            footer .footer-copy {
+                font-size: 0.74rem;
+                opacity: 0.8;
+            }
+
+            /* TOAST */
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: 24px;
+                transform: translate(-50%, 100px);
+                background: #0f172a;
+                color: #fff;
+                padding: 12px 20px;
+                border-radius: 12px;
+                box-shadow: var(--shadow-lg);
+                font-size: 0.88rem;
+                font-weight: 500;
+                opacity: 0;
+                transition:
+                    opacity 0.3s,
+                    transform 0.4s var(--ease);
+                z-index: 3000;
+                max-width: 90vw;
+                text-align: center;
+            }
+            .toast.show {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+            .toast.success {
+                background: #15803d;
+            }
+            .toast.error {
+                background: #b91c1c;
+            }
+
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: var(--scroll);
+                border-radius: 8px;
+            }
+
+            @media (max-width: 1100px) {
+                .app-header-inner {
+                    padding: 12px 18px;
+                }
+                .nav-btn {
+                    padding: 9px 12px;
+                }
+            }
+            @media (max-width: 960px) {
+                .info-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .photo-prev {
+                    left: 6px;
+                }
+                .photo-next {
+                    right: 6px;
+                }
+            }
+            @media (max-width: 760px) {
+                body {
+                    padding-bottom: calc(
+                        var(--nav-h) + env(safe-area-inset-bottom)
+                    );
+                }
+                .app-header-inner {
+                    padding: 12px 16px;
+                }
+                .app-logo {
+                    width: 38px;
+                    height: 38px;
+                    font-size: 1.15rem;
+                }
+                .app-title-block h1 {
+                    font-size: 1.1rem;
+                }
+                .theme-toggle {
+                    width: 40px;
+                    height: 40px;
+                }
+                .app-nav {
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 150;
+                    background: var(--nav-bg);
+                    backdrop-filter: blur(14px);
+                    -webkit-backdrop-filter: blur(14px);
+                    border-top: 1px solid var(--border);
+                    box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.12);
+                    padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
+                    gap: 6px;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                .nav-btn {
+                    flex-direction: column;
+                    gap: 3px;
+                    background: transparent;
+                    border: none;
+                    color: var(--text-2);
+                    padding: 8px 4px;
+                    border-radius: 12px;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    height: calc(var(--nav-h) - 12px);
+                    justify-content: center;
+                }
+                .nav-btn:hover,
+                .nav-btn:active {
+                    background: var(--primary-soft);
+                    color: var(--primary-ink);
+                    transform: none;
+                    box-shadow: none;
+                }
+                .nav-ic {
+                    font-size: 1.35rem;
+                }
+                main {
+                    padding: 14px 12px 28px;
+                }
+                .container {
+                    gap: 12px;
+                }
+                .toolbar {
+                    flex-direction: column;
+                    align-items: stretch;
+                    padding: 14px;
+                    gap: 12px;
+                    border-radius: 14px;
+                }
+                .btn-reload {
+                    width: 100%;
+                }
+                input[type="text"],
+                select,
+                textarea {
+                    font-size: 16px;
+                }
+                .info-card {
+                    padding: 14px;
+                    border-radius: 14px;
+                }
+                .info-title {
+                    margin-bottom: 12px;
+                }
+                .info-title h2 {
+                    font-size: 1rem;
+                }
+                .info-grid {
+                    gap: 8px;
+                }
+                .info-cell {
+                    padding: 9px 12px;
+                }
+                .table-wrapper {
+                    background: transparent;
+                    border: none;
+                    box-shadow: none;
+                    overflow: visible;
+                }
+                .table-scroll {
+                    overflow: visible;
+                }
+                table.checkup-table,
+                table.checkup-table tbody {
+                    display: block;
+                    min-width: 0;
+                    width: 100%;
+                }
+                table.checkup-table thead {
+                    display: none;
+                }
+                tr.item-row {
+                    display: grid;
+                    grid-template-columns: 1fr auto;
+                    column-gap: 10px;
+                    row-gap: 12px;
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                    border-left: 4px solid var(--success);
+                    border-radius: 14px;
+                    padding: 14px;
+                    margin-bottom: 10px;
+                    box-shadow: var(--shadow-xs);
+                }
+                tr.item-row.is-bad {
+                    border-left-color: var(--danger);
+                    background: linear-gradient(
+                        135deg,
+                        var(--danger-soft),
+                        var(--surface) 55%
+                    );
+                }
+                tr.item-row:active {
+                    transform: scale(0.992);
+                }
+                tr.item-row td,
+                tr.item-row:hover td,
+                tr.item-row.is-bad td {
+                    padding: 0;
+                    border: none;
+                    background: none;
+                    grid-column: 1 / -1;
+                    font-size: 0.86rem;
+                }
+                tr.item-row td.c-no,
+                tr.item-row.is-bad td.c-no {
+                    display: none;
+                    box-shadow: none;
+                }
+                tr.item-row td.c-name {
+                    grid-column: 1;
+                    min-width: 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 0.95rem;
+                }
+                tr.item-row td.c-status {
+                    grid-column: 2;
+                }
+                .idx-mob {
+                    display: grid;
+                    place-items: center;
+                    flex-shrink: 0;
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 8px;
+                    background: var(--primary-soft);
+                    color: var(--primary-ink);
+                    font-size: 0.74rem;
+                    font-weight: 800;
+                }
+                tr.item-row
+                    td[data-label]:not(.c-name):not(.c-status):not(
+                        .c-act
+                    )::before {
+                    content: attr(data-label);
+                    display: block;
+                    margin-bottom: 4px;
+                    font-size: 0.66rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    color: var(--text-muted);
+                }
+                tr.item-row td.is-empty {
+                    display: none;
+                }
+                .foto-grid {
+                    max-width: none;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 6px;
+                }
+                tr.item-row td.c-act {
+                    text-align: stretch;
+                    width: auto;
+                }
+                .btn-edit {
+                    width: 100%;
+                    height: 42px;
+                    font-size: 0.84rem;
+                }
+                .modal-overlay {
+                    align-items: flex-end;
+                    padding: 0;
+                }
+                .modal {
+                    max-width: none;
+                    border-radius: 22px 22px 0 0;
+                    padding: 8px 18px calc(18px + env(safe-area-inset-bottom));
+                    max-height: 94vh;
+                    max-height: 94dvh;
+                    transform: translateY(100%);
+                    opacity: 1;
+                }
+                .modal-overlay.active .modal {
+                    transform: none;
+                }
+                .modal.wide {
+                    max-width: none;
+                }
+                .sheet-handle {
+                    display: block;
+                    width: 42px;
+                    height: 5px;
+                    border-radius: 3px;
+                    background: var(--border-strong);
+                    margin: 4px auto 14px;
+                }
+                .modal h2 {
+                    font-size: 1.08rem;
+                }
+                .modal-actions {
+                    position: sticky;
+                    bottom: calc(-18px - env(safe-area-inset-bottom));
+                    background: var(--surface);
+                    margin: 18px -18px calc(-18px - env(safe-area-inset-bottom));
+                    padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+                    flex-direction: column-reverse;
+                    gap: 8px;
+                }
+                .modal-actions .btn {
+                    width: 100%;
+                }
+                .foto-edit-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 8px;
+                }
+                .assign-row {
+                    grid-template-columns: 1fr;
+                }
+                .assign-row .btn {
+                    width: 100%;
+                }
+                .item-add-row,
+                .sup-add-row {
+                    grid-template-columns: 1fr;
+                }
+                .item-add-row .btn,
+                .sup-add-row .btn {
+                    width: 100%;
+                }
+                .item-list,
+                .sup-list {
+                    max-height: 38vh;
+                }
+                .sup-row {
+                    grid-template-columns: auto 1fr auto;
+                    padding: 10px 10px 10px 12px;
+                    gap: 10px;
+                }
+                .icon-btn {
+                    width: 38px;
+                    height: 38px;
+                }
+                .photo-viewer img {
+                    max-height: 68vh;
+                    border-radius: 10px;
+                }
+                .photo-nav {
+                    width: 42px;
+                    height: 42px;
+                    font-size: 1.3rem;
+                }
+                .photo-viewer-close {
+                    top: -48px;
+                }
+                .toast {
+                    bottom: calc(
+                        var(--nav-h) + 16px + env(safe-area-inset-bottom)
+                    );
+                }
+                footer {
+                    padding: 16px 12px;
+                }
+            }
+            @media (max-width: 380px) {
+                .app-title-block p {
+                    display: none;
+                }
+                .info-cell.wide {
+                    grid-column: span 2;
+                }
+                .nav-btn {
+                    font-size: 0.66rem;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="app-header">
+            <div class="app-header-inner">
+                <div class="app-brand">
+                    <div class="app-logo">020</div>
+                    <div class="app-title-block">
+                        <h1>DAWET</h1>
+                        <p>Data Pengawasan Bersama TURT</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <nav class="app-nav" aria-label="Menu utama">
+                        <button class="nav-btn" id="btnKelolaArea">
+                            <span class="nav-ic">⚙️</span
+                            ><span class="btn-label">Lokasi</span>
+                        </button>
+                        <button class="nav-btn" id="btnKelolaSupervisor">
+                            <span class="nav-ic">👥</span
+                            ><span class="btn-label">Pengawas</span>
+                        </button>
+                        <button class="nav-btn" id="btnExportExcel">
+                            <span class="nav-ic">📊</span
+                            ><span class="btn-label">Excel</span>
+                        </button>
+                    </nav>
+                    <button
+                        class="theme-toggle"
+                        id="themeToggle"
+                        type="button"
+                        aria-label="Ganti mode gelap/terang"
+                        title="Ganti tema"
+                        aria-pressed="false"
+                    >
+                        <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4" />
+                            <path
+                                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                            />
+                        </svg>
+                        <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container">
+                <!-- TOOLBAR -->
+                <div class="toolbar">
+                    <div class="field">
+                        <label for="supervisorSelect">Pilih Lokasi</label>
+                        <select id="supervisorSelect">
+                            <option value="">-- Pilih Lokasi --</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-reload" id="btnReload">
+                        <span class="spin">🔄</span> Refresh
+                    </button>
+                </div>
+
+                <section class="info-card" id="infoCard">
+                    <div class="info-title">
+                        <h2 id="hdrAreaName">Belum ada area dipilih</h2>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-cell">
+                            <div class="k">Nama Pengawas</div>
+                            <div class="v" id="hdrSupervisor">-</div>
+                        </div>
+                        <div class="info-cell">
+                            <div class="k">Jumlah Item/Area</div>
+                            <div class="v" id="hdrJumlah">-</div>
+                        </div>
+                        <div class="info-cell wide">
+                            <div class="k">Terakhir Update</div>
+                            <div class="v" id="hdrTanggal">-</div>
+                        </div>
+                    </div>
+                    <div class="progress-wrap">
+                        <div class="progress-head">
+                            <span id="progressLabel">Kondisi normal</span
+                            ><b id="progressPct">0%</b>
+                        </div>
+                        <div
+                            class="progress"
+                            role="progressbar"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            id="progressTrack"
+                        >
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="filter-bar" id="filterBar">
+                    <button class="chip active" data-filter="all">Semua</button>
+                    <button class="chip" data-filter="OK">✅ OK / Normal</button>
+                    <button class="chip" data-filter="Bermasalah">⚠️ Bermasalah</button>
+                </div>
+
+                <div class="table-wrapper">
+                    <div class="table-scroll">
+                        <table class="checkup-table" id="checkupTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 52px; text-align: center">No</th>
+                                    <th style="width: 190px">Area / Barang</th>
+                                    <th style="width: 130px">Status</th>
+                                    <th style="width: 230px">Kondisi Lapangan</th>
+                                    <th style="width: 220px">Laporan Masalah</th>
+                                    <th style="width: 200px">Tindak Lanjut</th>
+                                    <th style="width: 150px">Keterangan</th>
+                                    <th style="width: 100px; text-align: center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-brand">DAWET — TURT Kanwil DJP Sumut I</div>
+            <div class="footer-copy">
+                &copy; <span id="footerYear"></span> DAWET. All rights reserved.
+            </div>
+        </footer>
+
+        <!-- MODAL EDIT ITEM -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal">
+                <div class="sheet-handle"></div>
+                <h2 id="modalTitle">Edit Item</h2>
+                <p class="modal-subtitle" id="modalSubtitle"></p>
+                <div class="form-group">
+                    <label for="modalStatus">Status</label>
+                    <select id="modalStatus">
+                        <option value="OK">OK / Normal</option>
+                        <option value="Bermasalah">Bermasalah</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Foto Kondisi (maks 10 foto)</label>
+                    <div class="foto-edit-grid" id="fotoEditGrid"></div>
+                    <div class="foto-limit-note" id="fotoLimitNote"></div>
+                </div>
+                <div class="form-group">
+                    <label for="modalLaporan">Laporan Masalah</label>
+                    <textarea
+                        id="modalLaporan"
+                        rows="3"
+                        placeholder="Deskripsi masalah..."
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="modalTindak">Tindak Lanjut</label>
+                    <textarea
+                        id="modalTindak"
+                        rows="3"
+                        placeholder="Tindakan yang dilakukan..."
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="modalKeterangan">Keterangan</label>
+                    <input type="text" id="modalKeterangan" placeholder="Opsional" />
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="btnModalCancel">Batal</button>
+                    <button class="btn btn-success" id="btnModalSave">💾 Simpan Item</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL KELOLA AREA -->
+        <div class="modal-overlay" id="modalKelolaOverlay">
+            <div class="modal wide">
+                <div class="sheet-handle"></div>
+                <h2>⚙️ Kelola Area &amp; Item</h2>
+                <p class="modal-subtitle">
+                    Atur ART penanggung jawab dan daftar item untuk setiap area.
+                </p>
+                <div class="area-tabs" id="areaTabs"></div>
+                <div class="assign-row">
+                    <div class="form-group" style="margin: 0">
+                        <label for="assignSupervisor">ART Penanggung Jawab</label>
+                        <select id="assignSupervisor"></select>
+                    </div>
+                    <button class="btn btn-primary" id="btnAssignSpv">💾 Simpan</button>
+                </div>
+                <span class="section-label">Daftar Item</span>
+                <div class="item-list" id="itemList"></div>
+                <div class="item-add-row">
+                    <input type="text" id="newItemInput" placeholder="Nama item baru..." />
+                    <button class="btn btn-success" id="btnAddItem">+ Tambah</button>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="btnKelolaClose">Tutup</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL KELOLA SUPERVISOR -->
+        <div class="modal-overlay" id="modalSupOverlay">
+            <div class="modal wide">
+                <div class="sheet-handle"></div>
+                <h2>👥 Kelola ART</h2>
+                <p class="modal-subtitle">
+                    Tambah, rename, atau hapus ART. Assign ke area lewat menu Kelola Area.
+                </p>
+                <div class="sup-list" id="supList"></div>
+                <div class="sup-add-row">
+                    <input
+                        type="text"
+                        id="newSupInput"
+                        placeholder="Nama ART baru (contoh: ART-K)"
+                    />
+                    <button class="btn btn-success" id="btnAddSup">+ Tambah</button>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="btnSupClose">Tutup</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHOTO VIEWER -->
+        <div class="photo-viewer-overlay" id="photoViewerOverlay">
+            <div class="photo-viewer">
+                <button class="photo-viewer-close" id="photoViewerClose" title="Tutup">✕</button>
+                <button class="photo-nav photo-prev" id="photoPrev" title="Sebelumnya">‹</button>
+                <img id="photoViewerImg" src="" alt="Preview Foto" />
+                <button class="photo-nav photo-next" id="photoNext" title="Berikutnya">›</button>
+                <div class="photo-viewer-info">
+                    <div class="title" id="photoViewerTitle">-</div>
+                    <div class="counter" id="photoViewerCounter"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script>
+            /* ========================================================
+   0. THEME
+   ======================================================== */
+            (function () {
+                const root = document.documentElement;
+                const btn = document.getElementById("themeToggle");
+                const meta = document.getElementById("metaTheme");
+                function sync() {
+                    const dark = root.getAttribute("data-theme") === "dark";
+                    btn.setAttribute("aria-pressed", String(dark));
+                    btn.title = dark ? "Ganti ke mode terang" : "Ganti ke mode gelap";
+                    meta.setAttribute("content", dark ? "#0c1530" : "#1d4ed8");
+                }
+                function setTheme(t, persist) {
+                    root.classList.add("theme-anim");
+                    root.setAttribute("data-theme", t);
+                    sync();
+                    if (persist) {
+                        try {
+                            localStorage.setItem("dawet_theme", t);
+                        } catch (e) {}
+                    }
+                    setTimeout(() => root.classList.remove("theme-anim"), 450);
+                }
+                btn.addEventListener("click", () => {
+                    setTheme(
+                        root.getAttribute("data-theme") === "dark" ? "light" : "dark",
+                        true
+                    );
+                });
+                if (window.matchMedia) {
+                    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+                    const onChange = (e) => {
+                        let saved = null;
+                        try {
+                            saved = localStorage.getItem("dawet_theme");
+                        } catch (er) {}
+                        if (!saved) setTheme(e.matches ? "dark" : "light", false);
+                    };
+                    if (mq.addEventListener) mq.addEventListener("change", onChange);
+                }
+                sync();
+            })();
+
+            /* Ripple */
+            document.addEventListener("click", (e) => {
+                const b = e.target.closest(".btn");
+                if (!b || b.disabled) return;
+                const r = b.getBoundingClientRect();
+                const size = Math.max(r.width, r.height);
+                const s = document.createElement("span");
+                s.className = "ripple";
+                s.style.width = s.style.height = size + "px";
+                s.style.left = e.clientX - r.left - size / 2 + "px";
+                s.style.top = e.clientY - r.top - size / 2 + "px";
+                b.appendChild(s);
+                setTimeout(() => s.remove(), 600);
+            });
+
+            /* ========================================================
+   1. DEFAULT DATA
+   ======================================================== */
+            const DEFAULT_AREAS = [
+                { key: "area_namabarang",  label: "Rumah Kakanwil", supervisor: "ART-A", items: ["Halaman", "Atap", "Listrik Air", "Genset", "Pagar"] },
+                { key: "area_namabarang2", label: "Ruang Genset",   supervisor: "ART-B", items: ["Bahan bakar", "APAR", "Kontroler", "Ventilasi", "Oli mesin dan Aki", "Air radiator", "Sistem grounding", "Rambu K3"] },
+                { key: "area_namabarang3", label: "Ruang Basement", supervisor: "ART-C", items: ["Bak Kontrol", "Pompa Celup", "APAR, hydran", "Ventilasi", "Floor drain", "Pipa air hydran", "Dinding penahan tanah"] },
+                { key: "area_namabarang4", label: "Halaman",        supervisor: "ART-D", items: ["Hydran", "Tanaman dan pohon", "Parkiran", "Pos satpam", "Rambu dan markah jalan", "Tangga lobby", "Saluran air", "Pipa air", "Lampu halaman", "Titik kumpul dan Pintu darurat", "CCTV luar gedung"] },
+                { key: "area_namabarang5", label: "Rooftop",        supervisor: "ART-E", items: ["Penangkal petir", "Cooling tower dan chiller", "Tangga, Markah penunjuk jalan", "Ruang Mesin lift", "Kebocoran Atap", "Pipa air", "Kondisi dak beton", "Tangki air", "Anti Petir"] },
+                { key: "area_namabarang6", label: "Lantai 1",       supervisor: "ART-F", items: ["Box hydran", "APAR", "Sound Ceiling", "Jalur evakuasi/pintu darurat", "AHU Ruangan", "Lift dan AC Lantai 1", "Kamar Mandi", "Ruang Klinik", "Ruang Laktasi", "Ruang Gallery dan Kolaborasi", "Ruang Kelas Pajak", "Area Mesjid", "Area TPT"] },
+                { key: "area_namabarang7", label: "Lantai 2",       supervisor: "ART-G", items: ["Jalur evakuasi/pintu darurat", "APAR", "Sound Ceiling", "Lampu, Atap, Listrik", "AHU Lantai", "Lift dan AC", "Kamar Mandi", "Pantry"] },
+                { key: "area_namabarang8", label: "Lantai 6",       supervisor: "ART-H", items: ["Jalur evakuasi/pintu darurat", "APAR", "Sound Ceiling", "Lampu, Atap, Listrik", "AHU Lantai", "Lift dan AC", "Kamar Mandi", "Ruangan FTB", "Ruangan BAP", "Ruangan Persediaan", "Lab Forensik", "Area Podcast, Yoga dan Kantin", "Pantry"] },
+                { key: "area_namabarang9", label: "Halaman",        supervisor: "ART-I", items: ["Ruang kakanwil dan Ruang Rapat", "Perpustakaan dan Ruang serbaguna", "Sound Ceiling", "Lampu, Atap, Listrik", "AHU Lantai", "Lift dan AC", "Kamar Mandi", "Pantry", "Jalur evakuasi/pintu darurat", "APAR"] },
+                { key: "area_namabarang10", label: "Lantai 8",      supervisor: "ART-J", items: ["Aula Istana Maimun", "Kontroling sound system", "Sound Ceiling", "Lampu, Atap, Listrik", "AHU Lantai", "Lift dan AC", "Kamar Mandi", "Pantry", "APAR", "Jalur evakuasi/pintu darurat"] }
+            ];
+
+            const DEFAULT_SUPERVISORS = ["ART-A","ART-B","ART-C","ART-D","ART-E","ART-F","ART-G","ART-H","ART-I","ART-J"];
+            const MAX_FOTO = 10;
+
+            /* ========================================================
+   2. STORAGE
+   ======================================================== */
+            const STORAGE_KEYS = {
+                AREAS: "dawet_areas_v10",
+                SUPERVISORS: "dawet_supervisors_v10",
+                CHECKUPS: "dawet_checkups_v10",
+                SEEDED: "dawet_seeded_v10"
+            };
+
+            function uuidv4() {
+                return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+                    const r = (Math.random() * 16) | 0;
+                    const v = c === "x" ? r : (r & 0x3) | 0x8;
+                    return v.toString(16);
+                });
+            }
+            function getAreas() {
+                try {
+                    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.AREAS));
+                    return raw && Array.isArray(raw) && raw.length > 0
+                        ? raw
+                        : JSON.parse(JSON.stringify(DEFAULT_AREAS));
+                } catch {
+                    return JSON.parse(JSON.stringify(DEFAULT_AREAS));
+                }
+            }
+            function saveAreas(l) { localStorage.setItem(STORAGE_KEYS.AREAS, JSON.stringify(l)); }
+            function getSupervisors() {
+                try {
+                    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.SUPERVISORS));
+                    return raw && Array.isArray(raw) && raw.length > 0 ? raw : [...DEFAULT_SUPERVISORS];
+                } catch {
+                    return [...DEFAULT_SUPERVISORS];
+                }
+            }
+            function saveSupervisors(l) { localStorage.setItem(STORAGE_KEYS.SUPERVISORS, JSON.stringify(l)); }
+            function getCheckups() {
+                try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.CHECKUPS)) || []; }
+                catch { return []; }
+            }
+            function saveCheckups(d) { localStorage.setItem(STORAGE_KEYS.CHECKUPS, JSON.stringify(d)); }
+            function getAreaBySupervisor(spv) { return getAreas().find((a) => a.supervisor === spv); }
+            function getAreaByKey(key) { return getAreas().find((a) => a.key === key); }
+
+            /* ========================================================
+   3. SEED
+   ======================================================== */
+            function placeholderFoto(warna, teks) {
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+        <rect width="400" height="300" fill="${warna}"/>
+        <text x="200" y="155" font-family="Arial" font-size="22" fill="white" text-anchor="middle" font-weight="bold">${teks}</text>
+    </svg>`;
+                return "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
+            }
+            const F_OK1 = placeholderFoto("#16a34a", "Kondisi OK");
+            const F_OK2 = placeholderFoto("#059669", "Kondisi OK");
+            const F_BAD1 = placeholderFoto("#dc2626", "Bermasalah");
+            const F_BAD2 = placeholderFoto("#b91c1c", "Bermasalah");
+            const F_BAD3 = placeholderFoto("#991b1b", "Bermasalah");
+
+            function mkItem(groupKey, areaBarang, status = "OK", fotoArr = [], laporan = "", tindak = "", ket = "") {
+                return {
+                    groupKey,
+                    areaBarang,
+                    status: status === "Bermasalah" ? "Bermasalah" : "OK",
+                    kondisiFoto: Array.isArray(fotoArr) ? fotoArr : [],
+                    laporanMasalah: laporan,
+                    tindakLanjut: tindak,
+                    keterangan: ket
+                };
+            }
+            function buildItemsForArea(area, overrides = []) {
+                return area.items.map((name) => {
+                    const found = overrides.find((o) => o.areaBarang === name);
+                    return found || mkItem(area.key, name);
+                });
+            }
+
+            function generateSeedData() {
+                const now = new Date();
+                const iso = (d) => d.toISOString();
+                const overridesByArea = {
+                    area_namabarang: [
+                        mkItem("area_namabarang", "Halaman", "OK", [F_OK1, F_OK2], "", "Rutin dibersihkan 2x seminggu", "Halaman bersih"),
+                        mkItem("area_namabarang", "Atap", "OK", [F_OK2], "", "Cek talang bulan depan", ""),
+                        mkItem("area_namabarang", "Listrik Air", "Bermasalah", [F_BAD1, F_BAD2, F_BAD3],
+                            "MCB sering trip saat AC dinyalakan bersamaan. Air PDAM keruh.",
+                            "Panggil teknisi listrik minggu ini. Pasang filter air.", "Prioritas tinggi"),
+                        mkItem("area_namabarang", "Genset", "OK", [F_OK1], "", "Oli sudah diganti", ""),
+                        mkItem("area_namabarang", "Pagar", "Bermasalah", [F_BAD2, F_BAD1],
+                            "Pagar sisi timur berkarat dan cat mengelupas.",
+                            "Jadwalkan pengecatan ulang minggu depan.", "Anggaran sudah disetujui")
+                    ],
+                    area_namabarang2: [
+                        mkItem("area_namabarang2", "Bahan bakar", "OK", [F_OK2], "", "Stok solar 80%", ""),
+                        mkItem("area_namabarang2", "APAR", "OK", [F_OK1], "", "Pressure normal, segel utuh", "Expired 2027"),
+                        mkItem("area_namabarang2", "Kontroler", "Bermasalah", [F_BAD3],
+                            "Panel kontroler genset error E-05 saat start.",
+                            "Reset manual, monitor 3 hari.", "Sudah dilaporkan ke vendor"),
+                        mkItem("area_namabarang2", "Oli mesin dan Aki", "OK", [F_OK2], "", "Level oli normal, aki 12.6V", ""),
+                        mkItem("area_namabarang2", "Sistem grounding", "OK", [F_OK1], "", "Ground resistance 1.2 ohm", "Aman"),
+                        mkItem("area_namabarang2", "Rambu K3", "Bermasalah", [F_BAD1],
+                            "2 rambu K3 di area genset sudah pudar.",
+                            "Pesan rambu pengganti, pasang minggu ini.", "")
+                    ],
+                    area_namabarang3: [
+                        mkItem("area_namabarang3", "Bak Kontrol", "OK", [F_OK1], "", "Bersih, tidak ada endapan", ""),
+                        mkItem("area_namabarang3", "Pompa Celup", "Bermasalah", [F_BAD2, F_BAD1],
+                            "Pompa celup no.2 berbunyi kasar, bearing aus.",
+                            "Stop operasi, panggil teknisi.", "Pakai pompa cadangan sementara"),
+                        mkItem("area_namabarang3", "Floor drain", "OK", [F_OK2], "", "Lancar, tidak ada sumbatan", ""),
+                        mkItem("area_namabarang3", "Dinding penahan tanah", "OK", [F_OK1], "", "Tidak ada retak", "")
+                    ],
+                    area_namabarang6: [
+                        mkItem("area_namabarang6", "APAR", "OK", [F_OK1, F_OK2], "", "Semua APAR lantai 1 dicek, kondisi baik", ""),
+                        mkItem("area_namabarang6", "Jalur evakuasi/pintu darurat", "Bermasalah", [F_BAD3],
+                            "Pintu darurat sayap kiri macet, handle patah.",
+                            "Panggil tukang kunci hari ini.", "Pintu darurat harus selalu bisa dibuka"),
+                        mkItem("area_namabarang6", "Kamar Mandi", "OK", [F_OK2], "", "Bersih, air lancar", "")
+                    ],
+                    area_namabarang9: [
+                        mkItem("area_namabarang9", "Ruang kakanwil dan Ruang Rapat", "Bermasalah", [F_BAD1],
+                            "AC ruang rapat tidak dingin, suhu 29°C.",
+                            "Servis AC, cek freon.", "Ada rapat penting minggu depan")
+                    ]
+                };
+                const areas = getAreas();
+                return areas.map((area, index) => {
+                    const overrides = overridesByArea[area.key] || [];
+                    return {
+                        id: uuidv4(),
+                        areaKey: area.key,
+                        areaLabel: area.label,
+                        supervisor: area.supervisor,
+                        createdAt: iso(new Date(now.getTime() - (index + 1) * 86400000)),
+                        updatedAt: iso(new Date(now.getTime() - (index + 1) * 3600000)),
+                        items: buildItemsForArea(area, overrides)
+                    };
+                });
+            }
+            function seedIfEmpty() {
+                const isSeeded = localStorage.getItem(STORAGE_KEYS.SEEDED);
+                const existing = getCheckups();
+                if (!isSeeded || existing.length === 0) {
+                    if (!localStorage.getItem(STORAGE_KEYS.AREAS)) saveAreas(DEFAULT_AREAS);
+                    if (!localStorage.getItem(STORAGE_KEYS.SUPERVISORS)) saveSupervisors(DEFAULT_SUPERVISORS);
+                    const seed = generateSeedData();
+                    saveCheckups(seed);
+                    localStorage.setItem(STORAGE_KEYS.SEEDED, "1");
+                }
+            }
+
+            /* ========================================================
+   4. STATE
+   ======================================================== */
+            let currentRecord = null;
+            let editingItem = null;
+            let editingFotos = [];
+            let kelolaAreaKey = null;
+            let activeFilter = "all";
+
+            /* ========================================================
+   5. SUPERVISOR SELECT — label opsi = nama lokasi/area
+   ======================================================== */
+            const supervisorSelect = document.getElementById("supervisorSelect");
+
+            function populateSupervisorOptions() {
+                const sups = getSupervisors();
+                const areas = getAreas();
+                const selected = supervisorSelect.value;
+                supervisorSelect.innerHTML = '<option value="">-- Pilih Lokasi --</option>';
+                sups.forEach((spv) => {
+                    const area = areas.find((a) => a.supervisor === spv);
+                    const opt = document.createElement("option");
+                    opt.value = spv;                            // value tetap supervisor
+                    opt.textContent = area ? area.label : spv;  // tampilkan nama area
+                    supervisorSelect.appendChild(opt);
+                });
+                if (selected && sups.includes(selected)) supervisorSelect.value = selected;
+            }
+
+            supervisorSelect.addEventListener("change", () => {
+                const spv = supervisorSelect.value;
+                if (!spv) { currentRecord = null; renderTable(true); return; }
+                const area = getAreaBySupervisor(spv);
+                if (!area) { currentRecord = null; renderTable(true); return; }
+                currentRecord = getOrCreateRecord(area);
+                renderTable(true);
+            });
+
+            document.getElementById("btnReload").addEventListener("click", (e) => {
+                const b = e.currentTarget;
+                b.classList.remove("loading");
+                void b.offsetWidth;
+                b.classList.add("loading");
+                supervisorSelect.dispatchEvent(new Event("change"));
+                showToast("Data dimuat ulang.", "success");
+            });
+
+            /* ========================================================
+   6. RECORD BUILD
+   ======================================================== */
+            function buildItemsForRecordFromArea(area, existingItems) {
+                return area.items.map((name) => {
+                    const existing = existingItems?.find((e) => e.areaBarang === name);
+                    if (existing) {
+                        if (!Array.isArray(existing.kondisiFoto)) {
+                            existing.kondisiFoto = existing.kondisiFoto ? [existing.kondisiFoto] : [];
+                        }
+                        if (existing.status !== "Bermasalah" && existing.status !== "OK")
+                            existing.status = "OK";
+                        return existing;
+                    }
+                    return mkItem(area.key, name);
+                });
+            }
+            function getOrCreateRecord(area) {
+                const records = getCheckups();
+                let rec = records.find((r) => r.areaKey === area.key && r.supervisor === area.supervisor);
+                if (!rec) {
+                    rec = {
+                        id: uuidv4(),
+                        areaKey: area.key,
+                        areaLabel: area.label,
+                        supervisor: area.supervisor,
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        items: buildItemsForRecordFromArea(area, null)
+                    };
+                    records.push(rec);
+                    saveCheckups(records);
+                } else {
+                    rec.items = buildItemsForRecordFromArea(area, rec.items);
+                    rec.areaLabel = area.label;
+                    rec.supervisor = area.supervisor;
+                    saveCheckups(records);
+                }
+                return rec;
+            }
+
+            /* ========================================================
+   7. RENDER TABEL
+   ======================================================== */
+            const tableBody = document.getElementById("tableBody");
+            const hdrAreaName = document.getElementById("hdrAreaName");
+            const hdrSupervisor = document.getElementById("hdrSupervisor");
+            const hdrJumlah = document.getElementById("hdrJumlah");
+            const hdrTanggal = document.getElementById("hdrTanggal");
+            const filterBar = document.getElementById("filterBar");
+            const progressBar = document.getElementById("progressBar");
+            const progressPct = document.getElementById("progressPct");
+            const progressLabel = document.getElementById("progressLabel");
+            const progressTrack = document.getElementById("progressTrack");
+
+            function formatTanggalFull(iso) {
+                if (!iso) return "-";
+                const d = new Date(iso);
+                if (isNaN(d.getTime())) return "-";
+                const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+                const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+                const namaHari = hari[d.getDay()];
+                const tgl = d.getDate();
+                const namaBulan = bulan[d.getMonth()];
+                const tahun = d.getFullYear();
+                const jam = String(d.getHours()).padStart(2, "0");
+                const menit = String(d.getMinutes()).padStart(2, "0");
+                return `${namaHari}, ${tgl} ${namaBulan} ${tahun}, ${jam}.${menit} WIB`;
+            }
+
+            function escapeHtml(str) {
+                if (!str) return "";
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            filterBar.addEventListener("click", (e) => {
+                const btn = e.target.closest(".chip");
+                if (!btn) return;
+                activeFilter = btn.dataset.filter;
+                renderTable(true);
+            });
+
+            function updateFilterChips(total, ok, bad) {
+                const labels = {
+                    all: `Semua (${total})`,
+                    OK: `✅ OK / Normal (${ok})`,
+                    Bermasalah: `⚠️ Bermasalah (${bad})`
+                };
+                filterBar.querySelectorAll(".chip").forEach((chip) => {
+                    chip.textContent = labels[chip.dataset.filter];
+                    chip.classList.toggle("active", chip.dataset.filter === activeFilter);
+                });
+            }
+
+            function updateProgress(total, ok) {
+                const pct = total ? Math.round((ok / total) * 100) : 0;
+                progressBar.style.width = pct + "%";
+                progressPct.textContent = pct + "%";
+                progressLabel.textContent = total
+                    ? `${ok} dari ${total} item dalam kondisi normal`
+                    : "Kondisi normal";
+                progressTrack.setAttribute("aria-valuenow", pct);
+            }
+
+            function emptyRow(icon, title, text) {
+                return `<tr><td colspan="8"><div class="empty-state"><span class="icon">${icon}</span><h3>${title}</h3><p>${text}</p></div></td></tr>`;
+            }
+            function cellText(value, label) {
+                const has = !!value;
+                return `<td data-label="${label}" class="${has ? "" : "is-empty"}">${has ? escapeHtml(value) : '<span class="text-empty">-</span>'}</td>`;
+            }
+
+            function renderTable(animate = false) {
+                tableBody.classList.toggle("animate", !!animate);
+                if (!currentRecord) {
+                    hdrAreaName.textContent = "Belum ada area dipilih";
+                    hdrSupervisor.textContent = "-";
+                    hdrJumlah.textContent = "-";
+                    hdrTanggal.textContent = "-";
+                    updateFilterChips(0, 0, 0);
+                    updateProgress(0, 0);
+                    tableBody.innerHTML = emptyRow(
+                        "📋",
+                        "Belum ada data yang dimuat",
+                        "Pilih <b>Lokasi</b> untuk memuat data area."
+                    );
+                    return;
+                }
+                const area = getAreaByKey(currentRecord.areaKey);
+                const items = currentRecord.items;
+                const okCount = items.filter((i) => i.status !== "Bermasalah").length;
+                const badCount = items.length - okCount;
+
+                hdrAreaName.textContent = area ? area.label : currentRecord.areaLabel || "-";
+                hdrSupervisor.textContent = currentRecord.supervisor;
+                hdrJumlah.textContent = `${items.length} item`;
+                hdrTanggal.textContent = formatTanggalFull(currentRecord.updatedAt);
+                updateFilterChips(items.length, okCount, badCount);
+                updateProgress(items.length, okCount);
+
+                const visible = items
+                    .map((item, idx) => ({ item, idx }))
+                    .filter(({ item }) => activeFilter === "all" || item.status === activeFilter);
+
+                if (visible.length === 0) {
+                    tableBody.innerHTML = emptyRow("🔍","Tidak ada item","Tidak ada item dengan status yang dipilih.");
+                    return;
+                }
+
+                tableBody.innerHTML = "";
+                visible.forEach(({ item, idx }, order) => {
+                    const tr = document.createElement("tr");
+                    const bad = item.status === "Bermasalah";
+                    tr.className = "item-row " + (bad ? "is-bad" : "is-ok");
+                    tr.style.setProperty("--i", Math.min(order, 14));
+                    const statusClass = bad ? "status-masalah" : "status-ok";
+                    const statusLabel = bad ? "Bermasalah" : "OK";
+
+                    const fotos = Array.isArray(item.kondisiFoto) ? item.kondisiFoto : [];
+                    let fotoHtml;
+                    if (fotos.length === 0) {
+                        fotoHtml = `<span class="no-photo">No foto</span>`;
+                    } else {
+                        const shown = fotos.slice(0, 7);
+                        fotoHtml = `<div class="foto-grid">`;
+                        shown.forEach((f, fi) => {
+                            fotoHtml += `<img src="${f}" class="img-thumbnail" loading="lazy" onclick="openPhotoViewer(${idx}, ${fi})" alt="Foto ${fi + 1}">`;
+                        });
+                        if (fotos.length > 7) {
+                            fotoHtml += `<div class="foto-more" onclick="openPhotoViewer(${idx}, 7)">+${fotos.length - 7}</div>`;
+                        }
+                        fotoHtml += `</div>`;
+                    }
+
+                    tr.innerHTML = `
+            <td class="c-no">${idx + 1}</td>
+            <td class="c-name"><span class="idx-mob">${idx + 1}</span><span>${escapeHtml(item.areaBarang)}</span></td>
+            <td class="c-status"><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+            <td data-label="Foto Kondisi" class="${fotos.length ? "" : "is-empty"}">${fotoHtml}</td>
+            ${cellText(item.laporanMasalah, "Laporan Masalah")}
+            ${cellText(item.tindakLanjut, "Tindak Lanjut")}
+            ${cellText(item.keterangan, "Keterangan")}
+            <td class="c-act"><button class="btn-edit" onclick="openEditModal(${idx})">✏️ Edit</button></td>
+        `;
+                    tableBody.appendChild(tr);
+                });
+            }
+
+            /* ========================================================
+   8. PHOTO VIEWER
+   ======================================================== */
+            const photoViewerOverlay = document.getElementById("photoViewerOverlay");
+            const photoViewerImg = document.getElementById("photoViewerImg");
+            const photoViewerTitle = document.getElementById("photoViewerTitle");
+            const photoViewerCounter = document.getElementById("photoViewerCounter");
+            const photoPrev = document.getElementById("photoPrev");
+            const photoNext = document.getElementById("photoNext");
+            const photoViewerClose = document.getElementById("photoViewerClose");
+            let viewerState = { itemIdx: 0, fotoIdx: 0 };
+
+            function openPhotoViewer(itemIdx, fotoIdx = 0) {
+                viewerState = { itemIdx, fotoIdx };
+                showPhotoInViewer();
+                photoViewerOverlay.classList.add("active");
+            }
+            function showPhotoInViewer() {
+                if (!currentRecord) return;
+                const item = currentRecord.items[viewerState.itemIdx];
+                if (!item) return;
+                const fotos = Array.isArray(item.kondisiFoto) ? item.kondisiFoto : [];
+                if (fotos.length === 0) return;
+                if (viewerState.fotoIdx < 0) viewerState.fotoIdx = 0;
+                if (viewerState.fotoIdx >= fotos.length) viewerState.fotoIdx = fotos.length - 1;
+                photoViewerImg.classList.remove("swap");
+                void photoViewerImg.offsetWidth;
+                photoViewerImg.classList.add("swap");
+                photoViewerImg.src = fotos[viewerState.fotoIdx];
+                photoViewerTitle.textContent = item.areaBarang;
+                photoViewerCounter.textContent = `Foto ${viewerState.fotoIdx + 1} dari ${fotos.length}`;
+                photoPrev.disabled = viewerState.fotoIdx === 0;
+                photoNext.disabled = viewerState.fotoIdx === fotos.length - 1;
+            }
+            photoPrev.addEventListener("click", () => {
+                if (viewerState.fotoIdx > 0) { viewerState.fotoIdx--; showPhotoInViewer(); }
+            });
+            photoNext.addEventListener("click", () => {
+                const item = currentRecord.items[viewerState.itemIdx];
+                const fotos = Array.isArray(item.kondisiFoto) ? item.kondisiFoto : [];
+                if (viewerState.fotoIdx < fotos.length - 1) { viewerState.fotoIdx++; showPhotoInViewer(); }
+            });
+            photoViewerClose.addEventListener("click", () => photoViewerOverlay.classList.remove("active"));
+            photoViewerOverlay.addEventListener("click", (e) => {
+                if (e.target === photoViewerOverlay) photoViewerOverlay.classList.remove("active");
+            });
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    [photoViewerOverlay, modalOverlay, modalKelolaOverlay, modalSupOverlay].forEach((o) =>
+                        o.classList.remove("active")
+                    );
+                    return;
+                }
+                if (!photoViewerOverlay.classList.contains("active")) return;
+                if (e.key === "ArrowLeft" && !photoPrev.disabled) photoPrev.click();
+                if (e.key === "ArrowRight" && !photoNext.disabled) photoNext.click();
+            });
+            (function () {
+                let startX = null;
+                photoViewerImg.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+                photoViewerImg.addEventListener("touchend", (e) => {
+                    if (startX === null) return;
+                    const dx = e.changedTouches[0].clientX - startX;
+                    if (Math.abs(dx) > 50) {
+                        if (dx < 0 && !photoNext.disabled) photoNext.click();
+                        if (dx > 0 && !photoPrev.disabled) photoPrev.click();
+                    }
+                    startX = null;
+                });
+            })();
+
+            /* ========================================================
+   9. MODAL EDIT ITEM
+   ======================================================== */
+            const modalOverlay = document.getElementById("modalOverlay");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalSubtitle = document.getElementById("modalSubtitle");
+            const modalStatus = document.getElementById("modalStatus");
+            const modalLaporan = document.getElementById("modalLaporan");
+            const modalTindak = document.getElementById("modalTindak");
+            const modalKeterangan = document.getElementById("modalKeterangan");
+            const fotoEditGrid = document.getElementById("fotoEditGrid");
+            const fotoLimitNote = document.getElementById("fotoLimitNote");
+
+            function openEditModal(index) {
+                editingItem = { index };
+                const item = currentRecord.items[index];
+                const area = getAreaByKey(currentRecord.areaKey);
+                modalTitle.textContent = `Edit: ${item.areaBarang}`;
+                modalSubtitle.textContent = `${area ? area.label : currentRecord.areaLabel} • ${currentRecord.supervisor}`;
+                modalStatus.value = item.status === "Bermasalah" ? "Bermasalah" : "OK";
+                modalLaporan.value = item.laporanMasalah;
+                modalTindak.value = item.tindakLanjut;
+                modalKeterangan.value = item.keterangan;
+                editingFotos = Array.isArray(item.kondisiFoto) ? [...item.kondisiFoto] : [];
+                renderFotoEditGrid();
+                modalOverlay.classList.add("active");
+                modalOverlay.querySelector(".modal").scrollTop = 0;
+            }
+            function renderFotoEditGrid() {
+                fotoEditGrid.innerHTML = "";
+                editingFotos.forEach((base64, i) => {
+                    const el = document.createElement("div");
+                    el.className = "foto-edit-item";
+                    el.innerHTML = `
+            <img src="${base64}" alt="Foto ${i + 1}">
+            <span class="foto-num">${i + 1}</span>
+            <button type="button" class="btn-del-foto" title="Hapus foto" onclick="removeFotoEdit(${i})">✕</button>
+        `;
+                    fotoEditGrid.appendChild(el);
+                });
+                if (editingFotos.length < MAX_FOTO) {
+                    const uploader = document.createElement("label");
+                    uploader.className = "foto-uploader";
+                    uploader.innerHTML = `
+            <span class="icon">📷</span>
+            <span>Tambah Foto</span>
+            <span class="count">${editingFotos.length} / ${MAX_FOTO}</span>
+            <input type="file" accept="image/*" multiple style="display:none;" id="fotoUploaderInput">
+        `;
+                    uploader.querySelector("input").addEventListener("change", handleFotoUpload);
+                    fotoEditGrid.appendChild(uploader);
+                }
+                fotoLimitNote.textContent =
+                    `Terpakai ${editingFotos.length} dari ${MAX_FOTO} foto. ` +
+                    (editingFotos.length >= MAX_FOTO ? "Batas maksimal tercapai." : "Disimpan sebagai base64.");
+            }
+            function handleFotoUpload(e) {
+                const files = Array.from(e.target.files || []);
+                if (files.length === 0) return;
+                const available = MAX_FOTO - editingFotos.length;
+                if (available <= 0) { showToast("Maksimal 10 foto per item.", "error"); return; }
+                const accepted = files.slice(0, available);
+                let pending = accepted.length;
+                accepted.forEach((file) => {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        editingFotos.push(ev.target.result);
+                        pending--;
+                        if (pending === 0) {
+                            renderFotoEditGrid();
+                            if (files.length > available)
+                                showToast(`Hanya ${available} foto ditambahkan (maks 10).`, "error");
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            function removeFotoEdit(i) { editingFotos.splice(i, 1); renderFotoEditGrid(); }
+            function closeModal() {
+                modalOverlay.classList.remove("active");
+                editingItem = null;
+                editingFotos = [];
+            }
+            document.getElementById("btnModalCancel").addEventListener("click", closeModal);
+            modalOverlay.addEventListener("click", (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+            document.getElementById("btnModalSave").addEventListener("click", () => {
+                if (!editingItem) return;
+                const idx = editingItem.index;
+                currentRecord.items[idx] = {
+                    ...currentRecord.items[idx],
+                    status: modalStatus.value,
+                    kondisiFoto: [...editingFotos],
+                    laporanMasalah: modalLaporan.value.trim(),
+                    tindakLanjut: modalTindak.value.trim(),
+                    keterangan: modalKeterangan.value.trim()
+                };
+                const records = getCheckups();
+                const recIdx = records.findIndex((r) => r.id === currentRecord.id);
+                if (recIdx >= 0) {
+                    currentRecord.updatedAt = new Date().toISOString();
+                    records[recIdx] = currentRecord;
+                    saveCheckups(records);
+                }
+                renderTable(false);
+                closeModal();
+                showToast("Item berhasil disimpan.", "success");
+            });
+
+            /* ========================================================
+   10. KELOLA AREA
+   ======================================================== */
+            const modalKelolaOverlay = document.getElementById("modalKelolaOverlay");
+            const areaTabs = document.getElementById("areaTabs");
+            const assignSupervisor = document.getElementById("assignSupervisor");
+            const itemList = document.getElementById("itemList");
+            const newItemInput = document.getElementById("newItemInput");
+
+            const ICON_TRASH = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg>';
+            const ICON_EDIT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
+
+            (function () {
+                const el = areaTabs;
+                function updateFades() {
+                    const max = el.scrollWidth - el.clientWidth;
+                    el.classList.toggle("fade-l", el.scrollLeft > 4);
+                    el.classList.toggle("fade-r", el.scrollLeft < max - 4);
+                }
+                el.addEventListener("scroll", updateFades, { passive: true });
+                window.addEventListener("resize", updateFades);
+                new MutationObserver(() => requestAnimationFrame(updateFades)).observe(el, { childList: true });
+                document.getElementById("btnKelolaArea").addEventListener("click", () => setTimeout(updateFades, 60));
+                el.addEventListener(
+                    "wheel",
+                    (e) => {
+                        if (el.scrollWidth <= el.clientWidth) return;
+                        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                            e.preventDefault();
+                            el.scrollBy({ left: e.deltaY, behavior: "auto" });
+                        }
+                    },
+                    { passive: false }
+                );
+                let down = false, moved = false, startX = 0, startLeft = 0;
+                el.addEventListener("mousedown", (e) => {
+                    if (e.button !== 0) return;
+                    down = true; moved = false;
+                    startX = e.pageX; startLeft = el.scrollLeft;
+                });
+                window.addEventListener("mousemove", (e) => {
+                    if (!down) return;
+                    const dx = e.pageX - startX;
+                    if (!moved && Math.abs(dx) > 5) { moved = true; el.classList.add("dragging"); }
+                    if (moved) el.scrollLeft = startLeft - dx;
+                });
+                window.addEventListener("mouseup", () => {
+                    if (!down) return;
+                    down = false;
+                    el.classList.remove("dragging");
+                });
+                el.addEventListener("click", (e) => {
+                    if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+                }, true);
+            })();
+
+            document.getElementById("btnKelolaArea").addEventListener("click", () => {
+                kelolaAreaKey = null;
+                populateAssignOptions();
+                renderAreaTabs();
+                const areas = getAreas();
+                if (areas.length > 0) selectKelolaArea(areas[0].key);
+                modalKelolaOverlay.classList.add("active");
+            });
+            document.getElementById("btnKelolaClose").addEventListener("click", () =>
+                modalKelolaOverlay.classList.remove("active")
+            );
+            modalKelolaOverlay.addEventListener("click", (e) => {
+                if (e.target === modalKelolaOverlay) modalKelolaOverlay.classList.remove("active");
+            });
+
+            function populateAssignOptions() {
+                const sups = getSupervisors();
+                const current = assignSupervisor.value;
+                assignSupervisor.innerHTML = '<option value="">-- Tidak ada --</option>';
+                sups.forEach((s) => {
+                    const opt = document.createElement("option");
+                    opt.value = s; opt.textContent = s;
+                    assignSupervisor.appendChild(opt);
+                });
+                if (current && sups.includes(current)) assignSupervisor.value = current;
+            }
+            function renderAreaTabs() {
+                const areas = getAreas();
+                areaTabs.innerHTML = "";
+                areas.forEach((area) => {
+                    const btn = document.createElement("button");
+                    btn.className = "area-tab" + (area.key === kelolaAreaKey ? " active" : "");
+                    btn.textContent = area.label;
+                    btn.title = `${area.key} — ${area.supervisor || "(belum)"}`;
+                    btn.addEventListener("click", () => selectKelolaArea(area.key));
+                    areaTabs.appendChild(btn);
+                });
+            }
+            function selectKelolaArea(key) {
+                kelolaAreaKey = key;
+                const area = getAreaByKey(key);
+                if (!area) return;
+                Array.from(areaTabs.children).forEach((btn) => {
+                    const on = btn.textContent === area.label;
+                    btn.classList.toggle("active", on);
+                    if (on) {
+                        areaTabs.scrollTo({
+                            left: btn.offsetLeft - (areaTabs.clientWidth - btn.offsetWidth) / 2,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+                assignSupervisor.value = area.supervisor || "";
+                itemList.innerHTML = "";
+                if (area.items.length === 0) {
+                    itemList.innerHTML = `<div class="list-empty">Belum ada item.</div>`;
+                } else {
+                    area.items.forEach((itemName, i) => {
+                        const row = document.createElement("div");
+                        row.className = "item-row-edit";
+                        row.style.animationDelay = Math.min(i, 10) * 25 + "ms";
+                        row.innerHTML = `
+                <div class="num">${i + 1}</div>
+                <input type="text" value="${escapeAttr(itemName)}" onchange="renameItem('${escapeAttrJs(area.key)}', ${i}, this)">
+                <button class="icon-btn del" title="Hapus item" aria-label="Hapus item" onclick="deleteItem('${escapeAttrJs(area.key)}', ${i})">${ICON_TRASH}</button>
+            `;
+                        itemList.appendChild(row);
+                    });
+                }
+            }
+            function escapeAttr(s) { return String(s).replace(/"/g, "&quot;"); }
+            function escapeAttrJs(s) { return String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'"); }
+
+            document.getElementById("btnAssignSpv").addEventListener("click", () => {
+                if (!kelolaAreaKey) return;
+                const areas = getAreas();
+                const area = areas.find((a) => a.key === kelolaAreaKey);
+                if (!area) return;
+                const newSpv = assignSupervisor.value;
+                if (newSpv) {
+                    const conflict = areas.find((a) => a.key !== kelolaAreaKey && a.supervisor === newSpv);
+                    if (conflict) {
+                        if (!confirm(`${newSpv} sudah menjadi ART untuk ${conflict.label}. Pindahkan ke ${area.label}?`)) return;
+                        conflict.supervisor = "";
+                    }
+                }
+                area.supervisor = newSpv;
+                saveAreas(areas);
+                const records = getCheckups();
+                records.forEach((rec) => {
+                    if (rec.areaKey === area.key) {
+                        rec.supervisor = area.supervisor;
+                        rec.areaLabel = area.label;
+                    }
+                });
+                saveCheckups(records);
+                populateSupervisorOptions();
+                renderAreaTabs();
+                showToast(`ART ${area.label} = ${newSpv || "(kosong)"}`, "success");
+                if (supervisorSelect.value === area.supervisor) {
+                    currentRecord = getOrCreateRecord(area);
+                    renderTable(false);
+                }
+            });
+            function renameItem(areaKey, index, inputEl) {
+                const areas = getAreas();
+                const area = areas.find((a) => a.key === areaKey);
+                if (!area) return;
+                const newName = inputEl.value.trim();
+                if (!newName) { inputEl.value = area.items[index]; return; }
+                if (newName === area.items[index]) return;
+                const oldName = area.items[index];
+                area.items[index] = newName;
+                saveAreas(areas);
+                const records = getCheckups();
+                const rec = records.find((r) => r.areaKey === areaKey);
+                if (rec) {
+                    const item = rec.items.find((it) => it.areaBarang === oldName);
+                    if (item) item.areaBarang = newName;
+                    saveCheckups(records);
+                }
+                renderAreaTabs();
+                selectKelolaArea(areaKey);
+                if (currentRecord && currentRecord.areaKey === areaKey) {
+                    currentRecord = getOrCreateRecord(area);
+                    renderTable(false);
+                }
+                showToast(`Item di-rename: ${oldName} → ${newName}`, "success");
+            }
+            function deleteItem(areaKey, index) {
+                const areas = getAreas();
+                const area = areas.find((a) => a.key === areaKey);
+                if (!area) return;
+                const name = area.items[index];
+                if (!confirm(`Hapus item "${name}" dari ${area.label}?`)) return;
+                area.items.splice(index, 1);
+                saveAreas(areas);
+                const records = getCheckups();
+                const rec = records.find((r) => r.areaKey === areaKey);
+                if (rec) {
+                    rec.items = rec.items.filter((it) => it.areaBarang !== name);
+                    saveCheckups(records);
+                }
+                renderAreaTabs();
+                selectKelolaArea(areaKey);
+                if (currentRecord && currentRecord.areaKey === areaKey) {
+                    currentRecord = getOrCreateRecord(area);
+                    renderTable(false);
+                }
+                showToast(`Item dihapus: ${name}`, "success");
+            }
+            document.getElementById("btnAddItem").addEventListener("click", () => {
+                if (!kelolaAreaKey) return;
+                const name = newItemInput.value.trim();
+                if (!name) { showToast("Nama item tidak boleh kosong.", "error"); return; }
+                const areas = getAreas();
+                const area = areas.find((a) => a.key === kelolaAreaKey);
+                if (!area) return;
+                if (area.items.includes(name)) { showToast(`Item "${name}" sudah ada.`, "error"); return; }
+                area.items.push(name);
+                saveAreas(areas);
+                const records = getCheckups();
+                const rec = records.find((r) => r.areaKey === area.key);
+                if (rec) { rec.items.push(mkItem(area.key, name)); saveCheckups(records); }
+                newItemInput.value = "";
+                renderAreaTabs();
+                selectKelolaArea(kelolaAreaKey);
+                if (currentRecord && currentRecord.areaKey === area.key) {
+                    currentRecord = getOrCreateRecord(area);
+                    renderTable(false);
+                }
+                showToast(`Item ditambahkan: ${name}`, "success");
+            });
+            newItemInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") { e.preventDefault(); document.getElementById("btnAddItem").click(); }
+            });
+
+            /* ========================================================
+   11. KELOLA SUPERVISOR (ART)
+   ======================================================== */
+            const modalSupOverlay = document.getElementById("modalSupOverlay");
+            const supListEl = document.getElementById("supList");
+            const newSupInput = document.getElementById("newSupInput");
+
+            document.getElementById("btnKelolaSupervisor").addEventListener("click", () => {
+                renderSupList();
+                modalSupOverlay.classList.add("active");
+            });
+            document.getElementById("btnSupClose").addEventListener("click", () =>
+                modalSupOverlay.classList.remove("active")
+            );
+            modalSupOverlay.addEventListener("click", (e) => {
+                if (e.target === modalSupOverlay) modalSupOverlay.classList.remove("active");
+            });
+
+            function renderSupList() {
+                const sups = getSupervisors();
+                const areas = getAreas();
+                supListEl.innerHTML = "";
+                if (sups.length === 0) {
+                    supListEl.innerHTML = `<div class="list-empty">Belum ada ART.</div>`;
+                    return;
+                }
+                sups.forEach((spv, i) => {
+                    const assignedAreas = areas.filter((a) => a.supervisor === spv).map((a) => a.label);
+                    const row = document.createElement("div");
+                    row.className = "sup-row";
+                    row.style.animationDelay = Math.min(i, 10) * 25 + "ms";
+                    const initials = spv.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "AR";
+                    row.innerHTML = `
+            <div class="sup-avatar">${escapeHtml(initials)}</div>
+            <div class="sup-info">
+                <div class="sup-name">${escapeHtml(spv)}</div>
+                <div class="sup-meta">
+                    ${assignedAreas.length > 0
+                        ? `📌 ${assignedAreas.map((k) => `<span class="info-badge">${escapeHtml(k)}</span>`).join(" ")}`
+                        : "Belum di-assign ke area"}
+                </div>
+            </div>
+            <div class="sup-actions">
+                <button class="icon-btn edit" title="Rename ART" aria-label="Rename ART" onclick="renameSupervisor('${escapeAttrJs(spv)}')">${ICON_EDIT}</button>
+                <button class="icon-btn del" title="Hapus ART" aria-label="Hapus ART" onclick="deleteSupervisor('${escapeAttrJs(spv)}')">${ICON_TRASH}</button>
+            </div>
+        `;
+                    supListEl.appendChild(row);
+                });
+            }
+            function renameSupervisor(oldName) {
+                const newName = prompt(`Rename ART "${oldName}" menjadi:`, oldName);
+                if (newName === null) return;
+                const trimmed = newName.trim();
+                if (!trimmed) { showToast("Nama tidak boleh kosong.", "error"); return; }
+                if (trimmed === oldName) return;
+                const sups = getSupervisors();
+                if (sups.includes(trimmed)) { showToast(`ART "${trimmed}" sudah ada.`, "error"); return; }
+                const idx = sups.indexOf(oldName);
+                if (idx < 0) return;
+                sups[idx] = trimmed;
+                saveSupervisors(sups);
+                const areas = getAreas();
+                areas.forEach((a) => { if (a.supervisor === oldName) a.supervisor = trimmed; });
+                saveAreas(areas);
+                const records = getCheckups();
+                records.forEach((r) => { if (r.supervisor === oldName) r.supervisor = trimmed; });
+                saveCheckups(records);
+                if (supervisorSelect.value === oldName) supervisorSelect.value = trimmed;
+                populateSupervisorOptions();
+                renderSupList();
+                if (currentRecord && currentRecord.supervisor === trimmed) {
+                    const area = getAreaBySupervisor(trimmed);
+                    if (area) { currentRecord = getOrCreateRecord(area); renderTable(false); }
+                }
+                showToast(`ART di-rename: ${oldName} → ${trimmed}`, "success");
+            }
+            function deleteSupervisor(name) {
+                if (!confirm(`Hapus ART "${name}"? Area yang di-assign akan menjadi tanpa ART.`)) return;
+                const sups = getSupervisors().filter((s) => s !== name);
+                saveSupervisors(sups);
+                const areas = getAreas();
+                areas.forEach((a) => { if (a.supervisor === name) a.supervisor = ""; });
+                saveAreas(areas);
+                const records = getCheckups();
+                records.forEach((r) => { if (r.supervisor === name) r.supervisor = ""; });
+                saveCheckups(records);
+                if (supervisorSelect.value === name) { supervisorSelect.value = ""; currentRecord = null; }
+                populateSupervisorOptions();
+                renderSupList();
+                renderTable(true);
+                showToast(`ART dihapus: ${name}`, "success");
+            }
+            document.getElementById("btnAddSup").addEventListener("click", () => {
+                const name = newSupInput.value.trim();
+                if (!name) { showToast("Nama ART tidak boleh kosong.", "error"); return; }
+                const sups = getSupervisors();
+                if (sups.includes(name)) { showToast(`ART "${name}" sudah ada.`, "error"); return; }
+                sups.push(name);
+                saveSupervisors(sups);
+                newSupInput.value = "";
+                populateSupervisorOptions();
+                renderSupList();
+                showToast(`ART ditambahkan: ${name}`, "success");
+            });
+            newSupInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") { e.preventDefault(); document.getElementById("btnAddSup").click(); }
+            });
+
+            /* ========================================================
+   12. EXPORT EXCEL
+   ======================================================== */
+            document.getElementById("btnExportExcel").addEventListener("click", exportToExcel);
+
+            function escapeXml(str) {
+                if (str == null) return "";
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&apos;");
+            }
+            function toExcelDateTime(iso) {
+                if (!iso) return "";
+                const d = new Date(iso);
+                if (isNaN(d.getTime())) return "";
+                const pad = (n) => String(n).padStart(2, "0");
+                return (
+                    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ` +
+                    `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+                );
+            }
+            function exportToExcel() {
+                const records = getCheckups();
+                const headers = ["Area","Supervisor","Item","Status","Masalah","Tindak Lanjut","Keterangan","Update"];
+                const rows = [];
+                records.forEach((rec) => {
+                    const area = getAreaByKey(rec.areaKey);
+                    const areaName = area ? area.label : rec.areaLabel || rec.areaKey || "";
+                    rec.items.forEach((it) => {
+                        rows.push([
+                            areaName,
+                            rec.supervisor || "",
+                            it.areaBarang || "",
+                            it.status === "Bermasalah" ? "Bermasalah" : "OK",
+                            it.laporanMasalah || "",
+                            it.tindakLanjut || "",
+                            it.keterangan || "",
+                            toExcelDateTime(rec.updatedAt)
+                        ]);
+                    });
+                });
+                const cols = headers.map(() => `<Column ss:AutoFitWidth="0" ss:Width="140"/>`).join("");
+                const headerRow = `<Row ss:StyleID="sHeader">${headers
+                    .map((h) => `<Cell><Data ss:Type="String">${escapeXml(h)}</Data></Cell>`)
+                    .join("")}</Row>`;
+                const dataRows = rows
+                    .map((r) => `<Row>${r
+                        .map((c) => `<Cell><Data ss:Type="String">${escapeXml(c)}</Data></Cell>`)
+                        .join("")}</Row>`)
+                    .join("");
+                const xml = `<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+<Styles>
+    <Style ss:ID="sHeader">
+        <Font ss:Bold="1" ss:Color="#FFFFFF"/>
+        <Interior ss:Color="#1E40AF" ss:Pattern="Solid"/>
+    </Style>
+</Styles>
+<Worksheet ss:Name="Rekap Checkup">
+    <Table>${cols}${headerRow}${dataRows}</Table>
+</Worksheet>
+</Workbook>`;
+                const blob = new Blob([xml], { type: "application/vnd.ms-excel;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                const stamp = new Date().toISOString().slice(0, 10);
+                a.href = url;
+                a.download = `DAWET_RekapCheckup_${stamp}.xls`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast("Export Excel berhasil.", "success");
+            }
+
+            /* ========================================================
+   13. TOAST
+   ======================================================== */
+            const toastEl = document.getElementById("toast");
+            let toastTimer = null;
+            function showToast(msg, type = "success") {
+                toastEl.textContent = msg;
+                toastEl.className = "toast show " + type;
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2400);
+            }
+
+            /* ========================================================
+   14. INIT
+   ======================================================== */
+            document.getElementById("footerYear").textContent = new Date().getFullYear();
+
+            if (!localStorage.getItem(STORAGE_KEYS.AREAS)) saveAreas(DEFAULT_AREAS);
+            if (!localStorage.getItem(STORAGE_KEYS.SUPERVISORS)) saveSupervisors(DEFAULT_SUPERVISORS);
+            populateSupervisorOptions();
+            seedIfEmpty();
+            renderTable(true);
+
+            (function autoLoadFirst() {
+                const records = getCheckups();
+                if (records.length > 0) {
+                    const first = records[0];
+                    const area = getAreaByKey(first.areaKey);
+                    if (area && area.supervisor) {
+                        supervisorSelect.value = area.supervisor;
+                        supervisorSelect.dispatchEvent(new Event("change"));
+                    }
+                }
+            })();
+
+            window.exportToJSON = function () {
+                const data = { areas: getAreas(), supervisors: getSupervisors(), checkups: getCheckups() };
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `DAWET_export_${new Date().toISOString().slice(0, 10)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            };
+        </script>
+    </body>
+</html>
