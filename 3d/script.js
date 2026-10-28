@@ -1,11 +1,17 @@
 /* ==================================================================
    IMAGE → 3D OBJECT EXTRACTOR
+   ------------------------------------------------------------------
    Pipeline:
-   1. Background removal  (@imgly/background-removal)
-   2. Depth estimation    (luminance + blur heuristic)
-   3. Mesh generation     (grid N×N, skip alpha < 0.15)
-   4. Render 360°         (Three.js + OrbitControls)
+   1. Background removal  (@imgly/background-removal, ES module)
+   2. Mask extraction     (alpha channel → grayscale)
+   3. Depth estimation    (luminance + box blur heuristic)
+   4. Mesh generation     (grid N×N, skip alpha < 0.15)
+   5. Render 360°         (Three.js + OrbitControls)
+   6. Export GLB          (GLTFExporter)
    ================================================================== */
+
+/* ==================== IMPORT (ES MODULE) ==================== */
+import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm';
 
 /* ==================== THREE.JS SETUP ==================== */
 const canvas = document.getElementById('canvas3d');
@@ -116,10 +122,17 @@ processBtn.addEventListener('click', async () => {
     try {
         /* ---- 1. Background removal ---- */
         showLoading('Memisahkan objek dari background...');
-        const cutoutBlob = await window.imglyBackgroundRemoval.removeBackground(
-            loadedImage.src,
-            { output: { format: 'image/png', quality: 1 } }
-        );
+
+        const cutoutBlob = await removeBackground(loadedImage.src, {
+            output: { format: 'image/png', quality: 1 },
+            progress: (key, current, total) => {
+                if (typeof key === 'string' && key.startsWith('fetch')) {
+                    const pct = Math.round((current / total) * 100);
+                    showLoading(`Download model AI: ${pct}%`);
+                }
+            },
+        });
+
         const cutoutImg = await blobToImage(cutoutBlob);
 
         /* ---- 2. Prepare base canvas ---- */
@@ -132,7 +145,7 @@ processBtn.addEventListener('click', async () => {
         const BH = baseCanvas.height;
         const baseData = ctxBase.getImageData(0, 0, BW, BH);
 
-        /* ---- 3. Build mask canvas (alpha → grayscale) ---- */
+        /* ---- 3. Mask canvas (alpha → grayscale) ---- */
         maskCanvas = document.createElement('canvas');
         maskCanvas.width = BW;
         maskCanvas.height = BH;
