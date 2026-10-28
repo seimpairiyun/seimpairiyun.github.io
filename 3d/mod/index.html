@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image → 3D Object Extractor</title>
 
+    <!-- Three.js + plugins (global) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+
+    <link rel="stylesheet" href="common.css?v=3">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h1>🧊 Image → 3D Object</h1>
+            <p class="subtitle">Ekstrak objek dari gambar, buat model 3D, tampilkan 360°</p>
+            <p class="subtitle"><a class="mode-link" href="multi.html">➜ Mode Multi-Foto (beberapa sudut, 360° sungguhan)</a></p>
+
+            <div class="control-group">
+                <label for="imageInput" class="btn-upload">📁 Pilih Gambar</label>
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <span id="fileName" class="file-name">Belum ada file</span>
+            </div>
+
+            <div class="control-group">
+                <button id="processBtn" class="btn btn-primary" disabled>✨ Proses → 3D</button>
+            </div>
+
+            <div class="control-group">
+                <label>Resolusi Mesh:</label>
+                <select id="resSelect">
+                    <option value="64">Rendah (64×64) - cepat</option>
+                    <option value="128" selected>Sedang (128×128)</option>
+                    <option value="192">Tinggi (192×192) - lambat</option>
+                    <option value="256">Ultra (256×256) - sangat lambat</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="depthScale">Skala Kedalaman: <span id="depthVal">1.5</span></label>
+                <input type="range" id="depthScale" min="0.2" max="5" step="0.1" value="1.5">
+            </div>
+
+            <div class="control-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="solidToggle" checked> Solid (punya sisi belakang, 360° tertutup)
+                </label>
+            </div>
+
+            <div class="control-group">
+                <label for="thickness">Ketebalan Solid: <span id="thicknessVal">0.25</span></label>
+                <input type="range" id="thickness" min="0" max="1.5" step="0.05" value="0.25">
+            </div>
+
+            <div class="control-group">
+                <label for="rotSpeed">Auto Rotate: <span id="rotVal">Off</span></label>
+                <input type="range" id="rotSpeed" min="0" max="5" step="0.1" value="0">
+            </div>
+
+            <div class="control-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="showDepth"> Tampilkan Depth Map
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="showMask"> Tampilkan Mask Objek
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="wireToggle"> Wireframe
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="bgToggle" checked> Grid & Background
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button id="resetBtn" class="btn">🔄 Reset View</button>
+                <button id="screenshotBtn" class="btn">📸 Screenshot</button>
+                <button id="exportBtn" class="btn btn-primary" disabled>💾 Export GLB</button>
+            </div>
+        </aside>
+
+        <main class="viewport">
+            <canvas id="canvas3d"></canvas>
+
+            <div class="info-overlay">
+                <span>🖱️ Drag = rotate</span>
+                <span>🔍 Scroll = zoom</span>
+                <span>🖱️ Kanan = pan</span>
+            </div>
+
+            <div id="previewPanel" class="preview-panel hidden">
+                <div class="preview-item">
+                    <span>Original</span>
+                    <canvas id="previewOriginal"></canvas>
+                </div>
+                <div class="preview-item">
+                    <span>Mask</span>
+                    <canvas id="previewMask"></canvas>
+                </div>
+                <div class="preview-item">
+                    <span>Depth</span>
+                    <canvas id="previewDepth"></canvas>
+                </div>
+            </div>
+
+            <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p id="loadingText">Memproses...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- ?v= → cache-busting, supaya browser tidak memakai script.js lama yang masih buggy -->
+    <script type="module" src="script.js?v=3"></script>
+</body>
+</html>

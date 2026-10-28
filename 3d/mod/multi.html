@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Foto → 3D 360°</title>
+
+    <!-- Three.js + plugins (global) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+
+    <link rel="stylesheet" href="common.css?v=3">
+    <style>
+        .hint {
+            font-size: 0.72rem;
+            color: #6b6b7e;
+            line-height: 1.45;
+            margin-bottom: 14px;
+        }
+        .hint b { color: #a0a0b8; }
+
+        .view-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+
+        .view-card {
+            background: #1a1a26;
+            border: 1px solid #2a2a3a;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .vc-head { display: flex; gap: 10px; align-items: center; }
+
+        .vc-thumb {
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            border-radius: 6px;
+            object-fit: contain;
+            background-color: #0a0a0f;
+            background-image:
+                linear-gradient(45deg, #1c1c28 25%, transparent 25%, transparent 75%, #1c1c28 75%),
+                linear-gradient(45deg, #1c1c28 25%, transparent 25%, transparent 75%, #1c1c28 75%);
+            background-size: 12px 12px;
+            background-position: 0 0, 6px 6px;
+        }
+
+        .vc-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+
+        .vc-name {
+            font-size: 0.7rem;
+            color: #6b6b7e;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .vc-main select { padding: 6px 8px; font-size: 0.78rem; }
+
+        .vc-del {
+            background: none;
+            border: none;
+            color: #6b6b7e;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 6px;
+        }
+        .vc-del:hover { color: #e5534b; }
+
+        .vc-custom {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.72rem;
+            color: #a0a0b8;
+        }
+        .vc-custom label { flex: 1; margin: 0; font-size: 0.72rem; }
+        .vc-custom input {
+            width: 100%;
+            margin-top: 4px;
+            padding: 6px;
+            background: #1e1e2a;
+            border: 1px solid #2a2a3a;
+            border-radius: 6px;
+            color: #e0e0e0;
+        }
+
+        .vc-fine { margin-top: 8px; font-size: 0.72rem; color: #a0a0b8; }
+        .vc-fine summary { cursor: pointer; color: #8fa0ff; }
+        .vc-fine label { margin: 10px 0 0; font-size: 0.72rem; }
+        .vc-fine input[type="range"] { margin-top: 6px; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h1>🧊 Multi-Foto → 3D 360°</h1>
+            <p class="subtitle">Foto objek dari beberapa sisi, hasilnya model 3D tertutup yang bisa diputar penuh.</p>
+            <p class="subtitle"><a class="mode-link" href="index.html">⬅ Mode 1 Foto (relief)</a></p>
+
+            <p class="hint">
+                <b>Tips foto:</b> objek di tengah, background polos &amp; kontras, jarak kamera
+                <b>sama</b> di semua foto (zoom jangan diubah), kamera sejajar (tidak miring).
+                Minimal 2 foto; idealnya depan, kanan, belakang, kiri (+ atas/bawah).
+                Foto <b>Atas</b>: bagian depan objek di bagian bawah gambar.
+            </p>
+
+            <div class="control-group">
+                <label for="imageInput" class="btn-upload">📁 Tambah Foto (bisa banyak)</label>
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <span id="fileName" class="file-name">Belum ada foto</span>
+                <div id="viewList" class="view-list"></div>
+            </div>
+
+            <div class="control-group">
+                <button id="processBtn" class="btn btn-primary" disabled>✨ Buat Model 3D</button>
+            </div>
+
+            <div class="control-group">
+                <label for="resSelect">Resolusi Mesh:</label>
+                <select id="resSelect">
+                    <option value="64">Rendah (64³) - cepat</option>
+                    <option value="96" selected>Sedang (96³)</option>
+                    <option value="128">Tinggi (128³)</option>
+                    <option value="160">Sangat tinggi (160³) - lambat</option>
+                    <option value="192">Ultra (192³) - sangat lambat</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="biasSlider">Toleransi Siluet: <span id="biasVal">1</span> px</label>
+                <input type="range" id="biasSlider" min="-4" max="8" step="1" value="1">
+                <span class="file-name">Naikkan jika model terlalu "kurus"/berlubang karena foto tidak presisi sejajar.</span>
+            </div>
+
+            <div class="control-group">
+                <label for="rotSpeed">Auto Rotate: <span id="rotVal">Off</span></label>
+                <input type="range" id="rotSpeed" min="0" max="5" step="0.1" value="0">
+            </div>
+
+            <div class="control-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="wireToggle"> Wireframe
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="bgToggle" checked> Grid &amp; Background
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button id="resetBtn" class="btn">🔄 Reset View</button>
+                <button id="screenshotBtn" class="btn">📸 Screenshot</button>
+                <button id="exportBtn" class="btn btn-primary" disabled>💾 Export GLB</button>
+            </div>
+        </aside>
+
+        <main class="viewport">
+            <canvas id="canvas3d"></canvas>
+
+            <div class="info-overlay">
+                <span>🖱️ Drag = rotate</span>
+                <span>🔍 Scroll = zoom</span>
+                <span>🖱️ Kanan = pan</span>
+            </div>
+
+            <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p id="loadingText">Memproses...</p>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="multi.js?v=3"></script>
+</body>
+</html>
