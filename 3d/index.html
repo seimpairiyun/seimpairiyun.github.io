@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image → 3D Object Extractor</title>
 
-    <!-- Libraries -->
+    <!-- Three.js + plugins (global) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
 
     <style>
         /* ============ RESET & BASE ============ */
@@ -21,9 +19,7 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
-        html, body {
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
         body {
             background: #0a0a0f;
@@ -63,9 +59,7 @@
             line-height: 1.4;
         }
 
-        .control-group {
-            margin-bottom: 18px;
-        }
+        .control-group { margin-bottom: 18px; }
 
         .control-group label {
             display: block;
@@ -115,9 +109,7 @@
             cursor: pointer;
         }
 
-        select:focus {
-            border-color: #667eea;
-        }
+        select:focus { border-color: #667eea; }
 
         input[type="range"] {
             padding: 0;
@@ -242,9 +234,7 @@
             max-width: 180px;
         }
 
-        .preview-panel.hidden {
-            display: none;
-        }
+        .preview-panel.hidden { display: none; }
 
         .preview-item {
             display: flex;
@@ -281,9 +271,7 @@
             min-width: 200px;
         }
 
-        .loading.hidden {
-            display: none;
-        }
+        .loading.hidden { display: none; }
 
         .spinner {
             width: 40px;
@@ -296,16 +284,12 @@
         }
 
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-            }
+            .app-container { flex-direction: column; }
 
             .sidebar {
                 width: 100%;
@@ -314,9 +298,7 @@
                 border-bottom: 1px solid #2a2a3a;
             }
 
-            .preview-panel {
-                max-width: 120px;
-            }
+            .preview-panel { max-width: 120px; }
 
             .info-overlay {
                 font-size: 0.62rem;
@@ -339,9 +321,7 @@
             </div>
 
             <div class="control-group">
-                <button id="processBtn" class="btn btn-primary" disabled>
-                    ✨ Proses → 3D
-                </button>
+                <button id="processBtn" class="btn btn-primary" disabled>✨ Proses → 3D</button>
             </div>
 
             <div class="control-group">
@@ -417,6 +397,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
