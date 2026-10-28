@@ -273,6 +273,30 @@
 
         .loading.hidden { display: none; }
 
+        /* ============ TOAST ============ */
+        .toast {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: min(520px, 90%);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            background: rgba(20, 20, 28, 0.95);
+            border: 1px solid #2a2a3a;
+            color: #e0e0e0;
+            z-index: 10;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.hidden { display: none; }
+        .toast.error { border-color: #e5534b; color: #ffb4ae; }
+        .toast.warn { border-color: #d29922; color: #f2d58b; }
+
+        .drop-active { outline: 2px dashed #667eea; outline-offset: -8px; }
+
         .spinner {
             width: 40px;
             height: 40px;
@@ -340,6 +364,17 @@
             </div>
 
             <div class="control-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="solidToggle" checked> Solid (punya sisi belakang, 360° tertutup)
+                </label>
+            </div>
+
+            <div class="control-group">
+                <label for="thickness">Ketebalan Solid: <span id="thicknessVal">0.25</span></label>
+                <input type="range" id="thickness" min="0" max="1.5" step="0.05" value="0.25">
+            </div>
+
+            <div class="control-group">
                 <label for="rotSpeed">Auto Rotate: <span id="rotVal">Off</span></label>
                 <input type="range" id="rotSpeed" min="0" max="5" step="0.1" value="0">
             </div>
@@ -390,6 +425,8 @@
                 </div>
             </div>
 
+            <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
             <div id="loading" class="loading hidden">
                 <div class="spinner"></div>
                 <p id="loadingText">Memproses...</p>
@@ -397,6 +434,7 @@
         </main>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <!-- ?v= → cache-busting, supaya browser tidak memakai script.js lama yang masih buggy -->
+    <script type="module" src="script.js?v=3"></script>
 </body>
 </html>

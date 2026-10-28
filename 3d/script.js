@@ -2,27 +2,97 @@
    IMAGE → 3D OBJECT EXTRACTOR
    ------------------------------------------------------------------
    Pipeline:
-   1. Background removal  (@imgly/background-removal, ES module)
-   2. Mask extraction     (alpha channel → grayscale)
-   3. Depth estimation    (luminance + box blur heuristic)
-   4. Mesh generation     (grid N×N, skip alpha < 0.15)
+   1. Background removal  (bg-remove.js: AI + fallback color-key)
+   2. Mask extraction     (alpha channel → grayscale preview)
+   3. Depth estimation    (mesh-core.js: dome distance-transform + luminance)
+   4. Mesh generation     (mesh-core.js: grid N×N, opsional solid)
    5. Render 360°         (Three.js + OrbitControls)
    6. Export GLB          (GLTFExporter)
    ================================================================== */
 
-/* ==================== IMPORT (ES MODULE) ==================== */
-import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm';
+import { computeDepth, buildGeometryData } from './mesh-core.js?v=3';
+import { removeBackgroundSmart } from './bg-remove.js?v=3';
+
+const $ = (id) => document.getElementById(id);
+
+/* ==================== KONFIGURASI ==================== */
+const MAX_FILE_MB = 20;
+const SOURCE_MAX = 1024; // ukuran maksimum input ke AI
+const TEXTURE_MAX = 768; // ukuran maksimum texture + depth
+const REBUILD_DEBOUNCE_MS = 120;
+
+/* ==================== UI REFERENCES ==================== */
+const viewport = document.querySelector('.viewport');
+const canvas = $('canvas3d');
+
+const imageInput = $('imageInput');
+const fileName = $('fileName');
+const processBtn = $('processBtn');
+const resSelect = $('resSelect');
+const depthScale = $('depthScale');
+const depthVal = $('depthVal');
+const solidToggle = $('solidToggle');
+const thickness = $('thickness');
+const thicknessVal = $('thicknessVal');
+const rotSpeed = $('rotSpeed');
+const rotVal = $('rotVal');
+const showDepth = $('showDepth');
+const showMask = $('showMask');
+const wireToggle = $('wireToggle');
+const bgToggle = $('bgToggle');
+const resetBtn = $('resetBtn');
+const screenshotBtn = $('screenshotBtn');
+const exportBtn = $('exportBtn');
+const loadingEl = $('loading');
+const loadingText = $('loadingText');
+const previewPanel = $('previewPanel');
+const toastEl = $('toast');
+
+/* ==================== HELPER UI ==================== */
+let toastTimer = null;
+function toast(message, type = 'info', ms = 6000) {
+    toastEl.textContent = message;
+    toastEl.className = 'toast ' + type;
+    clearTimeout(toastTimer);
+    if (ms > 0) toastTimer = setTimeout(() => toastEl.classList.add('hidden'), ms);
+}
+
+function showLoading(text) {
+    loadingText.textContent = text;
+    loadingEl.classList.remove('hidden');
+}
+function hideLoading() {
+    loadingEl.classList.add('hidden');
+}
+
+const nextFrame = () => new Promise((r) => setTimeout(r, 30));
+
+function debounce(fn, ms) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), ms);
+    };
+}
+
+/* ==================== CEK DEPENDENSI ==================== */
+if (typeof THREE === 'undefined' || !THREE.OrbitControls || !THREE.GLTFExporter) {
+    toast(
+        'Three.js gagal dimuat (cek koneksi internet / adblock lalu refresh halaman).',
+        'error',
+        0
+    );
+    throw new Error('THREE / OrbitControls / GLTFExporter tidak tersedia');
+}
 
 /* ==================== THREE.JS SETUP ==================== */
-const canvas = document.getElementById('canvas3d');
-const viewport = document.querySelector('.viewport');
-
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0a0a0f);
+const BG_COLOR = 0x0a0a0f;
+scene.background = new THREE.Color(BG_COLOR);
 
 const camera = new THREE.PerspectiveCamera(
     45,
-    viewport.clientWidth / viewport.clientHeight,
+    Math.max(1, viewport.clientWidth) / Math.max(1, viewport.clientHeight),
     0.05,
     500
 );
@@ -31,10 +101,12 @@ camera.position.set(0, 1.2, 3.5);
 const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    preserveDrawingBuffer: true,
+    alpha: true,
+    preserveDrawingBuffer: true, // diperlukan untuk screenshot
 });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+renderer.outputEncoding = THREE.sRGBEncoding; // warna texture akurat
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -42,7 +114,7 @@ controls.dampingFactor = 0.06;
 controls.minDistance = 0.5;
 controls.maxDistance = 20;
 
-/* ==================== LIGHTS ==================== */
+/* ---- Lights ---- */
 scene.add(new THREE.AmbientLight(0xffffff, 0.65));
 
 const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
@@ -57,342 +129,203 @@ const rimLight = new THREE.PointLight(0x667eea, 0.8, 20);
 rimLight.position.set(0, 3, -4);
 scene.add(rimLight);
 
-/* ==================== GRID ==================== */
+/* ---- Grid ---- */
 const grid = new THREE.GridHelper(20, 20, 0x2a2a3a, 0x1a1a2e);
+grid.position.y = -2;
 scene.add(grid);
 
 /* ==================== STATE ==================== */
-let mesh = null;
-let originalCanvas = null;
-let maskCanvas = null;
-let depthCanvas = null;
-let cutoutCanvas = null; // cache: cutout dengan alpha
-let autoRot = 0;
-let wireframe = false;
-
-/* ==================== UI REFERENCES ==================== */
-const $ = (id) => document.getElementById(id);
-
-const imageInput = $('imageInput');
-const fileName = $('fileName');
-const processBtn = $('processBtn');
-const resSelect = $('resSelect');
-const depthScale = $('depthScale');
-const depthVal = $('depthVal');
-const rotSpeed = $('rotSpeed');
-const rotVal = $('rotVal');
-const showDepth = $('showDepth');
-const showMask = $('showMask');
-const wireToggle = $('wireToggle');
-const bgToggle = $('bgToggle');
-const resetBtn = $('resetBtn');
-const screenshotBtn = $('screenshotBtn');
-const exportBtn = $('exportBtn');
-const loadingEl = $('loading');
-const loadingText = $('loadingText');
-const previewPanel = $('previewPanel');
+const state = {
+    source: null, // canvas gambar asli (di-resize)
+    cutout: null, // { canvas, rgba, width, height }
+    depth: null, // Uint8ClampedArray
+    texture: null, // THREE.CanvasTexture
+    mesh: null,
+    autoRot: 0,
+    busy: false,
+};
 
 /* ==================== FILE INPUT ==================== */
-let loadedImage = null;
+imageInput.addEventListener('change', (e) => loadFile(e.target.files[0]));
 
-imageInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
+// Drag & drop ke seluruh halaman
+['dragenter', 'dragover'].forEach((ev) =>
+    document.body.addEventListener(ev, (e) => {
+        e.preventDefault();
+        viewport.classList.add('drop-active');
+    })
+);
+['dragleave', 'drop'].forEach((ev) =>
+    document.body.addEventListener(ev, (e) => {
+        e.preventDefault();
+        viewport.classList.remove('drop-active');
+    })
+);
+document.body.addEventListener('drop', (e) => loadFile(e.dataTransfer?.files?.[0]));
+
+async function loadFile(file) {
     if (!file) return;
-    fileName.textContent = file.name;
 
-    const img = new Image();
-    img.onload = () => {
-        loadedImage = img;
-        processBtn.disabled = false;
-
-        // Tampilkan preview original
-        originalCanvas = document.createElement('canvas');
-        drawToCanvas(img, originalCanvas, 512);
-        replaceCanvas('previewOriginal', originalCanvas);
-        syncPreviewVisibility();
-    };
-    img.src = URL.createObjectURL(file);
-});
-
-/* ==================== PROCESS PIPELINE ==================== */
-processBtn.addEventListener('click', async () => {
-    if (!loadedImage) return;
-    processBtn.disabled = true;
-
-    try {
-        /* ---- 1. Background removal ---- */
-        showLoading('Memisahkan objek dari background...');
-
-        const cutoutBlob = await removeBackground(loadedImage.src, {
-            output: { format: 'image/png', quality: 1 },
-            progress: (key, current, total) => {
-                if (typeof key === 'string' && key.startsWith('fetch')) {
-                    const pct = Math.round((current / total) * 100);
-                    showLoading(`Download model AI: ${pct}%`);
-                }
-            },
-        });
-
-        const cutoutImg = await blobToImage(cutoutBlob);
-
-        /* ---- 2. Prepare base canvas ---- */
-        const baseCanvas = document.createElement('canvas');
-        drawToCanvas(cutoutImg, baseCanvas, 512);
-        cutoutCanvas = baseCanvas;
-
-        const ctxBase = baseCanvas.getContext('2d');
-        const BW = baseCanvas.width;
-        const BH = baseCanvas.height;
-        const baseData = ctxBase.getImageData(0, 0, BW, BH);
-
-        /* ---- 3. Mask canvas (alpha → grayscale) ---- */
-        maskCanvas = document.createElement('canvas');
-        maskCanvas.width = BW;
-        maskCanvas.height = BH;
-        const mCtx = maskCanvas.getContext('2d');
-        const mData = mCtx.createImageData(BW, BH);
-        for (let i = 0; i < baseData.data.length; i += 4) {
-            const a = baseData.data[i + 3];
-            mData.data[i] = a;
-            mData.data[i + 1] = a;
-            mData.data[i + 2] = a;
-            mData.data[i + 3] = 255;
-        }
-        mCtx.putImageData(mData, 0, 0);
-
-        /* ---- 4. Depth estimation ---- */
-        showLoading('Mengestimasi kedalaman (depth map)...');
-        await new Promise((r) => setTimeout(r, 50));
-        depthCanvas = await estimateDepth(baseCanvas);
-
-        /* ---- 5. Update previews ---- */
-        replaceCanvas('previewMask', maskCanvas);
-        replaceCanvas('previewDepth', depthCanvas);
-        syncPreviewVisibility();
-
-        /* ---- 6. Build mesh ---- */
-        showLoading('Membangun mesh 3D...');
-        await new Promise((r) => setTimeout(r, 50));
-        buildMeshFromData({
-            colorCanvas: cutoutCanvas,
-            maskCanvas,
-            depthCanvas,
-            resolution: parseInt(resSelect.value, 10),
-        });
-
-        exportBtn.disabled = false;
-        processBtn.disabled = false;
-        hideLoading();
-    } catch (err) {
-        console.error(err);
-        alert('Gagal memproses gambar: ' + err.message);
-        processBtn.disabled = false;
-        hideLoading();
+    if (!file.type.startsWith('image/')) {
+        toast('File harus berupa gambar (JPG, PNG, WebP, ...).', 'error');
+        return;
     }
-});
-
-/* ==================== DEPTH ESTIMATION ==================== */
-async function estimateDepth(sourceCanvas) {
-    const size = 128;
-    const c = document.createElement('canvas');
-    c.width = size;
-    c.height = size;
-    const ctx = c.getContext('2d');
-    ctx.drawImage(sourceCanvas, 0, 0, size, size);
-    const imgData = ctx.getImageData(0, 0, size, size);
-    const d = imgData.data;
-
-    // Luminance (dikalikan alpha agar background = 0)
-    const lum = new Float32Array(size * size);
-    for (let i = 0; i < size * size; i++) {
-        const r = d[i * 4];
-        const g = d[i * 4 + 1];
-        const b = d[i * 4 + 2];
-        const a = d[i * 4 + 3];
-        lum[i] = ((r * 0.299 + g * 0.587 + b * 0.114) / 255) * (a / 255);
-    }
-
-    // Blur 2 pass (haluskan)
-    let smooth = lum;
-    for (let pass = 0; pass < 2; pass++) {
-        smooth = boxBlur(smooth, size, size, 1);
-    }
-
-    // Normalize ke 0..255
-    let min = 1;
-    let max = 0;
-    for (const v of smooth) {
-        if (v < min) min = v;
-        if (v > max) max = v;
-    }
-    const range = Math.max(0.001, max - min);
-
-    const out = ctx.createImageData(size, size);
-    for (let i = 0; i < size * size; i++) {
-        const v = Math.floor(((smooth[i] - min) / range) * 255);
-        out.data[i * 4] = v;
-        out.data[i * 4 + 1] = v;
-        out.data[i * 4 + 2] = v;
-        out.data[i * 4 + 3] = 255;
-    }
-
-    const outCanvas = document.createElement('canvas');
-    outCanvas.width = size;
-    outCanvas.height = size;
-    outCanvas.getContext('2d').putImageData(out, 0, 0);
-    return outCanvas;
-}
-
-function boxBlur(src, w, h, r) {
-    const out = new Float32Array(w * h);
-    for (let y = 0; y < h; y++) {
-        for (let x = 0; x < w; x++) {
-            let sum = 0;
-            let count = 0;
-            for (let dy = -r; dy <= r; dy++) {
-                for (let dx = -r; dx <= r; dx++) {
-                    const nx = x + dx;
-                    const ny = y + dy;
-                    if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
-                        sum += src[ny * w + nx];
-                        count++;
-                    }
-                }
-            }
-            out[y * w + x] = sum / count;
-        }
-    }
-    return out;
-}
-
-/* ==================== MESH BUILDER ==================== */
-function buildMeshFromData({ colorCanvas, maskCanvas, depthCanvas, resolution }) {
-    // Cleanup mesh lama
-    if (mesh) {
-        scene.remove(mesh);
-        mesh.geometry.dispose();
-        if (mesh.material.map) mesh.material.map.dispose();
-        mesh.material.dispose();
-        mesh = null;
-    }
-
-    const N = resolution;
-
-    const colorData = colorCanvas
-        .getContext('2d')
-        .getImageData(0, 0, colorCanvas.width, colorCanvas.height).data;
-    const maskData = maskCanvas
-        .getContext('2d')
-        .getImageData(0, 0, maskCanvas.width, maskCanvas.height).data;
-    const depthData = depthCanvas
-        .getContext('2d')
-        .getImageData(0, 0, depthCanvas.width, depthCanvas.height).data;
-
-    const CW = colorCanvas.width;
-    const CH = colorCanvas.height;
-    const MW = maskCanvas.width;
-    const MH = maskCanvas.height;
-    const DW = depthCanvas.width;
-    const DH = depthCanvas.height;
-
-    const sampleRGB = (data, W, H, u, v) => {
-        const x = Math.min(W - 1, Math.max(0, Math.floor(u * (W - 1))));
-        const y = Math.min(H - 1, Math.max(0, Math.floor(v * (H - 1))));
-        const i = (y * W + x) * 4;
-        return [data[i], data[i + 1], data[i + 2], data[i + 3]];
-    };
-
-    const positions = [];
-    const uvs = [];
-    const colors = [];
-    const indices = [];
-    const depthStrength = parseFloat(depthScale.value) * 0.5;
-    const S = 1.6; // lebar plane dunia
-
-    const vertexMap = new Int32Array(N * N).fill(-1);
-    const indexAt = (ix, iy) => iy * N + ix;
-
-    const pushVertex = (ix, iy) => {
-        const u = ix / (N - 1);
-        const v = iy / (N - 1);
-
-        const [cr, cg, cb, ca] = sampleRGB(colorData, CW, CH, u, v);
-        const [, , , ma] = sampleRGB(maskData, MW, MH, u, v);
-        const [dr] = sampleRGB(depthData, DW, DH, u, v);
-
-        const alpha = (ca / 255) * (ma / 255);
-        if (alpha < 0.15) {
-            vertexMap[indexAt(ix, iy)] = -1;
-            return;
-        }
-
-        const px = (u - 0.5) * 2 * S;
-        const py = -(v - 0.5) * 2 * S;
-        const pz = (dr / 255) * depthStrength;
-
-        const idx = positions.length / 3;
-        positions.push(px, py, pz);
-        uvs.push(u, 1 - v); // flip V
-        colors.push(cr / 255, cg / 255, cb / 255);
-        vertexMap[indexAt(ix, iy)] = idx;
-    };
-
-    // Build vertices
-    for (let iy = 0; iy < N; iy++) {
-        for (let ix = 0; ix < N; ix++) {
-            pushVertex(ix, iy);
-        }
-    }
-
-    // Build triangles
-    for (let iy = 0; iy < N - 1; iy++) {
-        for (let ix = 0; ix < N - 1; ix++) {
-            const a = vertexMap[indexAt(ix, iy)];
-            const b = vertexMap[indexAt(ix + 1, iy)];
-            const c = vertexMap[indexAt(ix, iy + 1)];
-            const d = vertexMap[indexAt(ix + 1, iy + 1)];
-
-            if (a >= 0 && b >= 0 && c >= 0) indices.push(a, c, b);
-            if (b >= 0 && c >= 0 && d >= 0) indices.push(b, c, d);
-        }
-    }
-
-    if (positions.length === 0) {
-        alert('Tidak ada objek terdeteksi. Coba gambar dengan subjek lebih jelas.');
+    if (file.size > MAX_FILE_MB * 1024 * 1024) {
+        toast(`Ukuran file maksimum ${MAX_FILE_MB} MB.`, 'error');
         return;
     }
 
+    try {
+        const img = await loadImage(file);
+        state.source = document.createElement('canvas');
+        drawToCanvas(img, state.source, SOURCE_MAX);
+
+        fileName.textContent = file.name;
+        processBtn.disabled = false;
+        drawPreview('previewOriginal', state.source);
+        syncPreviewVisibility();
+        toast('Gambar siap. Klik "Proses → 3D".', 'info', 3000);
+    } catch (err) {
+        console.error(err);
+        toast('Gagal membaca gambar: ' + err.message, 'error');
+    }
+}
+
+/* ==================== PROCESS PIPELINE ==================== */
+processBtn.addEventListener('click', processImage);
+
+async function processImage() {
+    if (!state.source || state.busy) return;
+    state.busy = true;
+    processBtn.disabled = true;
+    exportBtn.disabled = true;
+
+    try {
+        /* ---- 1. Background removal ---- */
+        showLoading('Menyiapkan...');
+        const { canvas: cutoutFull, method } = await removeBackgroundSmart(state.source, {
+            onStatus: showLoading,
+            onNotice: (msg) => toast(msg, 'warn', 9000),
+        });
+
+        /* ---- 2. Base canvas (texture) ---- */
+        const base = document.createElement('canvas');
+        drawToCanvas(cutoutFull, base, TEXTURE_MAX);
+        const ctx = base.getContext('2d', { willReadFrequently: true });
+        const imageData = ctx.getImageData(0, 0, base.width, base.height);
+
+        /* ---- 3. Mask preview ---- */
+        const maskCanvas = makeMaskCanvas(imageData);
+
+        /* ---- 4. Depth ---- */
+        showLoading('Mengestimasi kedalaman (depth map)...');
+        await nextFrame();
+        const depth = computeDepth(imageData.data, base.width, base.height);
+        const depthCanvas = makeDepthCanvas(depth, base.width, base.height);
+
+        /* ---- 5. Simpan state + preview ---- */
+        if (state.texture) state.texture.dispose();
+        state.texture = new THREE.CanvasTexture(base);
+        state.texture.encoding = THREE.sRGBEncoding;
+        state.texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+        state.cutout = { canvas: base, rgba: imageData.data, width: base.width, height: base.height };
+        state.depth = depth;
+
+        drawPreview('previewMask', maskCanvas);
+        drawPreview('previewDepth', depthCanvas);
+        syncPreviewVisibility();
+
+        /* ---- 6. Mesh ---- */
+        showLoading('Membangun mesh 3D...');
+        await nextFrame();
+        const ok = rebuildMesh({ fit: true });
+
+        exportBtn.disabled = !ok;
+        if (ok && method === 'ai') toast('Selesai! Drag untuk memutar model 360°.', 'info', 3500);
+    } catch (err) {
+        console.error(err);
+        toast('Gagal memproses gambar: ' + (err?.message ?? err), 'error', 10000);
+    } finally {
+        state.busy = false;
+        processBtn.disabled = false;
+        hideLoading();
+    }
+}
+
+/* ==================== MESH ==================== */
+function disposeMesh() {
+    if (!state.mesh) return;
+    scene.remove(state.mesh);
+    state.mesh.geometry.dispose();
+    state.mesh.material.dispose(); // texture di-dispose terpisah (dipakai ulang)
+    state.mesh = null;
+}
+
+function rebuildMesh({ fit = false } = {}) {
+    if (!state.cutout || !state.depth) return false;
+
+    const { rgba, width, height, canvas: texCanvas } = state.cutout;
+    const data = buildGeometryData({
+        rgba,
+        depth: state.depth,
+        width,
+        height,
+        resolution: parseInt(resSelect.value, 10),
+        depthStrength: parseFloat(depthScale.value) * 0.5,
+        solid: solidToggle.checked,
+        thickness: parseFloat(thickness.value),
+    });
+
+    if (data.indices.length === 0) {
+        toast('Tidak ada objek terdeteksi. Coba gambar dengan subjek yang lebih jelas.', 'warn');
+        return false;
+    }
+
+    const prevRotY = state.mesh ? state.mesh.rotation.y : 0;
+    disposeMesh();
+
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    geometry.setIndex(indices);
+    geometry.setAttribute('position', new THREE.BufferAttribute(data.positions, 3));
+    geometry.setAttribute('uv', new THREE.BufferAttribute(data.uvs, 2));
+    geometry.setIndex(new THREE.BufferAttribute(data.indices, 1));
     geometry.computeVertexNormals();
+    geometry.center();
 
-    // Texture dari cutout
-    const tex = new THREE.CanvasTexture(colorCanvas);
-    tex.flipY = false;
-    tex.needsUpdate = true;
-    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-
+    // Catatan: hanya `map` (tanpa vertexColors) agar warna tidak ter-multiply dua kali,
+    // dan flipY dibiarkan default karena UV sudah memakai (u, 1 - v).
     const material = new THREE.MeshStandardMaterial({
-        map: tex,
-        vertexColors: true,
+        map: state.texture,
         roughness: 0.65,
         metalness: 0.05,
         side: THREE.DoubleSide,
-        transparent: true,
-        alphaTest: 0.05,
-        wireframe,
+        alphaTest: 0.5,
+        wireframe: wireToggle.checked,
     });
 
-    mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.y = prevRotY;
     scene.add(mesh);
+    state.mesh = mesh;
 
-    // Fit camera
-    geometry.computeBoundingSphere();
-    const radius = geometry.boundingSphere.radius;
-    camera.position.set(0, 0.3, radius * 2.2);
+    // grid tepat di bawah objek
+    geometry.computeBoundingBox();
+    grid.position.y = geometry.boundingBox.min.y - 0.02;
+
+    if (fit) fitCamera();
+    return true;
+}
+
+const scheduleRebuild = debounce(() => rebuildMesh(), REBUILD_DEBOUNCE_MS);
+
+function fitCamera() {
+    if (state.mesh) {
+        state.mesh.geometry.computeBoundingSphere();
+        const r = state.mesh.geometry.boundingSphere.radius;
+        camera.position.set(0, r * 0.15, r * 2.6);
+    } else {
+        camera.position.set(0, 1.2, 3.5);
+    }
     controls.target.set(0, 0, 0);
     controls.update();
 }
@@ -400,121 +333,152 @@ function buildMeshFromData({ colorCanvas, maskCanvas, depthCanvas, resolution })
 /* ==================== UI EVENTS ==================== */
 depthScale.addEventListener('input', () => {
     depthVal.textContent = parseFloat(depthScale.value).toFixed(1);
-    if (mesh && cutoutCanvas && maskCanvas && depthCanvas) {
-        buildMeshFromData({
-            colorCanvas: cutoutCanvas,
-            maskCanvas,
-            depthCanvas,
-            resolution: parseInt(resSelect.value, 10),
-        });
-    }
+    scheduleRebuild();
 });
 
-resSelect.addEventListener('change', () => {
-    if (mesh && cutoutCanvas && maskCanvas && depthCanvas) {
-        buildMeshFromData({
-            colorCanvas: cutoutCanvas,
-            maskCanvas,
-            depthCanvas,
-            resolution: parseInt(resSelect.value, 10),
-        });
-    }
+thickness.addEventListener('input', () => {
+    thicknessVal.textContent = parseFloat(thickness.value).toFixed(2);
+    scheduleRebuild();
 });
+
+solidToggle.addEventListener('change', () => {
+    thickness.disabled = !solidToggle.checked;
+    rebuildMesh();
+});
+
+resSelect.addEventListener('change', () => rebuildMesh());
 
 rotSpeed.addEventListener('input', () => {
-    autoRot = parseFloat(rotSpeed.value);
-    rotVal.textContent = autoRot > 0 ? autoRot.toFixed(1) : 'Off';
+    state.autoRot = parseFloat(rotSpeed.value);
+    rotVal.textContent = state.autoRot > 0 ? state.autoRot.toFixed(1) : 'Off';
 });
 
 wireToggle.addEventListener('change', () => {
-    wireframe = wireToggle.checked;
-    if (mesh) mesh.material.wireframe = wireframe;
+    if (state.mesh) state.mesh.material.wireframe = wireToggle.checked;
 });
 
 bgToggle.addEventListener('change', () => {
     grid.visible = bgToggle.checked;
-    scene.background = bgToggle.checked ? new THREE.Color(0x0a0a0f) : null;
+    scene.background = bgToggle.checked ? new THREE.Color(BG_COLOR) : null;
 });
 
 showMask.addEventListener('change', syncPreviewVisibility);
 showDepth.addEventListener('change', syncPreviewVisibility);
 
 resetBtn.addEventListener('click', () => {
-    if (mesh) {
-        mesh.geometry.computeBoundingSphere();
-        const r = mesh.geometry.boundingSphere.radius;
-        camera.position.set(0, 0.3, r * 2.2);
-    } else {
-        camera.position.set(0, 1.2, 3.5);
-    }
-    controls.target.set(0, 0, 0);
-    controls.update();
+    if (state.mesh) state.mesh.rotation.set(0, 0, 0);
+    fitCamera();
 });
 
 screenshotBtn.addEventListener('click', () => {
     renderer.render(scene, camera);
-    const url = renderer.domElement.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.download = '3d-view-' + Date.now() + '.png';
-    a.href = url;
-    a.click();
+    renderer.domElement.toBlob((blob) => {
+        if (blob) download(blob, `3d-view-${Date.now()}.png`);
+    }, 'image/png');
 });
 
 exportBtn.addEventListener('click', () => {
+    const mesh = state.mesh;
     if (!mesh) return;
+
     showLoading('Export GLB...');
-    const exporter = new THREE.GLTFExporter();
-    exporter.parse(
-        mesh,
-        (gltf) => {
-            const blob = new Blob([gltf], { type: 'model/gltf-binary' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'object-3d.glb';
-            a.click();
-            URL.revokeObjectURL(url);
-            hideLoading();
-        },
-        (err) => {
-            console.error(err);
-            alert('Export gagal');
-            hideLoading();
-        },
-        { binary: true }
-    );
+    const rotY = mesh.rotation.y;
+    mesh.rotation.y = 0; // export dalam orientasi netral, bukan posisi auto-rotate
+    mesh.updateMatrixWorld(true);
+
+    const restore = () => {
+        mesh.rotation.y = rotY;
+        hideLoading();
+    };
+
+    try {
+        // three r128: parse(input, onDone, options) — TIDAK ada error callback.
+        // (Kode lama memasukkan callback error di posisi `options`, sehingga
+        //  `binary: true` tidak terbaca dan file yang dihasilkan bukan GLB valid.)
+        new THREE.GLTFExporter().parse(
+            mesh,
+            (result) => {
+                try {
+                    const blob = new Blob([result], { type: 'model/gltf-binary' });
+                    download(blob, 'object-3d.glb');
+                } finally {
+                    restore();
+                }
+            },
+            { binary: true, onlyVisible: true }
+        );
+    } catch (err) {
+        console.error(err);
+        toast('Export gagal: ' + err.message, 'error');
+        restore();
+    }
 });
 
 /* ==================== HELPERS ==================== */
-function blobToImage(blob) {
+function loadImage(file) {
     return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
         const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = URL.createObjectURL(blob);
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            resolve(img);
+        };
+        img.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error('format gambar tidak didukung browser'));
+        };
+        img.src = url;
     });
 }
 
-function drawToCanvas(img, canvas, maxSize = 512) {
-    let w = img.width;
-    let h = img.height;
-    const scale = Math.min(1, maxSize / Math.max(w, h));
-    w *= scale;
-    h *= scale;
-    canvas.width = Math.round(w);
-    canvas.height = Math.round(h);
-    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+function drawToCanvas(img, target, maxSize) {
+    const w0 = img.naturalWidth || img.width;
+    const h0 = img.naturalHeight || img.height;
+    const scale = Math.min(1, maxSize / Math.max(w0, h0));
+    target.width = Math.max(1, Math.round(w0 * scale));
+    target.height = Math.max(1, Math.round(h0 * scale));
+    const ctx = target.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, target.width, target.height);
 }
 
-function replaceCanvas(id, srcCanvas) {
-    const old = document.getElementById(id);
-    if (!old) return;
+function makeMaskCanvas(imageData) {
+    const { width, height, data } = imageData;
     const c = document.createElement('canvas');
-    c.id = id;
-    c.width = srcCanvas.width;
-    c.height = srcCanvas.height;
-    c.getContext('2d').drawImage(srcCanvas, 0, 0);
-    old.replaceWith(c);
+    c.width = width;
+    c.height = height;
+    const ctx = c.getContext('2d');
+    const out = ctx.createImageData(width, height);
+    for (let i = 0; i < data.length; i += 4) {
+        const a = data[i + 3];
+        out.data[i] = out.data[i + 1] = out.data[i + 2] = a;
+        out.data[i + 3] = 255;
+    }
+    ctx.putImageData(out, 0, 0);
+    return c;
+}
+
+function makeDepthCanvas(depth, width, height) {
+    const c = document.createElement('canvas');
+    c.width = width;
+    c.height = height;
+    const ctx = c.getContext('2d');
+    const out = ctx.createImageData(width, height);
+    for (let i = 0; i < depth.length; i++) {
+        const v = depth[i];
+        out.data[i * 4] = out.data[i * 4 + 1] = out.data[i * 4 + 2] = v;
+        out.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(out, 0, 0);
+    return c;
+}
+
+function drawPreview(id, src) {
+    const el = $(id);
+    if (!el) return;
+    el.width = src.width;
+    el.height = src.height;
+    el.getContext('2d').drawImage(src, 0, 0);
 }
 
 function syncPreviewVisibility() {
@@ -523,27 +487,29 @@ function syncPreviewVisibility() {
     items[0].style.display = 'flex';
     items[1].style.display = showMask.checked ? 'flex' : 'none';
     items[2].style.display = showDepth.checked ? 'flex' : 'none';
-    const anyOn = showMask.checked || showDepth.checked;
-    previewPanel.classList.toggle('hidden', !anyOn);
+    previewPanel.classList.toggle('hidden', !(showMask.checked || showDepth.checked));
 }
 
-function showLoading(text) {
-    loadingText.textContent = text;
-    loadingEl.classList.remove('hidden');
-}
-
-function hideLoading() {
-    loadingEl.classList.add('hidden');
+function download(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
 
 /* ==================== RESIZE ==================== */
-window.addEventListener('resize', () => {
+new ResizeObserver(() => {
     const w = viewport.clientWidth;
     const h = viewport.clientHeight;
+    if (!w || !h) return;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
-});
+}).observe(viewport);
 
 /* ==================== ANIMATION LOOP ==================== */
 const clock = new THREE.Clock();
@@ -551,11 +517,9 @@ const clock = new THREE.Clock();
 function animate() {
     requestAnimationFrame(animate);
     const dt = clock.getDelta();
-
-    if (mesh && autoRot > 0) {
-        mesh.rotation.y += autoRot * dt * 0.6;
+    if (state.mesh && state.autoRot > 0) {
+        state.mesh.rotation.y += state.autoRot * dt * 0.6;
     }
-
     controls.update();
     renderer.render(scene, camera);
 }
