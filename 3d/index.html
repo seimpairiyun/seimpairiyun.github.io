@@ -4,16 +4,327 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image → 3D Object Extractor</title>
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
-
-    <!-- Background removal -->
     <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/index.js"></script>
-
-    <!-- TensorFlow.js + Depth model -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+
+    <style>
+        /* ============ RESET & BASE ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ============ SIDEBAR ============ */
+        .sidebar {
+            width: 340px;
+            background: linear-gradient(180deg, #14141c 0%, #0d0d14 100%);
+            padding: 24px;
+            overflow-y: auto;
+            border-right: 1px solid #2a2a3a;
+            flex-shrink: 0;
+        }
+
+        .sidebar h1 {
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.78rem;
+            color: #6b6b7e;
+            margin-bottom: 22px;
+            line-height: 1.4;
+        }
+
+        .control-group {
+            margin-bottom: 18px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #a0a0b8;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .btn-upload {
+            display: block;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-name {
+            display: block;
+            font-size: 0.72rem;
+            color: #6b6b7e;
+            margin-top: 6px;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        select,
+        input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            background: #1e1e2a;
+            border: 1px solid #2a2a3a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #667eea;
+        }
+
+        input[type="range"] {
+            padding: 0;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #2a2a3a;
+            border-radius: 3px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #14141c;
+        }
+
+        .checkbox-label {
+            display: flex !important;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #a0a0b8;
+            font-size: 0.82rem;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .checkbox-label input {
+            width: 16px;
+            height: 16px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #2a2a3a;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            background: #1e1e2a;
+            border: 1px solid #2a2a3a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #2a2a3a;
+            border-color: #667eea;
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ============ VIEWPORT ============ */
+        .viewport {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
+        }
+
+        #canvas3d {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .info-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            padding: 10px 20px;
+            background: rgba(20, 20, 28, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid #2a2a3a;
+            font-size: 0.72rem;
+            color: #a0a0b8;
+            pointer-events: none;
+        }
+
+        /* ============ PREVIEW PANEL ============ */
+        .preview-panel {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(20, 20, 28, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #2a2a3a;
+            max-width: 180px;
+        }
+
+        .preview-panel.hidden {
+            display: none;
+        }
+
+        .preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .preview-item span {
+            font-size: 0.68rem;
+            color: #6b6b7e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-item canvas {
+            width: 100%;
+            border-radius: 6px;
+            background: #0a0a0f;
+            display: block;
+        }
+
+        /* ============ LOADING ============ */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #a0a0b8;
+            background: rgba(20, 20, 28, 0.9);
+            padding: 24px 32px;
+            border-radius: 16px;
+            border: 1px solid #2a2a3a;
+            min-width: 200px;
+        }
+
+        .loading.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #2a2a3a;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 45vh;
+                border-right: none;
+                border-bottom: 1px solid #2a2a3a;
+            }
+
+            .preview-panel {
+                max-width: 120px;
+            }
+
+            .info-overlay {
+                font-size: 0.62rem;
+                gap: 10px;
+                padding: 8px 14px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -77,13 +388,13 @@
 
         <main class="viewport">
             <canvas id="canvas3d"></canvas>
+
             <div class="info-overlay">
                 <span>🖱️ Drag = rotate</span>
                 <span>🔍 Scroll = zoom</span>
                 <span>🖱️ Kanan = pan</span>
             </div>
 
-            <!-- Preview panel -->
             <div id="previewPanel" class="preview-panel hidden">
                 <div class="preview-item">
                     <span>Original</span>
