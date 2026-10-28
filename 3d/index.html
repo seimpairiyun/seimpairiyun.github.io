@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Image Generator - 360° View</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar">
+            <h1>🎨 3D Image Generator</h1>
+            <p class="subtitle">Ubah gambar jadi model 3D dengan view 360°</p>
 
+            <div class="control-group">
+                <label for="imageInput" class="btn-upload">
+                    📁 Pilih Gambar
+                </label>
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <span id="fileName" class="file-name">Belum ada file</span>
+            </div>
+
+            <div class="control-group">
+                <label>Mode 3D:</label>
+                <select id="modeSelect">
+                    <option value="plane">Plane (Gambar Datar)</option>
+                    <option value="box" selected>Box (Kotak 3D)</option>
+                    <option value="cylinder">Cylinder (Silinder)</option>
+                    <option value="sphere">Sphere (Bola 360°)</option>
+                    <option value="extrude">Extrude (Relief)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="depthRange">Kedalaman (Depth): <span id="depthVal">1.0</span></label>
+                <input type="range" id="depthRange" min="0.1" max="3" step="0.1" value="1.0">
+            </div>
+
+            <div class="control-group">
+                <label for="rotationRange">Auto Rotate: <span id="rotVal">Off</span></label>
+                <input type="range" id="rotationRange" min="0" max="5" step="0.1" value="0">
+            </div>
+
+            <div class="control-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="wireframeToggle">
+                    Wireframe
+                </label>
+            </div>
+
+            <div class="control-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="bgToggle" checked>
+                    Background Grid
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button id="resetBtn" class="btn">🔄 Reset View</button>
+                <button id="screenshotBtn" class="btn">📸 Screenshot</button>
+                <button id="exportBtn" class="btn btn-primary">💾 Export GLTF</button>
+            </div>
+        </aside>
+
+        <!-- 3D Canvas Area -->
+        <main class="viewport">
+            <canvas id="canvas3d"></canvas>
+            <div class="info-overlay">
+                <span>🖱️ Drag untuk rotate</span>
+                <span>🔍 Scroll untuk zoom</span>
+                <span>🖱️ Kanan untuk pan</span>
+            </div>
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Memproses gambar...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
